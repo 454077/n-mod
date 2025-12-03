@@ -32041,7 +32041,7 @@ const levelList = {
         level.customTopLayer = () => { };
         spawn.mapRect(1600, -325, 75, 75);
         spawn.mapRect(1025, -375, 25, 25);
-        spawn.mapRect(1025, -525, 25, 250);
+        spawn.mapRect(1025, -525, 25, 225);
         spawn.mapRect(1175, 25, 200, 25);
         spawn.mapRect(1625, -350, 25, 25);
         spawn.mapRect(1600, -350, 75, 100);
