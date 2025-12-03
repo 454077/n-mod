@@ -2045,7 +2045,7 @@ constructMouseDownPosition: {
   y: 0
 },
 constructMapString: [],
-autoCopyConstructionOutput: false,
+autoCopyConstructOutput: false,
 constructCycle() {
   if (simulation.isConstructionMode && simulation.constructMouseDownPosition) {
     function round(num, round = 25) {
@@ -2173,7 +2173,7 @@ outputMapString(string) {
     outHTML += "<div>" + simulation.constructMapString[i] + "</div>"
   }
   console.log(out)
-  if (simulation.autoCopyConstructionOutput) {
+  if (simulation.autoCopyConstructOutput) {
     navigator.clipboard.writeText(out).then(function () {
     /* clipboard successfully set */
     }, function () {
