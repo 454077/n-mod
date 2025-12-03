@@ -25,8 +25,8 @@ const level = {
                      "harpoon"],
     removedCommunityLevels: ["lock", "reservoir", "interferometer", "diamagnetism", "run", "biohazard", "stereoMadness",
 		"yingYang", "staircase", "buttonbutton", "downpour", "underpass", "cantilever", "shipwreck",
-		"unchartedCave", "dojo", "arena", "flappyGon", "rings", "trial", "soft", "movers", "descent", "split",
-		"boundary", "bifurcate"],
+		"unchartedCave", "dojo", "arena", "flappyGon", "rings", "trial", "soft", "movers", "gettingOverIt",
+        "movementTech", "descent", "split", "boundary", "bifurcate"],
     levels: [],
     start() {
         if (level.levelsCleared === 0) { //this code only runs on the first level
