@@ -1,0 +1,8 @@
+************************************************ TODO ******************************************
+•Integrate sword, scythe, spear, sniper shells, and MRFF as their own bullets, rather than being defined in their respective guns
+•Fix Genisis (arena boss) immunity bug
+•HEAVILY nerf MRFF damage (bc right now, it one-taps everything [except Genisis, see above] even if target is shielded and/or immune)
+•Fix coupling effect for Einsteins shield (or maybe change it entirely)
+•Add bossbar for boundaryBoss
+•Add localSettings saving, loading, and clearing
+•Add chat menu
