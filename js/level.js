@@ -991,8 +991,9 @@ const level = {
                 player.position.y < level.exit.y - 0 &&
                 player.velocity.y < 0.15
             ) {
-                // level.exitCount += input.down ? 8 : 2
-                level.exitCount += m.health < 0 ? 0.5 : 3
+                let countDelta = (m.health < 0 ? 0.5 : 3)
+                countDelta *= (m.crouch && input.down ? 2 : 1)
+                level.exitCount += countDelta
             } else if (level.exitCount > 0) {
                 level.exitCount -= 3
             }

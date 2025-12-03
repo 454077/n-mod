@@ -110,7 +110,9 @@ try {
       if (i < jsSrcs.length) { //load each .js file
         let tag = document.createElement('script'), obj = jsSrcs[i]
         tag.src = obj.src
-        tag.onerror = () => { errors.push(obj) }
+        tag.onerror = () => { //check for syntax errors
+          errors.push(obj)
+        }
         setTimeout(() => {
           document.body.append(tag);
         }, 250)
@@ -316,7 +318,7 @@ try {
             })*/
             
           }
-        }, 500 * Object.values(fileLoads).length); //ensure .js files are loaded BEFORE attempting error check
+        }, 250 * Object.values(fileLoads).length + 100); //ensure .js files are loaded BEFORE attempting error check
       }
     }
     fileLoads.isFileTesterJS = true
@@ -330,28 +332,28 @@ try {
 }
 /*
 
-    **************************************************************************************************
-    **************************************************************************************************
-    ********************************************  NOTES  *********************************************
-    **************************************************************************************************
-    **************************************************************************************************
+  **************************************************************************************************
+  **************************************************************************************************
+  ********************************************  NOTES  *********************************************
+  **************************************************************************************************
+  **************************************************************************************************
 
 
 	I wrote this file because previously, I kept accidentally overwriting the wrong .js file after making changes to the code.
 	And when I went to test the changes made (by refreshing the index.html page in my browser, so n-gon could recognize that
 	there were any changes in its code) I wouldn't know that I had saved my changes to the wrong file, until I tried running the
 	game and discovered that it wouldn't run. To fix this, I decided to engineer a way for the game to attempt to load its .js
-    files, see what code it's missing, and, if it detects that it's missing some of its functional code, overwrite the document
-    with an error report containing the locations of the faulty/undefined files. After a couple days of testing, debugging,
-    rinse and repeat, it was done. My file tester was working. Now, whenever I save changes for one file, but overwrite another
-    file with them, the game will tell me that not only I have overwritten the wrong file, but also what files are faulty.
+  files, see what code it's missing, and, if it detects that it's missing some of its functional code, overwrite the document
+  with an error report containing the locations of the faulty/undefined files. After a couple days of testing, debugging,
+  rinse and repeat, it was done. My file tester was working. Now, whenever I save changes for one file, but overwrite another
+  file with them, the game will tell me that not only I have overwritten the wrong file, but also what files are faulty.
 
-    An unintended side effect of this is that it will also throw the report if there are syntax errors in any of the files.
-    Not only that, it will also correctly identify the files that have syntax errors. (although it will not say what, or where in
-    the file, the syntax errors are)
+  This file will also throw the report if there are syntax errors in any of the files.
+  Not only that, it will also correctly identify the files that have syntax errors. (although it will not say what, or where in
+  the file, the syntax errors are)
 
-    Let me know what you think! :)
+  Let me know what you think! :)
 
-    	-R3d5t0n3_GUY
+    -R3d5t0n3_GUY
 
 */    
