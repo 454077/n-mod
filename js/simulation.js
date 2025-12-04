@@ -1067,6 +1067,7 @@ startGame(isBuildRun = false, isTrainingRun = false) {
           }
         if (tech.relayIce && tech.isFlipFlopOn) {
           for (let j = 0; j < tech.relayIce; j++) {
+            m.fieldUpgrades[4].endoThermic(0.6)
             for (let i = 0, len = 3 + Math.ceil(9 * Math.random()); i < len; i++) b.iceIX(2)
           }
         }

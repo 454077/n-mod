@@ -10859,6 +10859,7 @@ const tech = {
                 m.buttonCD_jump = m.cycle; //can't jump again until 20 cycles pass
                 Matter.Body.setVelocity(player, { x: player.velocity.x + horizontalVelocity, y: -7.5 + 0.25 * player.velocity.y });
                 player.force.y = -m.jumpForce; //player jump force
+                 m.fieldUpgrades[4].endoThermic(0.6)
               }
             },
           })
@@ -13856,6 +13857,7 @@ const tech = {
               y: m.pos.y - 40
             }
             b.missile(where, -Math.PI / 2 + 0.2 * (Math.random() - 0.5) * Math.sqrt(tech.missileCount), -2)
+            m.fieldUpgrades[4].endoThermic(0.6)
           }, i * 1000);
         }
       },
@@ -13885,6 +13887,7 @@ const tech = {
               x: who.velocity.x * 0.1,
               y: who.velocity.y * 0.1
             });
+            m.fieldUpgrades[4].endoThermic(0.6)
           }
         }, 2000);
       },

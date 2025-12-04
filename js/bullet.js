@@ -3452,6 +3452,7 @@ const b = {
             })
             if (found && m.energy > 0.041) {
               m.energy -= 0.04
+              m.fieldUpgrades[4].endoThermic(0.4)
               //remove the body and spawn a new drone
               Composite.remove(engine.world, found)
               body.splice(body.indexOf(found), 1)
@@ -3702,6 +3703,7 @@ const b = {
             })
             if (found && m.energy > 0.091) {
               m.energy -= 0.09
+              m.fieldUpgrades[4].endoThermic(0.7)
               //remove the body and spawn a new drone
               Composite.remove(engine.world, found)
               body.splice(body.indexOf(found), 1)
