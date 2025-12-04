@@ -1,6 +1,9 @@
 {
     "recommendations": [
         "ttoowa.in-your-face-incredible",
-        "adamraichu.font-viewer"
-    ],
+        "adamraichu.font-viewer",
+        "a5hk.tabulate",
+        "zainchen.json",
+        "davidhouchin.whitespace-plus"
+    ]
 }

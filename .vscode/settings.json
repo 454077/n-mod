@@ -1,8 +1,23 @@
 {
+    "git.enableSmartCommit": true,
     "fontViewer.characterList": [
-        "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ",
         "1!2@3#4$5%6^7&8*9(0)-_=+[{]}\\|,<.>/?",
         "áÁ©¢ðÐéÉíÍœŒøØµñÑóÓöÖäÄ®ß§þÞúÚåÅüÜæÆ",
         "¡²³¤€¼½¾‘’¥×¹˝¯£¸^̛˛˘°÷×«“”»\\¶°’”çÇ˙ˇ¿"
-    ]
+    ],
+    "ShortcutMenuBar.openSettings": true,
+    "ShortcutMenuBar.showCommands": true,
+    "whitespacepp.textEOF": "🏁",
+    "whitespacepp.foreColorEOF": "#0080807F",
+    "ShortcutMenuBar.navigateBack": false,
+    "ShortcutMenuBar.navigateForward": false,
+    "ShortcutMenuBar.openFilesList": false,
+    "ShortcutMenuBar.startDebugging": true,
+    "ShortcutMenuBar.toggleRenderWhitespace": true,
+    "editor.renderWhitespace": "none",
+    "ShortcutMenuBar.commentLine": true,
+    "htmlcharacterconverter.overrides": {
+        "\n": "<br>"
+    }
 }
