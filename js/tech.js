@@ -7117,7 +7117,8 @@ const tech = {
         return !tech.isImmuneExplosion && (build.isExperimentSelection || powerUps.research.count > 1) &&
           (tech.haveGunCheck("missiles") || (m.fieldMode === 4 && simulation.molecularMode === 1) || tech.isExplodeMob ||
            tech.missileBotCount > 0 || tech.isIncendiary || tech.isPulseLaser || tech.isTokamak || tech.isFoamExplode ||
-           (tech.haveGunCheck("grenades") && !tech.isNeutronBomb) || (tech.haveGunCheck("sniper") && tech.isExplodeSnipe))
+           (tech.haveGunCheck("grenades") && !tech.isNeutronBomb) || (tech.haveGunCheck("sniper") && tech.isExplodeSnipe) ||
+           tech.isPowerUpsVanish)
       },
       requires: "an explosive damage source, not rocket propelled grenade, neutron bomb",
       effect() {
