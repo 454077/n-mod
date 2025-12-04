@@ -10901,11 +10901,10 @@ const tech = {
       count: 0,
       frequency: 2,
       frequencyDefault: 2,
-      isWIP: true,
       allowed() {
-        return m.fieldMode === 4
+        return m.fieldMode === 4 || tech.relayIce > 0 || tech.isPrinter
       },
-      requires: "molecular assembler, pilot wave, standing wave",
+      requires: "molecular assembler, printer, relay ice",
       effect() {
         tech.isEndothermic = true
       },
