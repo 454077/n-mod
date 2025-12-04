@@ -10902,9 +10902,9 @@ const tech = {
       frequency: 2,
       frequencyDefault: 2,
       allowed() {
-        return m.fieldMode === 4 || tech.relayIce > 0 || tech.isPrinter
+        return m.fieldMode === 4 || tech.relayIce > 0 || tech.isPrinter || tech.isBlockJump
       },
-      requires: "molecular assembler, printer, relay ice",
+      requires: "molecular assembler, printer, relay ice, or working mass",
       effect() {
         tech.isEndothermic = true
       },
@@ -14855,6 +14855,7 @@ const tech = {
   isFarAwayDmg: null,
   isFirstDer: null,
   isMassEnergy: null,
+  isEndothermic: null,
   extraChoices: null,
   laserBotCount: null,
   dynamoBotCount: null,
