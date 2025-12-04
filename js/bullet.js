@@ -294,7 +294,7 @@ const b = {
     if (tech.isFireRateForGuns) b.fireCDscale *= Math.pow(0.76923, Math.max(0, b.inventory.length - 1))
     if (tech.isFireMoveLock) b.fireCDscale *= 0.25
     for (let i = 0, len = tech.tech.length; i < len; i++) {
-      if ((tech.tech[i].name === "Lorentz transformation") && tech.isFastTime){
+      if ((tech.tech[i].name === "Lorentz transformation") && tech.isFastTime) {
         b.fireCDscale *= 0.66;
         let lvl = tech.tech[i].count;
         b.fireCDscale *= 0.66 ** lvl;
@@ -595,11 +595,11 @@ const b = {
       x: where.x + 20 * Math.cos(angle),
       y: where.y + 20 * Math.sin(angle)
     },
-                  {
-                    x: where.x + range * Math.cos(angle),
-                    y: where.y + range * Math.sin(angle)
-                  }
-                 ];
+    {
+      x: where.x + range * Math.cos(angle),
+      y: where.y + range * Math.sin(angle)
+    }
+    ];
     //check for collisions
     best = {
       x: null,
@@ -1449,387 +1449,387 @@ const b = {
       index: 4,
       isInternal: false
     }],
-                                     {
-      angle: angle,
-      friction: 1,
-      frictionAir: 0.4,
-      thrustMag: 0.17,
-      dmg: 7, //damage done in addition to the damage from momentum
-      classType: "bullet",
-      endCycle: simulation.cycle + 70,
-      isSlowPull: false,
-      drawStringControlMagnitude: 1000 + 1000 * Math.random(),
-      drawStringFlip: (Math.round(Math.random()) ? 1 : -1),
-      attached: false,
-      glowColor: tech.hookNails ? "rgba(200,0,0,0.07)" : tech.isHarmReduce ? "rgba(50,100,255,0.1)" : "rgba(0,200,255,0.07)",
-      collisionFilter: {
-        category: cat.bullet,
-        mask: tech.isShieldPierce ? cat.body | cat.mob | cat.mobBullet : cat.body | cat.mob | cat.mobBullet | cat.mobShield,
-      },
-      minDmgSpeed: 4,
-      // lookFrequency: Math.floor(7 + Math.random() * 3),
-      density: 0.004, //0.001 is normal for blocks,  0.004 is normal for harpoon
-      drain: 0.001,
-      powerUpDamage: tech.isHarpoonPowerUp && simulation.cycle - 480 < tech.harpoonPowerUpCycle,
-      draw() {
-        // draw rope
-        const where = { x: m.pos.x + 30 * Math.cos(m.angle), y: m.pos.y + 30 * Math.sin(m.angle) }
-        const sub = Vector.sub(where, this.vertices[0])
-        ctx.strokeStyle = "#000" // "#0ce"
-        ctx.lineWidth = 0.5
-        ctx.beginPath();
-        ctx.moveTo(where.x, where.y);
-        if (this.attached) {
-          const controlPoint = Vector.add(where, Vector.mult(sub, -0.5))
-          ctx.quadraticCurveTo(controlPoint.x, controlPoint.y, this.vertices[0].x, this.vertices[0].y)
-        } else {
-          const long = Math.max(Vector.magnitude(sub), 60)
-          const perpendicular = Vector.mult(Vector.normalise(Vector.perp(sub)), this.drawStringFlip * Math.min(0.7 * long, 10 + this.drawStringControlMagnitude / (10 + Vector.magnitude(sub))))
-          const controlPoint = Vector.add(Vector.add(where, Vector.mult(sub, -0.5)), perpendicular)
-          ctx.quadraticCurveTo(controlPoint.x, controlPoint.y, this.vertices[0].x, this.vertices[0].y)
-        }
-        // ctx.lineTo(this.vertices[0].x, this.vertices[0].y);
-        // ctx.stroke();
-        ctx.strokeStyle = this.glowColor // "#0ce"
-        ctx.lineWidth = 10
-        ctx.stroke();
-        ctx.strokeStyle = "#000" // "#0ce"
-        ctx.lineWidth = 0.5
-        ctx.stroke();
-
-        if (this.powerUpDamage) {
+      {
+        angle: angle,
+        friction: 1,
+        frictionAir: 0.4,
+        thrustMag: 0.17,
+        dmg: 7, //damage done in addition to the damage from momentum
+        classType: "bullet",
+        endCycle: simulation.cycle + 70,
+        isSlowPull: false,
+        drawStringControlMagnitude: 1000 + 1000 * Math.random(),
+        drawStringFlip: (Math.round(Math.random()) ? 1 : -1),
+        attached: false,
+        glowColor: tech.hookNails ? "rgba(200,0,0,0.07)" : tech.isHarmReduce ? "rgba(50,100,255,0.1)" : "rgba(0,200,255,0.07)",
+        collisionFilter: {
+          category: cat.bullet,
+          mask: tech.isShieldPierce ? cat.body | cat.mob | cat.mobBullet : cat.body | cat.mob | cat.mobBullet | cat.mobShield,
+        },
+        minDmgSpeed: 4,
+        // lookFrequency: Math.floor(7 + Math.random() * 3),
+        density: 0.004, //0.001 is normal for blocks,  0.004 is normal for harpoon
+        drain: 0.001,
+        powerUpDamage: tech.isHarpoonPowerUp && simulation.cycle - 480 < tech.harpoonPowerUpCycle,
+        draw() {
+          // draw rope
+          const where = { x: m.pos.x + 30 * Math.cos(m.angle), y: m.pos.y + 30 * Math.sin(m.angle) }
+          const sub = Vector.sub(where, this.vertices[0])
+          ctx.strokeStyle = "#000" // "#0ce"
+          ctx.lineWidth = 0.5
           ctx.beginPath();
-          ctx.moveTo(this.vertices[0].x, this.vertices[0].y);
-          ctx.lineTo(this.vertices[1].x, this.vertices[1].y);
-          ctx.lineTo(this.vertices[2].x, this.vertices[2].y);
-          ctx.lineTo(this.vertices[3].x, this.vertices[3].y);
-          ctx.lineTo(this.vertices[4].x, this.vertices[4].y);
-          ctx.lineJoin = "miter"
-          ctx.miterLimit = 30;
-          ctx.lineWidth = 25;
-          ctx.strokeStyle = "rgba(0,255,255,0.4)";
-          ctx.stroke();
-          ctx.lineWidth = 8;
-          ctx.strokeStyle = "rgb(0,255,255)";
-          ctx.stroke();
-          ctx.lineJoin = "round"
-          ctx.miterLimit = 5
-          ctx.fillStyle = "#000"
-          ctx.fill();
-        }
-        //draw hook
-        ctx.beginPath();
-        ctx.lineTo(this.vertices[0].x, this.vertices[0].y);
-        const spike = Vector.add(this.vertices[3], Vector.mult(Vector.sub(this.vertices[3], this.vertices[2]), 2))
-        ctx.moveTo(this.vertices[2].x, this.vertices[2].y);
-        ctx.lineTo(spike.x, spike.y);
-        ctx.lineTo(this.vertices[1].x, this.vertices[1].y);
-        ctx.fillStyle = '#000'
-        ctx.fill();
-      },
-      beforeDmg(who) {
-        if (tech.isShieldPierce && who.isShielded) { //disable shields
-          who.isShielded = false
-          requestAnimationFrame(() => { who.isShielded = true });
-        }
-        if (m.fieldCDcycle < m.cycle + 30) m.fieldCDcycle = m.cycle + 30  //extra long cooldown on hitting mobs
-        if (tech.hookNails) {
-          // if (m.immuneCycle < m.cycle + m.collisionImmuneCycles) m.immuneCycle = m.cycle + 5; //player is immune to damage for 5 cycles
-          // b.explosion(this.position, 300 + 150 * Math.random()); //makes bullet do explosive damage at end
-          b.targetedNail(this.position, tech.hookNails)
-          const ANGLE = 2 * Math.PI * Math.random() //make a few random ones
-          for (let i = 0; i < 4; i++) b.nail(this.position, { x: 10.5 * Math.cos(ANGLE), y: 10.5 * Math.sin(ANGLE) }, 1.2)
-        }
-        // if (this.powerUpDamage) this.density = 2 * 0.004 //double damage after pick up power up for 8 seconds
-
-
-        if (tech.isHarpoonPowerUp && simulation.cycle - 480 < tech.harpoonPowerUpCycle) {
-          Matter.Body.setDensity(this, 1.8 * 0.004); //+90% damage after pick up power up for 8 seconds
-        } else if (tech.isHarpoonFullHealth && who.health === 1) {
-          Matter.Body.setDensity(this, 2.11 * 0.004); //+90% damage if mob has full health do
-          simulation.ephemera.push({
-            name: "grapple outline",
-            count: 3, //cycles before it self removes
-            vertices: this.vertices,
-            do() {
-              this.count--
-              if (this.count < 0) simulation.removeEphemera(this.name)
-
-              ctx.beginPath();
-              ctx.moveTo(this.vertices[0].x, this.vertices[0].y);
-              for (let j = 1, len = this.vertices.length; j < len; j += 1) ctx.lineTo(this.vertices[j].x, this.vertices[j].y);
-              ctx.lineTo(this.vertices[0].x, this.vertices[0].y);
-              ctx.lineJoin = "miter"
-              ctx.miterLimit = 20;
-              ctx.lineWidth = 40;
-              ctx.strokeStyle = "rgba(255,0,100,0.35)";
-              ctx.stroke();
-              ctx.lineWidth = 10;
-              ctx.strokeStyle = `#f07`;
-              ctx.stroke();
-              ctx.lineJoin = "round"
-              ctx.miterLimit = 5
-              ctx.fillStyle = "#000"
-              ctx.fill();
-            },
-          })
-        }
-
-
-        this.retract()
-      },
-      caughtPowerUp: null,
-      dropCaughtPowerUp() {
-        if (this.caughtPowerUp) {
-          this.caughtPowerUp.collisionFilter.category = cat.powerUp
-          this.caughtPowerUp.collisionFilter.mask = cat.map | cat.powerUp
-          this.caughtPowerUp = null
-        }
-      },
-      onEnd() {
-        if (this.caughtPowerUp && !simulation.isChoosing && (this.caughtPowerUp.name !== "heal" || m.health !== m.maxHealth || tech.isOverHeal)) {
-          let index = null //find index
-          for (let i = 0, len = powerUp.length; i < len; ++i) {
-            if (powerUp[i] === this.caughtPowerUp) index = i
+          ctx.moveTo(where.x, where.y);
+          if (this.attached) {
+            const controlPoint = Vector.add(where, Vector.mult(sub, -0.5))
+            ctx.quadraticCurveTo(controlPoint.x, controlPoint.y, this.vertices[0].x, this.vertices[0].y)
+          } else {
+            const long = Math.max(Vector.magnitude(sub), 60)
+            const perpendicular = Vector.mult(Vector.normalise(Vector.perp(sub)), this.drawStringFlip * Math.min(0.7 * long, 10 + this.drawStringControlMagnitude / (10 + Vector.magnitude(sub))))
+            const controlPoint = Vector.add(Vector.add(where, Vector.mult(sub, -0.5)), perpendicular)
+            ctx.quadraticCurveTo(controlPoint.x, controlPoint.y, this.vertices[0].x, this.vertices[0].y)
           }
-          if (index !== null) {
-            powerUps.onPickUp(this.caughtPowerUp);
-            this.caughtPowerUp.effect();
-            Matter.Composite.remove(engine.world, this.caughtPowerUp);
-            powerUp.splice(index, 1);
-            if (tech.isHarpoonPowerUp) tech.harpoonPowerUpCycle = simulation.cycle
+          // ctx.lineTo(this.vertices[0].x, this.vertices[0].y);
+          // ctx.stroke();
+          ctx.strokeStyle = this.glowColor // "#0ce"
+          ctx.lineWidth = 10
+          ctx.stroke();
+          ctx.strokeStyle = "#000" // "#0ce"
+          ctx.lineWidth = 0.5
+          ctx.stroke();
+
+          if (this.powerUpDamage) {
+            ctx.beginPath();
+            ctx.moveTo(this.vertices[0].x, this.vertices[0].y);
+            ctx.lineTo(this.vertices[1].x, this.vertices[1].y);
+            ctx.lineTo(this.vertices[2].x, this.vertices[2].y);
+            ctx.lineTo(this.vertices[3].x, this.vertices[3].y);
+            ctx.lineTo(this.vertices[4].x, this.vertices[4].y);
+            ctx.lineJoin = "miter"
+            ctx.miterLimit = 30;
+            ctx.lineWidth = 25;
+            ctx.strokeStyle = "rgba(0,255,255,0.4)";
+            ctx.stroke();
+            ctx.lineWidth = 8;
+            ctx.strokeStyle = "rgb(0,255,255)";
+            ctx.stroke();
+            ctx.lineJoin = "round"
+            ctx.miterLimit = 5
+            ctx.fillStyle = "#000"
+            ctx.fill();
+          }
+          //draw hook
+          ctx.beginPath();
+          ctx.lineTo(this.vertices[0].x, this.vertices[0].y);
+          const spike = Vector.add(this.vertices[3], Vector.mult(Vector.sub(this.vertices[3], this.vertices[2]), 2))
+          ctx.moveTo(this.vertices[2].x, this.vertices[2].y);
+          ctx.lineTo(spike.x, spike.y);
+          ctx.lineTo(this.vertices[1].x, this.vertices[1].y);
+          ctx.fillStyle = '#000'
+          ctx.fill();
+        },
+        beforeDmg(who) {
+          if (tech.isShieldPierce && who.isShielded) { //disable shields
+            who.isShielded = false
+            requestAnimationFrame(() => { who.isShielded = true });
+          }
+          if (m.fieldCDcycle < m.cycle + 30) m.fieldCDcycle = m.cycle + 30  //extra long cooldown on hitting mobs
+          if (tech.hookNails) {
+            // if (m.immuneCycle < m.cycle + m.collisionImmuneCycles) m.immuneCycle = m.cycle + 5; //player is immune to damage for 5 cycles
+            // b.explosion(this.position, 300 + 150 * Math.random()); //makes bullet do explosive damage at end
+            b.targetedNail(this.position, tech.hookNails)
+            const ANGLE = 2 * Math.PI * Math.random() //make a few random ones
+            for (let i = 0; i < 4; i++) b.nail(this.position, { x: 10.5 * Math.cos(ANGLE), y: 10.5 * Math.sin(ANGLE) }, 1.2)
+          }
+          // if (this.powerUpDamage) this.density = 2 * 0.004 //double damage after pick up power up for 8 seconds
+
+
+          if (tech.isHarpoonPowerUp && simulation.cycle - 480 < tech.harpoonPowerUpCycle) {
+            Matter.Body.setDensity(this, 1.8 * 0.004); //+90% damage after pick up power up for 8 seconds
+          } else if (tech.isHarpoonFullHealth && who.health === 1) {
+            Matter.Body.setDensity(this, 2.11 * 0.004); //+90% damage if mob has full health do
+            simulation.ephemera.push({
+              name: "grapple outline",
+              count: 3, //cycles before it self removes
+              vertices: this.vertices,
+              do() {
+                this.count--
+                if (this.count < 0) simulation.removeEphemera(this.name)
+
+                ctx.beginPath();
+                ctx.moveTo(this.vertices[0].x, this.vertices[0].y);
+                for (let j = 1, len = this.vertices.length; j < len; j += 1) ctx.lineTo(this.vertices[j].x, this.vertices[j].y);
+                ctx.lineTo(this.vertices[0].x, this.vertices[0].y);
+                ctx.lineJoin = "miter"
+                ctx.miterLimit = 20;
+                ctx.lineWidth = 40;
+                ctx.strokeStyle = "rgba(255,0,100,0.35)";
+                ctx.stroke();
+                ctx.lineWidth = 10;
+                ctx.strokeStyle = `#f07`;
+                ctx.stroke();
+                ctx.lineJoin = "round"
+                ctx.miterLimit = 5
+                ctx.fillStyle = "#000"
+                ctx.fill();
+              },
+            })
+          }
+
+
+          this.retract()
+        },
+        caughtPowerUp: null,
+        dropCaughtPowerUp() {
+          if (this.caughtPowerUp) {
+            this.caughtPowerUp.collisionFilter.category = cat.powerUp
+            this.caughtPowerUp.collisionFilter.mask = cat.map | cat.powerUp
+            this.caughtPowerUp = null
+          }
+        },
+        onEnd() {
+          if (this.caughtPowerUp && !simulation.isChoosing && (this.caughtPowerUp.name !== "heal" || m.health !== m.maxHealth || tech.isOverHeal)) {
+            let index = null //find index
+            for (let i = 0, len = powerUp.length; i < len; ++i) {
+              if (powerUp[i] === this.caughtPowerUp) index = i
+            }
+            if (index !== null) {
+              powerUps.onPickUp(this.caughtPowerUp);
+              this.caughtPowerUp.effect();
+              Matter.Composite.remove(engine.world, this.caughtPowerUp);
+              powerUp.splice(index, 1);
+              if (tech.isHarpoonPowerUp) tech.harpoonPowerUpCycle = simulation.cycle
+            } else {
+              this.dropCaughtPowerUp()
+            }
           } else {
             this.dropCaughtPowerUp()
           }
-        } else {
-          this.dropCaughtPowerUp()
-        }
-      },
-      retract() {
-        this.attached = false
-        this.do = this.returnToPlayer
-        this.endCycle = simulation.cycle + 60
-        Matter.Body.setDensity(this, 0.0005); //reduce density on return
-        if (this.angularSpeed < 0.5) this.torque += this.inertia * 0.001 * (Math.random() - 0.5) //(Math.round(Math.random()) ? 1 : -1)
-        this.collisionFilter.mask = 0//cat.map | cat.mob | cat.mobBullet | cat.mobShield // | cat.body
-        //recoil on pulling grapple back
-        // if (this.pickUpTarget.mass) console.log(this.pickUpTarget.mass)
-        const mag = this.pickUpTarget ? Math.min(5, Math.max(this.pickUpTarget.mass, 0.5)) : 0.5
-        const unit = Vector.normalise(Vector.sub(this.position, m.pos))
-        const momentum = Vector.mult(unit, mag * (m.crouch ? 0.1 : 0.2))
-        player.force.x += momentum.x
-        player.force.y += momentum.y
-      },
-      returnToPlayer() {
-        if (m.fieldCDcycle < m.cycle + 5) m.fieldCDcycle = m.cycle + 5
-        if (Vector.magnitude(Vector.sub(this.position, m.pos)) < returnRadius) { //near player
-          this.endCycle = 0;
-
-          //recoil on catching grapple
-          // const momentum = Vector.mult(Vector.sub(this.velocity, player.velocity), (m.crouch ? 0.0001 : 0.0002))
-          const unit = Vector.normalise(Vector.sub(this.velocity, player.velocity))
-          const momentum = Vector.mult(unit, (m.crouch ? 0.0001 : 0.0002))
+        },
+        retract() {
+          this.attached = false
+          this.do = this.returnToPlayer
+          this.endCycle = simulation.cycle + 60
+          Matter.Body.setDensity(this, 0.0005); //reduce density on return
+          if (this.angularSpeed < 0.5) this.torque += this.inertia * 0.001 * (Math.random() - 0.5) //(Math.round(Math.random()) ? 1 : -1)
+          this.collisionFilter.mask = 0//cat.map | cat.mob | cat.mobBullet | cat.mobShield // | cat.body
+          //recoil on pulling grapple back
+          // if (this.pickUpTarget.mass) console.log(this.pickUpTarget.mass)
+          const mag = this.pickUpTarget ? Math.min(5, Math.max(this.pickUpTarget.mass, 0.5)) : 0.5
+          const unit = Vector.normalise(Vector.sub(this.position, m.pos))
+          const momentum = Vector.mult(unit, mag * (m.crouch ? 0.1 : 0.2))
           player.force.x += momentum.x
           player.force.y += momentum.y
-          if (this.pickUpTarget) {
-            if (tech.isReel && this.blockDist > 150) {
-              // console.log(0.0003 * Math.min(this.blockDist, 1000))
-              m.energy += 0.00113 * Math.min(this.blockDist, 800) * level.isReducedRegen //max 0.352 energy
-              simulation.drawList.push({ //add dmg to draw queue
-                x: m.pos.x,
-                y: m.pos.y,
-                radius: 10,
-                color: m.fieldMeterColor,
-                time: simulation.drawTime
-              });
-            }
-            m.holdingTarget = this.pickUpTarget
-            // give block to player after it returns
-            m.isHolding = true;
-            //conserve momentum when player mass changes
-            const blockMass = Math.min(5, this.pickUpTarget.mass)
-            const grappleMomentum = Vector.mult(Vector.normalise(this.velocity), 15 * blockMass)
-            const playerMomentum = Vector.mult(player.velocity, player.mass)
-            totalMomentum = Vector.add(playerMomentum, grappleMomentum)
-            Matter.Body.setVelocity(player, Vector.mult(totalMomentum, 1 / (m.defaultMass + blockMass)));
+        },
+        returnToPlayer() {
+          if (m.fieldCDcycle < m.cycle + 5) m.fieldCDcycle = m.cycle + 5
+          if (Vector.magnitude(Vector.sub(this.position, m.pos)) < returnRadius) { //near player
+            this.endCycle = 0;
 
-            m.definePlayerMass(m.defaultMass + this.pickUpTarget.mass * m.holdingMassScale)
-            //make block collide with nothing
-            m.holdingTarget.collisionFilter.category = 0;
-            m.holdingTarget.collisionFilter.mask = 0;
-            this.pickUpTarget = null
+            //recoil on catching grapple
+            // const momentum = Vector.mult(Vector.sub(this.velocity, player.velocity), (m.crouch ? 0.0001 : 0.0002))
+            const unit = Vector.normalise(Vector.sub(this.velocity, player.velocity))
+            const momentum = Vector.mult(unit, (m.crouch ? 0.0001 : 0.0002))
+            player.force.x += momentum.x
+            player.force.y += momentum.y
+            if (this.pickUpTarget) {
+              if (tech.isReel && this.blockDist > 150) {
+                // console.log(0.0003 * Math.min(this.blockDist, 1000))
+                m.energy += 0.00113 * Math.min(this.blockDist, 800) * level.isReducedRegen //max 0.352 energy
+                simulation.drawList.push({ //add dmg to draw queue
+                  x: m.pos.x,
+                  y: m.pos.y,
+                  radius: 10,
+                  color: m.fieldMeterColor,
+                  time: simulation.drawTime
+                });
+              }
+              m.holdingTarget = this.pickUpTarget
+              // give block to player after it returns
+              m.isHolding = true;
+              //conserve momentum when player mass changes
+              const blockMass = Math.min(5, this.pickUpTarget.mass)
+              const grappleMomentum = Vector.mult(Vector.normalise(this.velocity), 15 * blockMass)
+              const playerMomentum = Vector.mult(player.velocity, player.mass)
+              totalMomentum = Vector.add(playerMomentum, grappleMomentum)
+              Matter.Body.setVelocity(player, Vector.mult(totalMomentum, 1 / (m.defaultMass + blockMass)));
+
+              m.definePlayerMass(m.defaultMass + this.pickUpTarget.mass * m.holdingMassScale)
+              //make block collide with nothing
+              m.holdingTarget.collisionFilter.category = 0;
+              m.holdingTarget.collisionFilter.mask = 0;
+              this.pickUpTarget = null
+            }
+          } else {
+            if (m.energy > this.drain) m.energy -= this.drain
+            const sub = Vector.sub(this.position, m.pos)
+            const rangeScale = 1 + 0.000003 * Vector.magnitude(sub)  //return faster when far from player
+            const returnForce = Vector.mult(Vector.normalise(sub), rangeScale * this.thrustMag * this.mass)
+            this.force.x -= returnForce.x
+            this.force.y -= returnForce.y
+            this.grabPowerUp()
+            this.grabBlocks()
           }
-        } else {
-          if (m.energy > this.drain) m.energy -= this.drain
-          const sub = Vector.sub(this.position, m.pos)
-          const rangeScale = 1 + 0.000003 * Vector.magnitude(sub)  //return faster when far from player
-          const returnForce = Vector.mult(Vector.normalise(sub), rangeScale * this.thrustMag * this.mass)
-          this.force.x -= returnForce.x
-          this.force.y -= returnForce.y
-          this.grabPowerUp()
-          this.grabBlocks()
-        }
-        this.draw();
-      },
-      destroyBlocks() {//not used?
-        const blocks = Matter.Query.collides(this, body)
-        if (blocks.length && !blocks[0].bodyA.isNotHoldable) {
-          if (blocks[0].bodyA.mass > 2.5) this.retract()
-          const block = blocks[0].bodyA.vertices
-          Composite.remove(engine.world, blocks[0].bodyA)
-          body.splice(body.indexOf(blocks[0].bodyA), 1)
-          //animate the block fading away
-          simulation.ephemera.push({
-            name: "blockFadeOut",
-            count: 25, //cycles before it self removes
-            do() {
-              this.count--
-              if (this.count < 0) simulation.removeEphemera(this.name)
-              ctx.beginPath();
-              ctx.moveTo(block[0].x, block[0].y);
-              for (let j = 1; j < block.length; j++) ctx.lineTo(block[j].x, block[j].y);
-              ctx.lineTo(block[0].x, block[0].y);
-              ctx.lineWidth = 2;
-              ctx.strokeStyle = `rgba(0,0,0,${this.count / 25})`
-              ctx.stroke();
-            },
-          })
-        }
-      },
-      pickUpTarget: null,
-      grabBlocks() {
-        if (this.pickUpTarget) { //if always attached to a block
-          //position block on hook
-          Matter.Body.setPosition(this.pickUpTarget, Vector.add(this.vertices[2], this.velocity))
-          Matter.Body.setVelocity(this.pickUpTarget, { x: 0, y: 0 })
-        } else {
+          this.draw();
+        },
+        destroyBlocks() {//not used?
           const blocks = Matter.Query.collides(this, body)
-          if (blocks.length) {
-            for (let i = 0; i < blocks.length; i++) {
-              if (blocks[i].bodyA.classType === "body" && !blocks[i].bodyA.isNotHoldable && blocks[0].bodyA.mass < 40) {
-                this.retract()
-                if (tech.hookNails) {
-                  b.targetedNail(this.position, 3 * tech.hookNails)
-                  const ANGLE = 2 * Math.PI * Math.random() //make a few random ones
-                  for (let i = 0; i < 13; i++) b.nail(this.position, { x: 10.5 * Math.cos(ANGLE), y: 10.5 * Math.sin(ANGLE) }, 1.2)
+          if (blocks.length && !blocks[0].bodyA.isNotHoldable) {
+            if (blocks[0].bodyA.mass > 2.5) this.retract()
+            const block = blocks[0].bodyA.vertices
+            Composite.remove(engine.world, blocks[0].bodyA)
+            body.splice(body.indexOf(blocks[0].bodyA), 1)
+            //animate the block fading away
+            simulation.ephemera.push({
+              name: "blockFadeOut",
+              count: 25, //cycles before it self removes
+              do() {
+                this.count--
+                if (this.count < 0) simulation.removeEphemera(this.name)
+                ctx.beginPath();
+                ctx.moveTo(block[0].x, block[0].y);
+                for (let j = 1; j < block.length; j++) ctx.lineTo(block[j].x, block[j].y);
+                ctx.lineTo(block[0].x, block[0].y);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = `rgba(0,0,0,${this.count / 25})`
+                ctx.stroke();
+              },
+            })
+          }
+        },
+        pickUpTarget: null,
+        grabBlocks() {
+          if (this.pickUpTarget) { //if always attached to a block
+            //position block on hook
+            Matter.Body.setPosition(this.pickUpTarget, Vector.add(this.vertices[2], this.velocity))
+            Matter.Body.setVelocity(this.pickUpTarget, { x: 0, y: 0 })
+          } else {
+            const blocks = Matter.Query.collides(this, body)
+            if (blocks.length) {
+              for (let i = 0; i < blocks.length; i++) {
+                if (blocks[i].bodyA.classType === "body" && !blocks[i].bodyA.isNotHoldable && blocks[0].bodyA.mass < 40) {
+                  this.retract()
+                  if (tech.hookNails) {
+                    b.targetedNail(this.position, 3 * tech.hookNails)
+                    const ANGLE = 2 * Math.PI * Math.random() //make a few random ones
+                    for (let i = 0; i < 13; i++) b.nail(this.position, { x: 10.5 * Math.cos(ANGLE), y: 10.5 * Math.sin(ANGLE) }, 1.2)
 
-                  const blockVertices = blocks[i].bodyA.vertices
-                  Composite.remove(engine.world, blocks[i].bodyA)
-                  body.splice(body.indexOf(blocks[i].bodyA), 1)
-                  //animate the block fading away
-                  simulation.ephemera.push({
-                    name: "blockFadeOut",
-                    count: 25, //cycles before it self removes
-                    do() {
-                      this.count--
-                      if (this.count < 0) simulation.removeEphemera(this.name)
-                      ctx.beginPath();
-                      ctx.moveTo(blockVertices[0].x, blockVertices[0].y);
-                      for (let j = 1; j < blockVertices.length; j++) ctx.lineTo(blockVertices[j].x, blockVertices[j].y);
-                      ctx.lineTo(blockVertices[0].x, blockVertices[0].y);
-                      ctx.lineWidth = 2;
-                      ctx.strokeStyle = `rgba(0,0,0,${this.count / 25})`
-                      ctx.stroke();
-                    },
-                  })
+                    const blockVertices = blocks[i].bodyA.vertices
+                    Composite.remove(engine.world, blocks[i].bodyA)
+                    body.splice(body.indexOf(blocks[i].bodyA), 1)
+                    //animate the block fading away
+                    simulation.ephemera.push({
+                      name: "blockFadeOut",
+                      count: 25, //cycles before it self removes
+                      do() {
+                        this.count--
+                        if (this.count < 0) simulation.removeEphemera(this.name)
+                        ctx.beginPath();
+                        ctx.moveTo(blockVertices[0].x, blockVertices[0].y);
+                        for (let j = 1; j < blockVertices.length; j++) ctx.lineTo(blockVertices[j].x, blockVertices[j].y);
+                        ctx.lineTo(blockVertices[0].x, blockVertices[0].y);
+                        ctx.lineWidth = 2;
+                        ctx.strokeStyle = `rgba(0,0,0,${this.count / 25})`
+                        ctx.stroke();
+                      },
+                    })
+                  } else {
+                    this.pickUpTarget = blocks[i].bodyA
+                    this.blockDist = Vector.magnitude(Vector.sub(this.pickUpTarget.position, m.pos))
+                  }
+                }
+              }
+            }
+          }
+        },
+        grabPowerUp() { //grab power ups near the tip of the harpoon
+          if (this.caughtPowerUp) {
+            Matter.Body.setPosition(this.caughtPowerUp, Vector.add(this.vertices[2], this.velocity))
+            Matter.Body.setVelocity(this.caughtPowerUp, { x: 0, y: 0 })
+          } else {
+            for (let i = 0, len = powerUp.length; i < len; ++i) {
+              if (tech.isEnergyNoAmmo && powerUp[i].name === "ammo") continue
+              const radius = powerUp[i].circleRadius + 50
+              if (Vector.magnitudeSquared(Vector.sub(this.vertices[2], powerUp[i].position)) < radius * radius) {
+                if (powerUp[i].name !== "heal" || m.health !== m.maxHealth || tech.isOverHeal) {
+                  this.caughtPowerUp = powerUp[i]
+                  Matter.Body.setVelocity(powerUp[i], { x: 0, y: 0 })
+                  Matter.Body.setPosition(powerUp[i], this.vertices[2])
+                  powerUp[i].collisionFilter.category = 0
+                  powerUp[i].collisionFilter.mask = 0
+                  this.thrustMag *= 0.6
+                  this.endCycle += 0.5 //it pulls back slower, so this prevents it from ending early
+                  // this.retract()
+                  break //just pull 1 power up if possible
+                }
+              }
+            }
+          }
+          m.grabPowerUp();
+        },
+        do() {
+          if (m.fieldCDcycle < m.cycle + 5) m.fieldCDcycle = m.cycle + 5
+          if (input.field) {
+            this.grabBlocks()
+            this.grabPowerUp()
+          } else {
+            this.retract()
+          }
+          //grappling hook
+          if (input.field && Matter.Query.collides(this, map).length) {
+            Matter.Body.setPosition(this, Vector.add(this.position, { x: -20 * Math.cos(this.angle), y: -20 * Math.sin(this.angle) }))
+            if (Matter.Query.collides(this, map).length) {
+              if (tech.hookNails) {
+                b.targetedNail(this.position, tech.hookNails)
+                const ANGLE = 2 * Math.PI * Math.random() //make a few random ones
+                for (let i = 0; i < 4; i++) b.nail(this.position, { x: 10.5 * Math.cos(ANGLE), y: 10.5 * Math.sin(ANGLE) }, 1.2)
+
+              }
+              this.attached = true
+              Matter.Body.setVelocity(this, { x: 0, y: 0 });
+              Matter.Sleeping.set(this, true)
+              this.endCycle = simulation.cycle + 5
+              this.do = () => {
+                if (m.fieldCDcycle < m.cycle + 5) m.fieldCDcycle = m.cycle + 5
+                this.grabPowerUp()
+
+                //between player nose and the grapple
+                const sub = Vector.sub(this.vertices[0], { x: m.pos.x + 30 * Math.cos(m.angle), y: m.pos.y + 30 * Math.sin(m.angle) })
+                let dist = Vector.magnitude(sub)
+                if (input.field) {
+                  this.endCycle = simulation.cycle + 10
+                  if (input.down) { //down
+                    this.isSlowPull = true
+                    dist = 0
+                    player.force.y += 3 * player.mass * simulation.g; //adjust this to control fall rate while hooked and pressing down
+                  } else if (input.up) {
+                    this.isSlowPull = false
+                    player.force.y -= player.mass * simulation.g; //adjust this to control fall rate while hooked and pressing down
+                  }
+                  if (m.energy < this.drain) this.isSlowPull = true
+
+                  // pulling friction that allowed a slight swinging, but has high linear pull at short dist
+                  const drag = 1 - 30 / Math.min(Math.max(100, dist), 700) - 0.1 * (player.speed > 66)
+                  Matter.Body.setVelocity(player, { x: player.velocity.x * drag, y: player.velocity.y * drag });
+                  const pull = Vector.mult(Vector.normalise(sub), 0.0004 * Math.min(Math.max(15, dist), this.isSlowPull ? 70 : 200))
+                  //original pulling force with high friction and very linear pull
+                  // Matter.Body.setVelocity(player, { x: player.velocity.x * 0.85, y: player.velocity.y * 0.85 });
+                  // const pull = Vector.mult(Vector.normalise(sub), 0.0008 * Math.min(Math.max(15, dist), this.isSlowPull ? 100 : 200))
+                  player.force.x += pull.x
+                  player.force.y += pull.y
+                  if (dist > 500) m.energy -= this.drain
                 } else {
-                  this.pickUpTarget = blocks[i].bodyA
-                  this.blockDist = Vector.magnitude(Vector.sub(this.pickUpTarget.position, m.pos))
+                  Matter.Sleeping.set(this, false)
+                  this.retract()
                 }
+                this.draw();
               }
             }
           }
-        }
-      },
-      grabPowerUp() { //grab power ups near the tip of the harpoon
-        if (this.caughtPowerUp) {
-          Matter.Body.setPosition(this.caughtPowerUp, Vector.add(this.vertices[2], this.velocity))
-          Matter.Body.setVelocity(this.caughtPowerUp, { x: 0, y: 0 })
-        } else {
-          for (let i = 0, len = powerUp.length; i < len; ++i) {
-            if (tech.isEnergyNoAmmo && powerUp[i].name === "ammo") continue
-            const radius = powerUp[i].circleRadius + 50
-            if (Vector.magnitudeSquared(Vector.sub(this.vertices[2], powerUp[i].position)) < radius * radius) {
-              if (powerUp[i].name !== "heal" || m.health !== m.maxHealth || tech.isOverHeal) {
-                this.caughtPowerUp = powerUp[i]
-                Matter.Body.setVelocity(powerUp[i], { x: 0, y: 0 })
-                Matter.Body.setPosition(powerUp[i], this.vertices[2])
-                powerUp[i].collisionFilter.category = 0
-                powerUp[i].collisionFilter.mask = 0
-                this.thrustMag *= 0.6
-                this.endCycle += 0.5 //it pulls back slower, so this prevents it from ending early
-                // this.retract()
-                break //just pull 1 power up if possible
-              }
-            }
-          }
-        }
-        m.grabPowerUp();
-      },
-      do() {
-        if (m.fieldCDcycle < m.cycle + 5) m.fieldCDcycle = m.cycle + 5
-        if (input.field) {
-          this.grabBlocks()
-          this.grabPowerUp()
-        } else {
-          this.retract()
-        }
-        //grappling hook
-        if (input.field && Matter.Query.collides(this, map).length) {
-          Matter.Body.setPosition(this, Vector.add(this.position, { x: -20 * Math.cos(this.angle), y: -20 * Math.sin(this.angle) }))
-          if (Matter.Query.collides(this, map).length) {
-            if (tech.hookNails) {
-              b.targetedNail(this.position, tech.hookNails)
-              const ANGLE = 2 * Math.PI * Math.random() //make a few random ones
-              for (let i = 0; i < 4; i++) b.nail(this.position, { x: 10.5 * Math.cos(ANGLE), y: 10.5 * Math.sin(ANGLE) }, 1.2)
-
-            }
-            this.attached = true
-            Matter.Body.setVelocity(this, { x: 0, y: 0 });
-            Matter.Sleeping.set(this, true)
-            this.endCycle = simulation.cycle + 5
-            this.do = () => {
-              if (m.fieldCDcycle < m.cycle + 5) m.fieldCDcycle = m.cycle + 5
-              this.grabPowerUp()
-
-              //between player nose and the grapple
-              const sub = Vector.sub(this.vertices[0], { x: m.pos.x + 30 * Math.cos(m.angle), y: m.pos.y + 30 * Math.sin(m.angle) })
-              let dist = Vector.magnitude(sub)
-              if (input.field) {
-                this.endCycle = simulation.cycle + 10
-                if (input.down) { //down
-                  this.isSlowPull = true
-                  dist = 0
-                  player.force.y += 3 * player.mass * simulation.g; //adjust this to control fall rate while hooked and pressing down
-                } else if (input.up) {
-                  this.isSlowPull = false
-                  player.force.y -= player.mass * simulation.g; //adjust this to control fall rate while hooked and pressing down
-                }
-                if (m.energy < this.drain) this.isSlowPull = true
-
-                // pulling friction that allowed a slight swinging, but has high linear pull at short dist
-                const drag = 1 - 30 / Math.min(Math.max(100, dist), 700) - 0.1 * (player.speed > 66)
-                Matter.Body.setVelocity(player, { x: player.velocity.x * drag, y: player.velocity.y * drag });
-                const pull = Vector.mult(Vector.normalise(sub), 0.0004 * Math.min(Math.max(15, dist), this.isSlowPull ? 70 : 200))
-                //original pulling force with high friction and very linear pull
-                // Matter.Body.setVelocity(player, { x: player.velocity.x * 0.85, y: player.velocity.y * 0.85 });
-                // const pull = Vector.mult(Vector.normalise(sub), 0.0008 * Math.min(Math.max(15, dist), this.isSlowPull ? 100 : 200))
-                player.force.x += pull.x
-                player.force.y += pull.y
-                if (dist > 500) m.energy -= this.drain
-              } else {
-                Matter.Sleeping.set(this, false)
-                this.retract()
-              }
-              this.draw();
-            }
-          }
-        }
-        this.force.x += this.thrustMag * this.mass * Math.cos(this.angle);
-        this.force.y += this.thrustMag * this.mass * Math.sin(this.angle);
-        this.draw()
-      },
-    });
+          this.force.x += this.thrustMag * this.mass * Math.cos(this.angle);
+          this.force.y += this.thrustMag * this.mass * Math.sin(this.angle);
+          this.draw()
+        },
+      });
     Composite.add(engine.world, bullet[me]); //add bullet to world
     Matter.Body.setVelocity(bullet[me], player.velocity); //set velocity in direction of player
   },
@@ -2217,7 +2217,7 @@ const b = {
       minDmgSpeed: 10,
       lookFrequency: Math.floor(10 + Math.random() * 3),
       explodeRad: ((tech.isMissileBig ? 230 : 180) + 60 * Math.random()) *
-      (tech.isMissileBotUpgrade ? 2 ** tech.isMissileBotUpgrade : 1),
+        (tech.isMissileBotUpgrade ? 2 ** tech.isMissileBotUpgrade : 1),
       density: 0.02, //0.001 is normal
       beforeDmg() {
         Matter.Body.setDensity(this, 0.0001); //reduce density to normal
@@ -2328,8 +2328,8 @@ const b = {
 
         ctx.beginPath(); //draw rocket
         ctx.arc(this.position.x - Math.cos(this.angle) * (25 * size - 3) + (Math.random() - 0.5) * 4,
-                this.position.y - Math.sin(this.angle) * (25 * size - 3) + (Math.random() - 0.5) * 4,
-                11 * size, 0, 2 * Math.PI);
+          this.position.y - Math.sin(this.angle) * (25 * size - 3) + (Math.random() - 0.5) * 4,
+          11 * size, 0, 2 * Math.PI);
         ctx.fillStyle = "rgba(255,155,0,0.5)";
         ctx.fill();
       },
@@ -2820,7 +2820,7 @@ const b = {
             requestAnimationFrame(cycle)
           } else if (tech.isSuperMine) {
             b.targetedBall(this.position, 22 + 2 * tech.extraSuperBalls)
-          }else{
+          } else {
             b.targetedNail(this.position, 22, 40 + 10 * Math.random(), 1200, 2.2)
           }
         }
@@ -2903,7 +2903,7 @@ const b = {
                             for (let i = 0, len = tech.extraSuperBalls / 4; i < len; i++) {
                               if (Math.random() < 0.33) b.targetedBall(this.position, 1, 42 + 12 * Math.random(), 1200, false)
                             }
-                          }else{
+                          } else {
                             this.shots -= b.targetedNail(this.position, 1, 45 + 5 * Math.random(), 1100, 2.3)
                           }
                           if (this.shots < 0) this.endCycle = 0
@@ -3567,6 +3567,17 @@ const b = {
 
         this.force.y += this.mass * 0.0002;
         if (!(simulation.cycle % this.lookFrequency)) {
+          if (tech.isExponential) { //base drones last about 22 seconds
+            if (Matter.Query.collides(this, map).length > 1) {
+              const SCALE = 0.9
+              Matter.Body.scale(this, SCALE, SCALE);
+              this.scale *= SCALE
+            } else {
+              const SCALE = 1.03
+              Matter.Body.scale(this, SCALE, SCALE);
+              this.scale *= SCALE
+            }
+          }
           //find mob targets
           this.lockedOn = null;
           let closeDist = Infinity;
@@ -3783,6 +3794,12 @@ const b = {
           this.force.y += this.mass * 0.0002; //gravity
 
           if (!(simulation.cycle % this.lookFrequency)) {
+            if (tech.isExponential) { //base drones last about 22 seconds
+              const SCALE = 1.03
+              Matter.Body.scale(this, SCALE, SCALE);
+              this.scale *= SCALE
+              this.radioRadius = this.radioRadius * SCALE
+            }
             //find mob targets
             this.lockedOn = null;
             let closeDist = Infinity;
@@ -4538,7 +4555,7 @@ const b = {
   meleeScythe(where, angle = m.angle) {
     const me = bullet.length;
   },
-  spear(where, angle = m.angle) {},
+  spear(where, angle = m.angle) { },
   spearDmgAura(where, size = 1000) {
     const me = bullet.length;
   },
@@ -5513,7 +5530,7 @@ const b = {
         if (this.lockedOn && this.lockedOn.alive && !m.isCloak) {
           const DIST = Vector.magnitude(Vector.sub(this.vertices[0], this.lockedOn.position));
           if (DIST - this.lockedOn.radius < this.range &&
-              Matter.Query.ray(map, this.position, this.lockedOn.position).length === 0) {
+            Matter.Query.ray(map, this.position, this.lockedOn.position).length === 0) {
             //move towards the target
             this.force = Vector.add(this.force, Vector.mult(Vector.normalise(Vector.sub(this.lockedOn.position, this.position)), this.attackAcceleration * this.mass))
           }
@@ -5581,7 +5598,7 @@ const b = {
           const unit = Vector.normalise(sub)
           if (DIST < tech.isPlasmaRange * 450 && m.energy > this.drainThreshold) {
             let drain = 0.001;
-            if (this.isUpgraded){
+            if (this.isUpgraded) {
               for (let i = 0, len = tech.tech.length; i < len; i++) {
                 if (tech.tech[i].name === "plasma-bot upgrade") {
                   drain *= 0.5 ** tech.tech[i].count;
@@ -5601,7 +5618,7 @@ const b = {
               path[path.length - 1] = { x: best.x, y: best.y };
               if (best.who.alive) {
                 let dmg = 1.4;
-                if (this.isUpgraded){
+                if (this.isUpgraded) {
                   dmg *= 2.0 ** tech.isPlasmaBotUpgrade.count;
                 }//********** SCALE DAMAGE HERE *********************
                 best.who.damage(dmg);
@@ -6727,9 +6744,9 @@ const b = {
                   if (closestMob) {
                     const dir = Vector.normalise(Vector.sub(closestMob.position, who.position))
                     var angle = Math.atan2(dir.y, dir.x)
-                    } else {
-                      var angle = 2 * Math.PI * Math.random()
-                      }
+                  } else {
+                    var angle = 2 * Math.PI * Math.random()
+                  }
                   this.waves.push({
                     position: who.position,
                     angle: angle - halfArc, //used in drawing ctx.arc
@@ -7354,9 +7371,9 @@ const b = {
       doStream() { },
       fireStream() {
         const spread = (m.crouch ?
-                        0.04 * (Math.random() - 0.5) + 0.09 * Math.sin(m.cycle * 0.12) :
-                        0.23 * (Math.random() - 0.5) + 0.15 * Math.sin(m.cycle * 0.12)
-                       )
+          0.04 * (Math.random() - 0.5) + 0.09 * Math.sin(m.cycle * 0.12) :
+          0.23 * (Math.random() - 0.5) + 0.15 * Math.sin(m.cycle * 0.12)
+        )
         const radius = 5 + 8 * Math.random() + (tech.isAmmoFoamSize && this.ammo < 300) * 12
         const SPEED = (m.crouch ? 1.2 : 1) * Math.max(2, 14 - radius * 0.25)
         const dir = m.angle + 0.15 * (Math.random() - 0.5)
@@ -7408,9 +7425,9 @@ const b = {
       },
       fireCharges() {
         const spread = (m.crouch ?
-                        0.04 * (Math.random() - 0.5) + 0.09 * Math.sin(m.cycle * 0.12) :
-                        0.23 * (Math.random() - 0.5) + 0.15 * Math.sin(m.cycle * 0.12)
-                       )
+          0.04 * (Math.random() - 0.5) + 0.09 * Math.sin(m.cycle * 0.12) :
+          0.23 * (Math.random() - 0.5) + 0.15 * Math.sin(m.cycle * 0.12)
+        )
         const radius = 5 + 8 * Math.random() + (tech.isAmmoFoamSize && this.ammo < 300) * 12
         const SPEED = (m.crouch ? 1.2 : 1) * Math.max(2, 14 - radius * 0.25)
         const dir = m.angle + 0.15 * (Math.random() - 0.5)
@@ -8135,7 +8152,7 @@ const b = {
     },
     {
       name: "sword",
-      descriptionFunction() { return `swing a <b>sword</b> that <b style="color: indigo;">lifesteals</b> <strong class='color-h'>health</strong><br>drains <strong class='color-h'>health</strong> instead of ammunition<br>doesn't use <b>ammo</b>`},
+      descriptionFunction() { return `swing a <b>sword</b> that <b style="color: indigo;">lifesteals</b> <strong class='color-h'>health</strong><br>drains <strong class='color-h'>health</strong> instead of ammunition<br>doesn't use <b>ammo</b>` },
       ammo: Infinity,
       ammoPack: Infinity,
       defaultAmmoPack: Infinity,
@@ -8154,20 +8171,20 @@ const b = {
       haveEphemera: false,
       fire() { },
       do() {
-        if(!this.haveEphemera) {
+        if (!this.haveEphemera) {
           this.haveEphemera = true;
           simulation.ephemera.push({
             name: "sword",
             do() {
-              if(b.guns[b.activeGun].name !== 'sword') {
+              if (b.guns[b.activeGun].name !== 'sword') {
                 for (let i = 0, len = b.inventory.length; i < len; ++i) {
-                  if(b.guns[b.inventory[i]].name === "sword" && b.guns[b.inventory[i]].sword) {
+                  if (b.guns[b.inventory[i]].name === "sword" && b.guns[b.inventory[i]].sword) {
                     b.guns[b.inventory[i]].cycle = 0;
-                    if(b.guns[b.inventory[i]].constraint1) {
+                    if (b.guns[b.inventory[i]].constraint1) {
                       Composite.remove(engine.world, b.guns[b.inventory[i]].constraint1);
                       b.guns[b.inventory[i]].constraint1 = undefined;
                     }
-                    if(b.guns[b.inventory[i]].constraint2) {
+                    if (b.guns[b.inventory[i]].constraint2) {
                       Composite.remove(engine.world, b.guns[b.inventory[i]].constraint2);
                       b.guns[b.inventory[i]].constraint2 = undefined;
                     }
@@ -8184,9 +8201,9 @@ const b = {
                   }
                 }
               }
-              if(b.guns[b.activeGun].name == 'sword' && tech.greatSword && b.guns[b.activeGun].sword) {
+              if (b.guns[b.activeGun].name == 'sword' && tech.greatSword && b.guns[b.activeGun].sword) {
                 let bladeSegments = b.guns[b.activeGun].bladeSegments;
-                for(let i = 0; i < bladeSegments.length; i++) {
+                for (let i = 0; i < bladeSegments.length; i++) {
                   ctx.beginPath();
                   ctx.lineJoin = "miter";
                   ctx.miterLimit = 100;
@@ -8194,7 +8211,7 @@ const b = {
                   ctx.lineWidth = 5;
                   ctx.fillStyle = "black";
                   ctx.moveTo(bladeSegments[i].vertices[0].x, bladeSegments[i].vertices[0].y);
-                  for(let j = 0; j < bladeSegments[i].vertices.length; j++) {
+                  for (let j = 0; j < bladeSegments[i].vertices.length; j++) {
                     ctx.lineTo(bladeSegments[i].vertices[j].x, bladeSegments[i].vertices[j].y)
                   };
                   ctx.closePath();
@@ -8207,17 +8224,17 @@ const b = {
             }
           })
         }
-        if(this.sword && this.cycle < 1) {
+        if (this.sword && this.cycle < 1) {
           this.angle2 = Math.atan2(this.sword.position.y - m.pos.y, this.sword.position.x - m.pos.x);
         }
-        if(this.sword) {
+        if (this.sword) {
           this.cycle++;
         }
         this.chooseFireMethod();
         this.fire();
-        if(tech.soundSword) {
+        if (tech.soundSword) {
           this.renderSoundSword();
-        } else if(tech.longSword) {
+        } else if (tech.longSword) {
           this.renderLongsword();
         } else {
           this.renderDefault();
@@ -8232,12 +8249,12 @@ const b = {
         }
       },
       stabFire() {
-        if(this.constraint) {
+        if (this.constraint) {
           this.constraint.pointA = player.position;
         }
-        if(this.sword) {
+        if (this.sword) {
           this.stabStatus = true;
-          if(tech.isEnergyHealth) {
+          if (tech.isEnergyHealth) {
             m.energy -= 0.002;
           } else {
             m.health -= 0.00025;
@@ -8246,17 +8263,17 @@ const b = {
         }
         if (input.fire && (tech.isEnergyHealth ? m.energy >= 0.11 : m.health >= 0.11)) {
           if (!this.sword && b.guns[b.activeGun].name === 'sword') {
-            if(tech.greatSword) {
-              ({ sword: this.sword, bladeSegments: this.bladeSegments} = this.greatSword());
-            } else if(tech.longSword) {
-              ({ sword: this.sword, bladeSegments: this.bladeSegments} = this.longSword());
+            if (tech.greatSword) {
+              ({ sword: this.sword, bladeSegments: this.bladeSegments } = this.greatSword());
+            } else if (tech.longSword) {
+              ({ sword: this.sword, bladeSegments: this.bladeSegments } = this.longSword());
             } else {
-              ({ sword: this.sword, bladeSegments: this.bladeSegments} = this.createAndSwingSword());
+              ({ sword: this.sword, bladeSegments: this.bladeSegments } = this.createAndSwingSword());
             }
             this.angle = m.angle;
           }
         }
-        if(this.sword && this.released == true && this.charge <= 0) {
+        if (this.sword && this.released == true && this.charge <= 0) {
           this.cycle = 0;
           Matter.Body.setAngularVelocity(this.sword, 0);
           player.force.x *= 0.01;
@@ -8270,7 +8287,7 @@ const b = {
             }
           });
           this.sword = undefined;
-          if(this.constraint) {
+          if (this.constraint) {
             Composite.remove(engine.world, this.constraint);
             this.constraint = undefined;
           }
@@ -8279,25 +8296,25 @@ const b = {
           this.released = false;
         } else {
           if (this.sword && (tech.isEnergyHealth ? m.energy >= 0.11 : m.health >= 0.11)) {
-            if(tech.infinityEdge) {
+            if (tech.infinityEdge) {
               const newSize = Math.sqrt(0.5 * m.health) + 1;
               Matter.Body.scale(this.sword, newSize * (1 / (this.sword.scale == undefined ? 1 : this.sword.scale)), newSize * (1 / (this.sword.scale == undefined ? 1 : this.sword.scale)), this.sword.position);
               this.sword.scale = newSize;
             }
             let handle;
-            for(let i = 0; i < bullet.length; i++) {
-              if(bullet[i].customName == "handle") {
+            for (let i = 0; i < bullet.length; i++) {
+              if (bullet[i].customName == "handle") {
                 handle = bullet[i];
               }
             }
             Matter.Body.setAngle(this.sword, m.angle + (Math.PI / 2))
-            if(!this.released) {
+            if (!this.released) {
               this.sword.force.x -= Math.cos(m.angle) * this.charge;
               this.sword.force.y -= Math.sin(m.angle) * this.charge;
-              if(this.charge > 10 && !input.fire) {
+              if (this.charge > 10 && !input.fire) {
                 this.released = true;
-              } 
-              if(this.charge <= 10) {
+              }
+              if (this.charge <= 10) {
                 this.charge += 0.2;
               }
               const flashEffect = Math.sin((2 * Math.PI * this.cycle) / (50))
@@ -8307,7 +8324,7 @@ const b = {
               ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
               ctx.arc(simulation.mouseInGame.x, simulation.mouseInGame.y, radius, 0, Math.PI * 2 * (this.charge / 10));
               ctx.stroke();
-              if((this.charge / 10) >= 1 && flashEffect > 0) {
+              if ((this.charge / 10) >= 1 && flashEffect > 0) {
                 ctx.beginPath();
                 ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
                 ctx.moveTo(simulation.mouseInGame.x, simulation.mouseInGame.y - radius);
@@ -8329,7 +8346,7 @@ const b = {
                 ctx.stroke();
               }
             } else {
-              if(this.charge > 0) {
+              if (this.charge > 0) {
                 this.charge -= 0.5;
                 this.sword.force.x += Math.cos(m.angle) * this.charge * 2 * Math.sqrt(this.sword.mass);
                 this.sword.force.y += Math.sin(m.angle) * this.charge * 2 * Math.sqrt(this.sword.mass);
@@ -8337,21 +8354,21 @@ const b = {
                 m.fireCDcycle = m.cycle + 100;
               }
             }
-            if(!this.constraint && (m.angle > -Math.PI / 2 && m.angle < Math.PI / 2)) {
+            if (!this.constraint && (m.angle > -Math.PI / 2 && m.angle < Math.PI / 2)) {
               this.constraint = Constraint.create({
                 pointA: player.position,
                 bodyB: this.sword,
-                pointB: {x: -9, y: 0},
+                pointB: { x: -9, y: 0 },
                 stiffness: 0.09,
                 damping: 0.9,
                 length: 0,
               });
               Composite.add(engine.world, this.constraint);
-            } else if(!this.constraint) {
+            } else if (!this.constraint) {
               this.constraint = Constraint.create({
                 pointA: player.position,
                 bodyB: this.sword,
-                pointB: {x: 9, y: 0},
+                pointB: { x: 9, y: 0 },
                 stiffness: 0.09,
                 damping: 0.9,
                 length: 0,
@@ -8359,14 +8376,14 @@ const b = {
               Composite.add(engine.world, this.constraint);
             }
           } else {
-            if(this.sword) {
+            if (this.sword) {
               this.cycle = 0;
               Matter.Body.setAngularVelocity(this.sword, 0);
               player.force.x *= 0.01;
               player.force.y *= 0.01;
-              if(player.velocity > 4) {
+              if (player.velocity > 4) {
                 Matter.Body.setVelocity(player, {
-                  x: player.velocity * 0.01, 
+                  x: player.velocity * 0.01,
                   y: player.velocity * 0.01
                 })
               }
@@ -8379,7 +8396,7 @@ const b = {
                 }
               });
               this.sword = undefined;
-              if(this.constraint) {
+              if (this.constraint) {
                 Composite.remove(engine.world, this.constraint);
                 this.constraint = undefined;
               }
@@ -8391,13 +8408,13 @@ const b = {
         }
       },
       normalFire() {
-        if(this.constraint) {
+        if (this.constraint) {
           this.constraint.pointA = player.position;
         }
-        if(tech.isStabSword && !m.crouch && this.cycle > 0 && this.stabStatus) {
-          if(this.sword) {
+        if (tech.isStabSword && !m.crouch && this.cycle > 0 && this.stabStatus) {
+          if (this.sword) {
             this.stabStatus = false;
-            if(tech.isEnergyHealth) {
+            if (tech.isEnergyHealth) {
               m.energy = 0.01;
               m.immuneCycle = m.cycle + 30;
             }
@@ -8412,7 +8429,7 @@ const b = {
               }
             });
             this.sword = undefined;
-            if(this.constraint) {
+            if (this.constraint) {
               Composite.remove(engine.world, this.constraint);
               this.constraint = undefined;
             }
@@ -8421,8 +8438,8 @@ const b = {
           }
         }
 
-        if(input.fire && (tech.isEnergyHealth ? m.energy >= 0.11 : m.health >= 0.11)) {
-          if(tech.isEnergyHealth) {
+        if (input.fire && (tech.isEnergyHealth ? m.energy >= 0.11 : m.health >= 0.11)) {
+          if (tech.isEnergyHealth) {
             m.energy -= 0.004;
           } else {
             m.health -= 0.001 * (input.down ? 0.5 : 1);
@@ -8431,17 +8448,17 @@ const b = {
         }
         if (input.fire && (tech.isEnergyHealth ? m.energy >= 0.11 : m.health >= 0.11)) {
           if (!this.sword && b.guns[b.activeGun].name === 'sword') {
-            if(tech.greatSword) {
-              ({ sword: this.sword, bladeSegments: this.bladeSegments} = this.greatSword());
-            } else if(tech.longSword) {
-              ({ sword: this.sword, bladeSegments: this.bladeSegments} = this.longSword());
+            if (tech.greatSword) {
+              ({ sword: this.sword, bladeSegments: this.bladeSegments } = this.greatSword());
+            } else if (tech.longSword) {
+              ({ sword: this.sword, bladeSegments: this.bladeSegments } = this.longSword());
             } else {
-              ({ sword: this.sword, bladeSegments: this.bladeSegments} = this.createAndSwingSword());
+              ({ sword: this.sword, bladeSegments: this.bladeSegments } = this.createAndSwingSword());
             }
             this.angle = m.angle;
           }
         }
-        if(this.sword && !input.fire) {
+        if (this.sword && !input.fire) {
           this.cycle = 0;
           Matter.Body.setAngularVelocity(this.sword, 0);
           player.force.x *= 0.01;
@@ -8455,7 +8472,7 @@ const b = {
             }
           });
           this.sword = undefined;
-          if(this.constraint) {
+          if (this.constraint) {
             Composite.remove(engine.world, this.constraint);
             this.constraint = undefined;
           }
@@ -8464,7 +8481,7 @@ const b = {
           m.fireCDcycle = m.cycle + 10;
         } else {
           if (this.sword && (tech.isEnergyHealth ? m.energy >= 0.11 : m.health >= 0.11)) {
-            if(tech.infinityEdge) {
+            if (tech.infinityEdge) {
               const newSize = Math.sqrt(0.5 * m.health) + 1;
               Matter.Body.scale(this.sword, newSize * (1 / (this.sword.scale == undefined ? 1 : this.sword.scale)), newSize * (1 / (this.sword.scale == undefined ? 1 : this.sword.scale)), this.sword.position);
               this.sword.scale = newSize;
@@ -8474,34 +8491,34 @@ const b = {
             } else {
               Matter.Body.setAngularVelocity(this.sword, Math.PI * 0.1 * (tech.greatSword ? 0.75 : 1) * (tech.longSword ? 0.6 : 1));
             }
-            if(tech.sizeIllusion) {
+            if (tech.sizeIllusion) {
               player.force.x += Math.cos(m.angle) * player.mass / 500;
               player.force.y += Math.sin(m.angle) * player.mass / 500;
             }
-            if(!this.constraint && (m.angle > -Math.PI / 2 && m.angle < Math.PI / 2)) {
+            if (!this.constraint && (m.angle > -Math.PI / 2 && m.angle < Math.PI / 2)) {
               this.constraint = Constraint.create({
                 pointA: player.position,
                 bodyB: this.sword,
-                pointB: {x: tech.longSword ? -75 : (tech.greatSword ? -50 : -9), y: (tech.longSword ? 275 : 200)},
+                pointB: { x: tech.longSword ? -75 : (tech.greatSword ? -50 : -9), y: (tech.longSword ? 275 : 200) },
                 stiffness: (tech.infinityEdge ? 0.05 : 0.1),
                 damping: 0.001815,
                 length: 0,
 
               });
               Composite.add(engine.world, this.constraint);
-            } else if(!this.constraint) {
+            } else if (!this.constraint) {
               this.constraint = Constraint.create({
                 pointA: player.position,
                 bodyB: this.sword,
-                pointB: {x: tech.longSword ? 75 : (tech.greatSword ? 50 : 9), y: (tech.longSword ? 275 : 200)},
+                pointB: { x: tech.longSword ? 75 : (tech.greatSword ? 50 : 9), y: (tech.longSword ? 275 : 200) },
                 stiffness: (tech.infinityEdge ? 0.05 : 0.1),
                 damping: 0.001815,
                 length: 0,
               });
               Composite.add(engine.world, this.constraint);
             }
-          } else if(this.sword) {
-            if(tech.isEnergyHealth) {
+          } else if (this.sword) {
+            if (tech.isEnergyHealth) {
               m.energy = 0.01;
               m.immuneCycle = m.cycle + 30;
             }
@@ -8518,7 +8535,7 @@ const b = {
               }
             });
             this.sword = undefined;
-            if(this.constraint) {
+            if (this.constraint) {
               Composite.remove(engine.world, this.constraint);
               this.constraint = undefined;
             }
@@ -8554,7 +8571,7 @@ const b = {
             const bladeY = y - handleHeight / 2 - i * (bladeHeight / 4.5) * extensionFactor;
 
             const vertices = [
-              { x: bladeX, y: bladeY - bladeHeight / 2 }, 
+              { x: bladeX, y: bladeY - bladeHeight / 2 },
               { x: bladeX + bladeWidth / 2, y: bladeY + bladeHeight / 2 },
               { x: bladeX - bladeWidth / 2, y: bladeY + bladeHeight / 2 },
               { x: bladeX, y: bladeY - bladeHeight / 2 + 10 },
@@ -8599,7 +8616,7 @@ const b = {
         const handle = Bodies.rectangle(x, y, handleWidth, handleHeight, spawn.propsIsNotHoldable);
         bullet[bullet.length] = handle;
         handle.customName = "handle";
-        bullet[bullet.length - 1].do = () => {};
+        bullet[bullet.length - 1].do = () => { };
         const pommelWidth = 30;
         const pommelHeight = 40;
         const pommelVertices = [
@@ -8613,9 +8630,9 @@ const b = {
         const crossHeight = 15;
         const crossVertices = [
           { x: x + crossWidth, y: y },
-          { x: x, y: y - crossHeight},
+          { x: x, y: y - crossHeight },
           { x: x - crossWidth, y: y },
-          { x: x, y: y + crossHeight},
+          { x: x, y: y + crossHeight },
         ];
         const cross = Bodies.fromVertices(x, y - handleHeight / 2, crossVertices, spawn.propsIsNotHoldable);
         const leftOuterVertices = [
@@ -8626,7 +8643,7 @@ const b = {
         ];
         const leftOuter = Bodies.fromVertices(x + 15, y - handleHeight, leftOuterVertices, spawn.propsIsNotHoldable);
         bullet[bullet.length] = leftOuter;
-        bullet[bullet.length - 1].do = () => {};
+        bullet[bullet.length - 1].do = () => { };
         const rightOuterVertices = [
           { x: x, y: y - 95 },
           { x: x - 15, y: y - 120 },
@@ -8638,9 +8655,9 @@ const b = {
         const cross2Height = 30;
         const cross2Vertices = [
           { x: x + cross2Width, y: y },
-          { x: x, y: y - cross2Height},
+          { x: x, y: y - cross2Height },
           { x: x - cross2Width, y: y },
-          { x: x, y: y + cross2Height},
+          { x: x, y: y + cross2Height },
         ];
         const cross2 = Bodies.fromVertices(x, y - handleHeight - 95, cross2Vertices, spawn.propsIsNotHoldable);
         const leftHigherVertices = [
@@ -8660,42 +8677,42 @@ const b = {
         const decor1Vertices = [
           { x: x, y: y },
           { x: x + 10, y: y },
-          { x: x + 40, y: y - 70},
+          { x: x + 40, y: y - 70 },
           { x: x + 30, y: y - 70 },
         ];
         const decor1 = Bodies.fromVertices(x + 30, y - handleHeight / 2 - 50, decor1Vertices, spawn.propsIsNotHoldable);
         const decor2Vertices = [
           { x: x, y: y },
           { x: x - 10, y: y },
-          { x: x - 80, y: y - 120},
+          { x: x - 80, y: y - 120 },
           { x: x - 70, y: y - 120 },
         ];
         const decor2 = Bodies.fromVertices(x + 10, y - handleHeight / 2 - 150, decor2Vertices, spawn.propsIsNotHoldable);
         const decor3Vertices = [
           { x: x, y: y },
           { x: x + 10, y: y },
-          { x: x + 40, y: y - 70},
+          { x: x + 40, y: y - 70 },
           { x: x + 40, y: y - 80 },
         ];
         const decor3 = Bodies.fromVertices(x - 10, y - handleHeight / 2 - 247, decor3Vertices, spawn.propsIsNotHoldable);
         const decor4Vertices = [
-          { x: x, y: y + 6},
+          { x: x, y: y + 6 },
           { x: x - 10, y: y + 6 },
-          { x: x - 40, y: y - 70},
+          { x: x - 40, y: y - 70 },
           { x: x - 30, y: y - 70 },
         ];
-        const decor4 = Bodies.fromVertices(x - 30, y - handleHeight / 2 - 47, decor4Vertices, spawn.propsIsNotHoldable);						
+        const decor4 = Bodies.fromVertices(x - 30, y - handleHeight / 2 - 47, decor4Vertices, spawn.propsIsNotHoldable);
         const decor5Vertices = [
           { x: x, y: y },
           { x: x + 10, y: y },
-          { x: x + 80, y: y - 120},
+          { x: x + 80, y: y - 120 },
           { x: x + 70, y: y - 120 },
         ];
         const decor5 = Bodies.fromVertices(x - 10, y - handleHeight / 2 - 150, decor5Vertices, spawn.propsIsNotHoldable);
         const decor6Vertices = [
           { x: x, y: y },
           { x: x - 10, y: y },
-          { x: x - 35, y: y - 70},
+          { x: x - 35, y: y - 70 },
           { x: x - 35, y: y - 80 },
         ];
         const decor6 = Bodies.fromVertices(x + 12, y - handleHeight / 2 - 246, decor6Vertices, spawn.propsIsNotHoldable);
@@ -8703,12 +8720,12 @@ const b = {
           parts: [handle, leftOuter, rightOuter, rightHigher, decor1, decor2, decor3, leftHigher, decor4, decor5, decor6, pommel, cross, cross2],
         });
         Composite.add(engine.world, sword);
-        Matter.Body.setPosition(sword, { 
-          x: x, 
+        Matter.Body.setPosition(sword, {
+          x: x,
           y: y
         });
-        Matter.Body.setVelocity(sword, { 
-          x: 0, 
+        Matter.Body.setVelocity(sword, {
+          x: 0,
           y: 0
         });
         sword.collisionFilter.category = cat.bullet;
@@ -8736,11 +8753,11 @@ const b = {
         const crossHeight = 15;
         const crossVertices = [
           { x: x + crossWidth, y: y },
-          { x: x, y: y - crossHeight},
+          { x: x, y: y - crossHeight },
           { x: x - crossWidth, y: y },
-          { x: x, y: y + crossHeight},
+          { x: x, y: y + crossHeight },
         ];
-        const cross = Bodies.fromVertices(x, y - handleHeight / 2, crossVertices, spawn.propsIsNotHoldable);					
+        const cross = Bodies.fromVertices(x, y - handleHeight / 2, crossVertices, spawn.propsIsNotHoldable);
         const blade1Vertices = [
           { x: x, y: y - 750 },
           { x: x + 15, y: y - 650 },
@@ -8748,76 +8765,76 @@ const b = {
           { x: x - 10, y: y },
           { x: x - 15, y: y - 650 },
         ];
-        const blade1 = Bodies.fromVertices(x, y - handleHeight - 290, blade1Vertices, spawn.propsIsNotHoldable);					
+        const blade1 = Bodies.fromVertices(x, y - handleHeight - 290, blade1Vertices, spawn.propsIsNotHoldable);
         const blade2Vertices = [
           { x: x + 20, y: y },
           { x: x, y: y - 30 },
           { x: x - 20, y: y },
           { x: x, y: y + 10 },
         ];
-        const blade2 = Bodies.fromVertices(x, y - handleHeight + 50, blade2Vertices, spawn.propsIsNotHoldable);		
+        const blade2 = Bodies.fromVertices(x, y - handleHeight + 50, blade2Vertices, spawn.propsIsNotHoldable);
         const cross2Vertices = [
           { x: x, y: y - 10 },
           { x: x + 27, y: y },
           { x: x, y: y + 10 },
           { x: x - 7, y: y },
         ];
-        const cross2 = Bodies.fromVertices(x - crossWidth, y - handleHeight / 2, cross2Vertices, spawn.propsIsNotHoldable);				
+        const cross2 = Bodies.fromVertices(x - crossWidth, y - handleHeight / 2, cross2Vertices, spawn.propsIsNotHoldable);
         const cross3Vertices = [
           { x: x, y: y - 10 },
           { x: x + 7, y: y },
           { x: x, y: y + 10 },
           { x: x - 27, y: y },
         ];
-        const cross3 = Bodies.fromVertices(x + crossWidth, y - handleHeight / 2, cross3Vertices, spawn.propsIsNotHoldable);				
+        const cross3 = Bodies.fromVertices(x + crossWidth, y - handleHeight / 2, cross3Vertices, spawn.propsIsNotHoldable);
         const cross4Vertices = [
           { x: x, y: y },
           { x: x - 10, y: y },
           { x: x - 15, y: y + 50 },
         ];
-        const cross4 = Bodies.fromVertices(x + crossWidth, y - handleHeight / 2 + 25, cross4Vertices, spawn.propsIsNotHoldable);				
+        const cross4 = Bodies.fromVertices(x + crossWidth, y - handleHeight / 2 + 25, cross4Vertices, spawn.propsIsNotHoldable);
         const cross5Vertices = [
           { x: x, y: y },
           { x: x - 10, y: y },
           { x: x + 5, y: y + 50 },
         ];
-        const cross5 = Bodies.fromVertices(x - crossWidth, y - handleHeight / 2 + 25, cross5Vertices, spawn.propsIsNotHoldable);				
+        const cross5 = Bodies.fromVertices(x - crossWidth, y - handleHeight / 2 + 25, cross5Vertices, spawn.propsIsNotHoldable);
         const cross6Vertices = [
           { x: x, y: y - 50 },
           { x: x + 10, y: y },
           { x: x, y: y + 50 },
           { x: x - 10, y: y },
         ];
-        const cross6 = Bodies.fromVertices(x, y - handleHeight / 2, cross6Vertices, spawn.propsIsNotHoldable);		
+        const cross6 = Bodies.fromVertices(x, y - handleHeight / 2, cross6Vertices, spawn.propsIsNotHoldable);
         const cross7Vertices = [
           { x: x, y: y },
           { x: x - 10, y: y },
           { x: x - 15, y: y - 50 },
         ];
-        const cross7 = Bodies.fromVertices(x + crossWidth, y - handleHeight / 2 - 25, cross7Vertices, spawn.propsIsNotHoldable);				
+        const cross7 = Bodies.fromVertices(x + crossWidth, y - handleHeight / 2 - 25, cross7Vertices, spawn.propsIsNotHoldable);
         const cross8Vertices = [
           { x: x, y: y },
           { x: x - 10, y: y },
           { x: x + 5, y: y - 50 },
         ];
-        const cross8 = Bodies.fromVertices(x - crossWidth, y - handleHeight / 2 - 25, cross8Vertices, spawn.propsIsNotHoldable);		
+        const cross8 = Bodies.fromVertices(x - crossWidth, y - handleHeight / 2 - 25, cross8Vertices, spawn.propsIsNotHoldable);
         const slitVertices = [
           { x: x, y: y - 20 },
           { x: x + 5, y: y },
           { x: x, y: y + 20 },
           { x: x - 5, y: y },
         ];
-        const slit = Bodies.fromVertices(x, y - handleHeight / 2, slitVertices, spawn.propsIsNotHoldable);	
+        const slit = Bodies.fromVertices(x, y - handleHeight / 2, slitVertices, spawn.propsIsNotHoldable);
         const sword = Body.create({
           parts: [handle, pommel, blade1, blade2, cross4, cross5, cross7, cross8, cross, cross2, cross3, cross6, eye, slit],
         });
         Composite.add(engine.world, sword);
-        Matter.Body.setPosition(sword, { 
-          x: x, 
+        Matter.Body.setPosition(sword, {
+          x: x,
           y: y
         });
-        Matter.Body.setVelocity(sword, { 
-          x: 0, 
+        Matter.Body.setVelocity(sword, {
+          x: 0,
           y: 0
         });
         sword.collisionFilter.category = cat.bullet;
@@ -8827,7 +8844,7 @@ const b = {
         return { sword, bladeSegments: [handle, pommel, blade1, blade2, cross4, cross5, cross7, cross8, cross, cross2, cross3, cross6, eye, slit] };
       },
       renderDefault() {
-        if(this.sword) {
+        if (this.sword) {
           for (let i = 0; i < this.bladeSegments.length; i++) {
             const blade = this.bladeSegments[i];
             const trail = this.bladeTrails[i] || [];
@@ -8856,8 +8873,8 @@ const b = {
 
               alpha += alphaStep;
               ctx.closePath();
-              if(tech.isEnergyHealth) {
-                const eyeColor = m.fieldMeterColor;    
+              if (tech.isEnergyHealth) {
+                const eyeColor = m.fieldMeterColor;
                 const r = eyeColor[1];
                 const g = eyeColor[2];
                 const b = eyeColor[3];
@@ -8869,8 +8886,8 @@ const b = {
               ctx.fill();
             }
           }
-          if(!tech.greatSword) {
-            for(let i = 0; i < this.bladeSegments.length; i++) {
+          if (!tech.greatSword) {
+            for (let i = 0; i < this.bladeSegments.length; i++) {
               ctx.beginPath();
               ctx.lineJoin = "miter";
               ctx.miterLimit = 100;
@@ -8878,7 +8895,7 @@ const b = {
               ctx.lineWidth = 5;
               ctx.fillStyle = "black";
               ctx.moveTo(this.bladeSegments[i].vertices[0].x, this.bladeSegments[i].vertices[0].y);
-              for(let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
+              for (let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
                 ctx.lineTo(this.bladeSegments[i].vertices[j].x, this.bladeSegments[i].vertices[j].y)
               };
               ctx.closePath();
@@ -8889,9 +8906,9 @@ const b = {
             }
           }
         }
-      },		
+      },
       renderLongsword() {
-        if(this.sword) {
+        if (this.sword) {
           for (let i = 0; i < this.bladeSegments.length; i++) {
             const blade = this.bladeSegments[i];
             const trail = this.bladeTrails[i] || [];
@@ -8912,7 +8929,7 @@ const b = {
             ctx.save();
             ctx.beginPath();
             const gradient = ctx.createLinearGradient(
-              trail[0].tip.x, trail[0].tip.y, 
+              trail[0].tip.x, trail[0].tip.y,
               trail[trail.length - 1].tip.x, trail[trail.length - 1].tip.y
             );
             gradient.addColorStop(0, "rgba(180, 0, 220, 0)");
@@ -8929,7 +8946,7 @@ const b = {
             ctx.fill();
             ctx.restore();
           }
-          for(let i = 0; i < this.bladeSegments.length; i++) {
+          for (let i = 0; i < this.bladeSegments.length; i++) {
             ctx.save();
             ctx.beginPath();
             ctx.lineJoin = "miter";
@@ -8937,7 +8954,7 @@ const b = {
             ctx.strokeStyle = tech.isEnergyHealth ? m.fieldMeterColor : "rgba(180, 0, 220, 0.2)";
             ctx.lineWidth = 15;
             ctx.moveTo(this.bladeSegments[i].vertices[0].x, this.bladeSegments[i].vertices[0].y);
-            for(let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
+            for (let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
               ctx.lineTo(this.bladeSegments[i].vertices[j].x, this.bladeSegments[i].vertices[j].y)
             };
             ctx.closePath();
@@ -8948,7 +8965,7 @@ const b = {
             ctx.strokeStyle = tech.isEnergyHealth ? m.fieldMeterColor : "rgba(180, 0, 220, 0.8)";
             ctx.lineWidth = 10;
             ctx.moveTo(this.bladeSegments[i].vertices[0].x, this.bladeSegments[i].vertices[0].y);
-            for(let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
+            for (let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
               ctx.lineTo(this.bladeSegments[i].vertices[j].x, this.bladeSegments[i].vertices[j].y)
             };
             ctx.closePath();
@@ -8960,7 +8977,7 @@ const b = {
             ctx.lineWidth = 5;
             ctx.fillStyle = "black";
             ctx.moveTo(this.bladeSegments[i].vertices[0].x, this.bladeSegments[i].vertices[0].y);
-            for(let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
+            for (let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
               ctx.lineTo(this.bladeSegments[i].vertices[j].x, this.bladeSegments[i].vertices[j].y)
             };
             ctx.closePath();
@@ -8973,7 +8990,7 @@ const b = {
       renderSoundSword() {
         if (this.sword) {
           color.bullet = "transparent";
-          if(this.cycle > 20 && (!tech.isStabSword && !input.down)) {
+          if (this.cycle > 20 && (!tech.isStabSword && !input.down)) {
             this.cycle = 0;
             Matter.Body.setAngularVelocity(this.sword, 0);
             player.force.x *= 0.01;
@@ -8987,7 +9004,7 @@ const b = {
               }
             });
             this.sword = undefined;
-            if(this.constraint) {
+            if (this.constraint) {
               Composite.remove(engine.world, this.constraint);
               this.constraint = undefined;
             }
@@ -9021,8 +9038,8 @@ const b = {
 
               alpha += alphaStep;
               ctx.closePath();
-              if(tech.isEnergyHealth) {
-                const eyeColor = m.fieldMeterColor;    
+              if (tech.isEnergyHealth) {
+                const eyeColor = m.fieldMeterColor;
                 const r = eyeColor[1];
                 const g = eyeColor[2];
                 const b = eyeColor[3];
@@ -9034,7 +9051,7 @@ const b = {
               ctx.fill();
             }
           }
-          for(let i = 0; i < this.bladeSegments.length; i++) {
+          for (let i = 0; i < this.bladeSegments.length; i++) {
             ctx.beginPath();
             ctx.lineJoin = "miter";
             ctx.miterLimit = 100;
@@ -9042,7 +9059,7 @@ const b = {
             ctx.lineWidth = 5;
             ctx.fillStyle = "transparent";
             ctx.moveTo(this.bladeSegments[i].vertices[0].x, this.bladeSegments[i].vertices[0].y);
-            for(let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
+            for (let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
               ctx.lineTo(this.bladeSegments[i].vertices[j].x, this.bladeSegments[i].vertices[j].y)
             };
             ctx.closePath();
@@ -9056,20 +9073,20 @@ const b = {
         }
       },
       collision() {
-        if(this.sword) {
+        if (this.sword) {
           for (let i = 0; i < mob.length; i++) {
             if (Matter.Query.collides(this.sword, [mob[i]]).length > 0) {
               const dmg = (m.damageDone ? m.damageDone : m.dmgScale) * Math.sqrt(this.sword.speed) * (tech.sizeIllusion ? 1.1 : 1) * (tech.isStabSword ? 1.5 : 1) * (tech.infinityEdge ? 1.1 : 1) * (tech.greatSword ? 2 : 1) * (tech.longSword ? 1.7 : 1);
-              if(!tech.soundSword) {
-                if(m.health < m.maxHealth) {
-                  if(tech.isEnergyHealth) {
+              if (!tech.soundSword) {
+                if (m.health < m.maxHealth) {
+                  if (tech.isEnergyHealth) {
                     m.energy += 0.04;
                   } else {
                     m.health += 0.01 * (dmg - mob[i].health);
                     m.displayHealth();
                   }
                 } else {
-                  if(tech.isEnergyHealth) {
+                  if (tech.isEnergyHealth) {
                     m.energy += 0.04;
                   } else {
                     m.health = m.maxHealth;
@@ -9082,10 +9099,10 @@ const b = {
                 x: mob[i].position.x,
                 y: mob[i].position.y,
                 radius: Math.abs(Math.log(dmg * this.sword.speed) * 40 * mob[i].damageReduction + 3),
-                color: (tech.soundSword ? "rgba(0, 0, 0, 0.3)": simulation.mobDmgColor),
+                color: (tech.soundSword ? "rgba(0, 0, 0, 0.3)" : simulation.mobDmgColor),
                 time: simulation.drawTime
               });
-              if(!tech.soundSword && !tech.greatSword) {
+              if (!tech.soundSword && !tech.greatSword) {
                 const angle = Math.atan2(mob[i].position.y - this.sword.position.y, mob[i].position.x - this.sword.position.x);
                 this.sword.force.x -= Math.cos(angle) * 10;
                 this.sword.force.y -= Math.sin(angle) * 10;
@@ -9098,12 +9115,12 @@ const b = {
     },
     {
       name: "scythe",
-      descriptionFunction() { return `throw a <b>scythe</b> that keeps velocity upon collisions<br>drains <strong class='color-h'>health</strong> instead of ammunition<br>doesn't use <b>ammo</b>`},
+      descriptionFunction() { return `throw a <b>scythe</b> that keeps velocity upon collisions<br>drains <strong class='color-h'>health</strong> instead of ammunition<br>doesn't use <b>ammo</b>` },
       ammo: Infinity,
       ammoPack: Infinity,
       defaultAmmoPack: Infinity,
       have: false,
-      fire() {},
+      fire() { },
       cycle: 0,
       cycle2: 0,
       scythe: undefined,
@@ -9116,12 +9133,12 @@ const b = {
       haveEphemera: false,
       right: true,
       do() {
-        if(this.cycle2 === 0) {
+        if (this.cycle2 === 0) {
           const oldEffect = powerUps.ammo.effect;
           powerUps.ammo.effect = () => {
             oldEffect();
             for (let i = 0, len = b.inventory.length; i < len; ++i) {
-              if(b.guns[b.inventory[i]].name === "scythe" && tech.durabilityScythe) {
+              if (b.guns[b.inventory[i]].name === "scythe" && tech.durabilityScythe) {
                 let duraBoost = ((tech.isAmmoForGun && b.guns[b.activeGun].name === 'scythe') ? 30 : 15);
                 if (tech.isRadioScythe) duraBoost *= 0.75
                 b.guns[b.inventory[i]].durability += duraBoost;
@@ -9130,16 +9147,16 @@ const b = {
           }
         }
         this.cycle2++;
-        if(!this.haveEphemera) {
+        if (!this.haveEphemera) {
           this.haveEphemera = true;
           simulation.ephemera.push({
             name: "scythe",
             do() {
-              if(b.guns[b.activeGun].name !== 'scythe') {
+              if (b.guns[b.activeGun].name !== 'scythe') {
                 for (let i = 0, len = b.inventory.length; i < len; ++i) {
-                  if(b.guns[b.inventory[i]].name === "scythe" && b.guns[b.inventory[i]].scythe) {
+                  if (b.guns[b.inventory[i]].name === "scythe" && b.guns[b.inventory[i]].scythe) {
                     b.guns[b.inventory[i]].cycle = 0;
-                    if(b.guns[b.inventory[i]].constraint) {
+                    if (b.guns[b.inventory[i]].constraint) {
                       Composite.remove(engine.world, b.guns[b.inventory[i]].constraint);
                       b.guns[b.inventory[i]].constraint = undefined;
                     }
@@ -9157,14 +9174,14 @@ const b = {
                 }
               }
               for (let i = 0, len = b.inventory.length; i < len; ++i) {
-                if(b.guns[b.inventory[i]].name === "scythe" && tech.durabilityScythe) {
+                if (b.guns[b.inventory[i]].name === "scythe" && tech.durabilityScythe) {
                   document.getElementById(b.inventory[i]).innerHTML = `${b.guns[b.inventory[i]].name} - ${b.guns[b.inventory[i]].durability}/${b.guns[b.inventory[i]].maxDurability} <em style="font-size: 20px;">durability</em>`
                 }
               }
             },
           })
         }
-        if(tech.isAmmoScythe) {
+        if (tech.isAmmoScythe) {
           if (tech.isRadioScythe) {
             this.ammoPack = 0.6;
           } else {
@@ -9178,28 +9195,28 @@ const b = {
         }
         this.durability = Math.max(0, Math.min(this.durability, this.maxDurability));
         if (b.activeGun !== null && input.fire && (tech.isEnergyHealth ? m.energy >= 0.11 : m.health >= 0.11) && this.durability > 0) {
-          if (!this.scythe && b.guns[b.activeGun].name === 'scythe') {					
+          if (!this.scythe && b.guns[b.activeGun].name === 'scythe') {
             this.angle = m.angle;
-            if(tech.durabilityScythe) {
+            if (tech.durabilityScythe) {
               if (!(this.angle > -Math.PI / 2 && this.angle < Math.PI / 2)) {
                 this.right = false;
-                ({ scythe: this.scythe, bladeSegments: this.bladeSegments} = this.createScythe(player.position, false));
+                ({ scythe: this.scythe, bladeSegments: this.bladeSegments } = this.createScythe(player.position, false));
               } else {
                 this.right = true;
-                ({ scythe: this.scythe, bladeSegments: this.bladeSegments} = this.createScythe(player.position, true));
+                ({ scythe: this.scythe, bladeSegments: this.bladeSegments } = this.createScythe(player.position, true));
               }
             } else {
-              ({ scythe: this.scythe, bladeSegments: this.bladeSegments} = this.createAndSwingScythe());
+              ({ scythe: this.scythe, bladeSegments: this.bladeSegments } = this.createAndSwingScythe());
             }
 
-            if(!tech.isAmmoScythe && !b.guns[b.activeGun].ammo == 0 && !tech.durabilityScythe) {
+            if (!tech.isAmmoScythe && !b.guns[b.activeGun].ammo == 0 && !tech.durabilityScythe) {
               let drain = 0.1;
               if (tech.isRadioScythe) {
                 drain *= 1.5;
               }
-              if(tech.isEnergyHealth) {
+              if (tech.isEnergyHealth) {
                 m.energy -= drain;
-                if(tech.isPhaseScythe) {
+                if (tech.isPhaseScythe) {
                   m.immuneCycle = this.cycle;
                 }
               } else {
@@ -9209,7 +9226,7 @@ const b = {
             }
           }
         }
-        if(tech.durabilityScythe) {
+        if (tech.durabilityScythe) {
           if (!(m.angle > -Math.PI / 2 && m.angle < Math.PI / 2) && this.right == true && this.scythe) {
             Matter.Body.setAngularVelocity(this.scythe, 0);
             Composite.remove(engine.world, this.scythe);
@@ -9223,11 +9240,11 @@ const b = {
             this.scythe = undefined;
             this.bladeTrails = [];
             m.fireCDcycle = 0;
-            if(this.constraint) {
+            if (this.constraint) {
               Composite.remove(engine.world, this.constraint);
               this.constraint = undefined;
             }
-          } else if((m.angle > -Math.PI / 2 && m.angle < Math.PI / 2) && this.right == false && this.scythe) {
+          } else if ((m.angle > -Math.PI / 2 && m.angle < Math.PI / 2) && this.right == false && this.scythe) {
             Matter.Body.setAngularVelocity(this.scythe, 0);
             Composite.remove(engine.world, this.scythe);
             this.scythe.parts.forEach(part => {
@@ -9240,12 +9257,12 @@ const b = {
             this.scythe = undefined;
             this.bladeTrails = [];
             m.fireCDcycle = 0;
-            if(this.constraint) {
+            if (this.constraint) {
               Composite.remove(engine.world, this.constraint);
               this.constraint = undefined;
             }
           }
-          if(this.scythe && (!input.fire || !this.durability)) {
+          if (this.scythe && (!input.fire || !this.durability)) {
             Matter.Body.setAngularVelocity(this.scythe, 0);
             Composite.remove(engine.world, this.scythe);
             this.scythe.parts.forEach(part => {
@@ -9258,13 +9275,13 @@ const b = {
             this.scythe = undefined;
             this.bladeTrails = [];
             m.fireCDcycle = 0;
-            if(this.constraint) {
+            if (this.constraint) {
               Composite.remove(engine.world, this.constraint);
               this.constraint = undefined;
             }
           }
         }
-        if(this.scythe && m.cycle > this.cycle + 30 && !tech.durabilityScythe) {
+        if (this.scythe && m.cycle > this.cycle + 30 && !tech.durabilityScythe) {
           Matter.Body.setAngularVelocity(this.scythe, 0);
           Composite.remove(engine.world, this.scythe);
           this.scythe.parts.forEach(part => {
@@ -9277,7 +9294,7 @@ const b = {
           this.scythe = undefined;
           this.bladeTrails = [];
           m.fireCDcycle = 0;
-          if(this.constraint) {
+          if (this.constraint) {
             Composite.remove(engine.world, this.constraint);
             this.constraint = undefined;
           }
@@ -9292,19 +9309,19 @@ const b = {
               x: Math.cos(this.angle) * 30,
               y: Math.sin(this.angle) * 30
             });
-          } else if(this.scythe && (tech.isMeleeScythe || tech.durabilityScythe)) {
+          } else if (this.scythe && (tech.isMeleeScythe || tech.durabilityScythe)) {
             if (!(this.angle > -Math.PI / 2 && this.angle < Math.PI / 2)) {
               Matter.Body.setAngularVelocity(this.scythe, -Math.PI * 0.1 + (tech.isStunScythe ? 0.1 : 0) - (tech.scytheRad ? tech.scytheRad * 0.1 : 0));
             } else {
               Matter.Body.setAngularVelocity(this.scythe, Math.PI * 0.1 - (tech.isStunScythe ? 0.1 : 0) + (tech.scytheRad ? tech.scytheRad * 0.1 : 0));
             }
-            if(tech.durabilityScythe) {
-              if(!this.constraint) {
+            if (tech.durabilityScythe) {
+              if (!this.constraint) {
                 if (!(this.angle > -Math.PI / 2 && this.angle < Math.PI / 2)) {
                   this.constraint = Constraint.create({
                     pointA: player.position,
                     bodyB: this.scythe,
-                    pointB: {x: 50, y: 100},
+                    pointB: { x: 50, y: 100 },
                     stiffness: 0.9,
                     damping: 0.001
                   });
@@ -9313,19 +9330,19 @@ const b = {
                   this.constraint = Constraint.create({
                     pointA: player.position,
                     bodyB: this.scythe,
-                    pointB: {x: -50, y: 100},
+                    pointB: { x: -50, y: 100 },
                     stiffness: 0.9,
                     damping: 0.001
                   });
                   Composite.add(engine.world, this.constraint);
                 }
-              } 
+              }
             } else {
               Matter.Body.setPosition(this.scythe, player.position);
             }
           }
         }
-        if(this.scythe) {
+        if (this.scythe) {
           for (let i = 0; i < this.bladeSegments.length; i++) {
             const blade = this.bladeSegments[i];
             const trail = this.bladeTrails[i] || [];
@@ -9354,14 +9371,14 @@ const b = {
 
               alpha += alphaStep;
               ctx.closePath();
-              if(tech.isEnergyHealth) {
-                const eyeColor = m.fieldMeterColor;    
+              if (tech.isEnergyHealth) {
+                const eyeColor = m.fieldMeterColor;
                 const r = eyeColor[1];
                 const g = eyeColor[2];
                 const b = eyeColor[3];
                 const color = `#${r}${r}${g}${g}${b}${b}${Math.round(alpha * 255).toString(16).padStart(2, '0')}`;
                 ctx.fillStyle = color;
-              } else if (tech.isAmmoScythe && tech.isStunScythe){
+              } else if (tech.isAmmoScythe && tech.isStunScythe) {
                 ctx.fillStyle = `#004010${Math.round(alpha * 255).toString(16).padStart(2, '0')}`
               } else if (tech.isAmmoScythe) {
                 ctx.fillStyle = `#c0c0c0${Math.round(alpha * 255).toString(16).padStart(2, '0')}`
@@ -9373,7 +9390,7 @@ const b = {
               ctx.fill();
             }
           }
-          for(let i = 0; i < this.bladeSegments.length; i++) {
+          for (let i = 0; i < this.bladeSegments.length; i++) {
             ctx.beginPath();
             ctx.lineJoin = "miter";
             ctx.miterLimit = 100;
@@ -9381,7 +9398,7 @@ const b = {
             ctx.lineWidth = 5;
             ctx.fillStyle = "black";
             ctx.moveTo(this.bladeSegments[i].vertices[0].x, this.bladeSegments[i].vertices[0].y);
-            for(let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
+            for (let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
               ctx.lineTo(this.bladeSegments[i].vertices[j].x, this.bladeSegments[i].vertices[j].y)
             };
             ctx.closePath();
@@ -9391,10 +9408,10 @@ const b = {
             ctx.miterLimit = 10;
           }
         }
-        if(this.scythe) {
+        if (this.scythe) {
           for (let i = 0; i < mob.length; i++) {
             if (Matter.Query.collides(this.scythe, [mob[i]]).length > 0) {
-              if(tech.durabilityScythe) {
+              if (tech.durabilityScythe) {
                 this.durability--;
               }
               const dmg = (m.damageDone ? m.damageDone : m.dmgScale) * 0.12 * 2.73 * (tech.isLongBlade ? 1.3 : 1) * (tech.scytheRange ? tech.scytheRange * 1.15 : 1) * (tech.isDoubleScythe ? 0.9 : 1) * (tech.scytheRad ? tech.scytheRad * 1.5 : 1);
@@ -9406,12 +9423,12 @@ const b = {
                 color: simulation.mobDmgColor,
                 time: simulation.drawTime
               });
-              if(!tech.isMeleeScythe) {
+              if (!tech.isMeleeScythe) {
                 const angle = Math.atan2(mob[i].position.y - this.scythe.position.y, mob[i].position.x - this.scythe.position.x);
                 this.scythe.force.x += Math.cos(angle) * 2;
                 this.scythe.force.y += Math.sin(angle) * 2;
               }
-              if(tech.isStunScythe && !mob[i].isZombie) {
+              if (tech.isStunScythe && !mob[i].isZombie) {
                 mobs.statusStun(mob[i], 90);
               }
               if (tech.isZombieScythe) {
@@ -9433,20 +9450,20 @@ const b = {
           const handleHeight = 200 + (tech.isLongBlade ? 30 : 0) + (tech.isMeleeScythe ? 140 : 0);
           const handle = Bodies.rectangle(x, y, handleWidth, handleHeight, spawn.propsIsNotHoldable);
           bullet[bullet.length] = handle;
-          bullet[bullet.length - 1].do = () => {};
+          bullet[bullet.length - 1].do = () => { };
           const bladeWidth = 100;
           const bladeHeight = 20;
           const numBlades = 10 + (tech.isLongBlade ? 1 : 0) + (tech.isMeleeScythe ? 2 : 0);
           const extensionFactor = 5.5;
           const bladeSegments = [];
-          if(!tech.isDoubleScythe) {
+          if (!tech.isDoubleScythe) {
             for (let i = 0; i < numBlades; i++) {
               const extensionFactorFraction = (i / (numBlades - 1)) * extensionFactor;
               const bladeX = x - handleWidth / 2 + i * (bladeWidth / 2) - extensionFactorFraction * (bladeWidth / 2);
               const bladeY = y + handleHeight / 2 - i * (bladeHeight / (3 ** i));
 
               const vertices = [
-                { x: bladeX, y: bladeY - bladeHeight / 2 }, 
+                { x: bladeX, y: bladeY - bladeHeight / 2 },
                 { x: bladeX + bladeWidth / 2, y: bladeY + bladeHeight / 2 },
                 { x: bladeX - bladeWidth / 2, y: bladeY + bladeHeight / 2 },
                 { x: bladeX, y: bladeY - bladeHeight / 2 + 10 },
@@ -9454,7 +9471,7 @@ const b = {
 
               const blade = Bodies.fromVertices(bladeX, bladeY, vertices, spawn.propsIsNotHoldable);
               bullet[bullet.length] = blade;
-              bullet[bullet.length - 1].do = () => {};
+              bullet[bullet.length - 1].do = () => { };
               Matter.Body.rotate(blade, -Math.sin(i * (Math.PI / 180) * 5));
               bladeSegments.push(blade);
             }
@@ -9465,7 +9482,7 @@ const b = {
               const bladeY = y + handleHeight / 2 - i * (bladeHeight / (3 ** i));
 
               const vertices = [
-                { x: bladeX, y: bladeY - bladeHeight / 2 }, 
+                { x: bladeX, y: bladeY - bladeHeight / 2 },
                 { x: bladeX + bladeWidth / 2, y: bladeY + bladeHeight / 2 },
                 { x: bladeX - bladeWidth / 2, y: bladeY + bladeHeight / 2 },
                 { x: bladeX, y: bladeY - bladeHeight / 2 + 10 },
@@ -9473,7 +9490,7 @@ const b = {
 
               const blade = Bodies.fromVertices(bladeX, bladeY, vertices, spawn.propsIsNotHoldable);
               bullet[bullet.length] = blade;
-              bullet[bullet.length - 1].do = () => {};
+              bullet[bullet.length - 1].do = () => { };
               Matter.Body.rotate(blade, -Math.sin(i * (Math.PI / 180) * 5));
               bladeSegments.push(blade);
             }
@@ -9484,7 +9501,7 @@ const b = {
               const bladeY = y - handleHeight / 2 - i * (bladeHeight / (3 ** i));
 
               const vertices = [
-                { x: bladeX, y: bladeY - bladeHeight / 2 }, 
+                { x: bladeX, y: bladeY - bladeHeight / 2 },
                 { x: bladeX + bladeWidth / 2, y: bladeY + bladeHeight / 2 },
                 { x: bladeX - bladeWidth / 2, y: bladeY + bladeHeight / 2 },
                 { x: bladeX, y: bladeY - bladeHeight / 2 + 10 },
@@ -9492,7 +9509,7 @@ const b = {
 
               const blade = Bodies.fromVertices(bladeX, bladeY, vertices, spawn.propsIsNotHoldable);
               bullet[bullet.length] = blade;
-              bullet[bullet.length - 1].do = () => {};
+              bullet[bullet.length - 1].do = () => { };
               Matter.Body.rotate(blade, -Math.sin(i * (Math.PI / 180) * 5) + Math.PI);
               bladeSegments.push(blade);
             }
@@ -9533,63 +9550,63 @@ const b = {
         ];
         const pommel = Bodies.fromVertices(x, y + handleHeight / 2, pommelVertices, spawn.propsIsNotHoldable);
         const handle2Vertices = [
-          { x: x + 120, y: y - 140},
+          { x: x + 120, y: y - 140 },
           { x: x + 100, y: y - 140 },
           { x: x + 23, y: y },
           { x: x + 3, y: y },
         ];
         const handle2 = Bodies.fromVertices(x + 50, y - handleHeight / 2 - 70, handle2Vertices, spawn.propsIsNotHoldable);
 
-        const joint = Bodies.polygon(x + 100, y - handleHeight - 20, 5, 30, spawn.propsIsNotHoldable);	
+        const joint = Bodies.polygon(x + 100, y - handleHeight - 20, 5, 30, spawn.propsIsNotHoldable);
 
         const joint2 = Bodies.polygon(x, y - handleHeight / 2, 3, 20, spawn.propsIsNotHoldable);
         Body.rotate(joint2, Math.PI / 2)
 
         const blade1Vertices = [
-          { x: x - 5, y: y - 10},
+          { x: x - 5, y: y - 10 },
           { x: x - 15, y: y + 10 },
-          { x: x - 100, y: y - 35},
-          { x: x - 60, y: y},
+          { x: x - 100, y: y - 35 },
+          { x: x - 60, y: y },
         ];
         const blade1 = Bodies.fromVertices(x + 50, y - handleHeight / 2 - 150, blade1Vertices, spawn.propsIsNotHoldable);
 
         const blade2Vertices = [
-          { x: x - 10, y: y - 10},
+          { x: x - 10, y: y - 10 },
           { x: x + 15, y: y + 10 },
-          { x: x - 100, y: y - 30},
-          { x: x - 60, y: y},
+          { x: x - 100, y: y - 30 },
+          { x: x - 60, y: y },
         ];
-        const blade2 = Bodies.fromVertices(x + 100, y - handleHeight / 2 - 150, blade2Vertices, spawn.propsIsNotHoldable);		
+        const blade2 = Bodies.fromVertices(x + 100, y - handleHeight / 2 - 150, blade2Vertices, spawn.propsIsNotHoldable);
 
         const blade3Vertices = [
-          { x: x - 10, y: y - 10},
+          { x: x - 10, y: y - 10 },
           { x: x + 15, y: y + 10 },
-          { x: x - 90, y: y - 30},
-          { x: x - 60, y: y},
+          { x: x - 90, y: y - 30 },
+          { x: x - 60, y: y },
         ];
-        const blade3 = Bodies.fromVertices(x + 150, y - handleHeight / 2 - 130, blade3Vertices, spawn.propsIsNotHoldable);		
+        const blade3 = Bodies.fromVertices(x + 150, y - handleHeight / 2 - 130, blade3Vertices, spawn.propsIsNotHoldable);
 
         const blade4Vertices = [
-          { x: x, y: y - 10},
-          { x: x + 15, y: y + 10},
-          { x: x - 90, y: y - 25},
-          { x: x - 60, y: y + 5},
+          { x: x, y: y - 10 },
+          { x: x + 15, y: y + 10 },
+          { x: x - 90, y: y - 25 },
+          { x: x - 60, y: y + 5 },
         ];
         const blade4 = Bodies.fromVertices(x - 20, y - handleHeight / 2 - 160, blade4Vertices, spawn.propsIsNotHoldable);
 
         const blade5Vertices = [
-          { x: x, y: y - 30},
-          { x: x + 15, y: y - 10},
-          { x: x - 90, y: y - 25},
-          { x: x - 60, y: y},
+          { x: x, y: y - 30 },
+          { x: x + 15, y: y - 10 },
+          { x: x - 90, y: y - 25 },
+          { x: x - 60, y: y },
         ];
         const blade5 = Bodies.fromVertices(x - 90, y - handleHeight / 2 - 160, blade5Vertices, spawn.propsIsNotHoldable);
 
         const blade6Vertices = [
-          { x: x + 10, y: y - 15},
-          { x: x + 30, y: y + 4},
-          { x: x - 90, y: y + 10},
-          { x: x - 30, y: y + 20},
+          { x: x + 10, y: y - 15 },
+          { x: x + 30, y: y + 4 },
+          { x: x - 90, y: y + 10 },
+          { x: x - 30, y: y + 20 },
         ];
         const blade6 = Bodies.fromVertices(x - 150, y - handleHeight / 2 - 150, blade6Vertices, spawn.propsIsNotHoldable);
 
@@ -9598,18 +9615,18 @@ const b = {
         });
 
         Composite.add(engine.world, scythe);
-        Matter.Body.setPosition(scythe, { 
-          x: x, 
+        Matter.Body.setPosition(scythe, {
+          x: x,
           y: y
         });
-        Matter.Body.setVelocity(scythe, { 
-          x: 0, 
+        Matter.Body.setVelocity(scythe, {
+          x: 0,
           y: 0
         });
         scythe.collisionFilter.category = cat.bullet;
         scythe.collisionFilter.mask = cat.mobBullet | cat.powerup | cat.mob | cat.body | cat.bullet;
         Body.scale(scythe, -1, 1); //disappears without this >:(
-        if(!right) {
+        if (!right) {
           Body.scale(scythe, -1, 1);
         }
         return { scythe, bladeSegments: [handle, handle2, pommel, blade6, blade5, blade4, blade1, blade2, blade3, joint, joint2] };
@@ -9617,7 +9634,7 @@ const b = {
     },
     {
       name: "spear",
-      descriptionFunction() { return `control a <b>spear</b> that has <em style="color: gray;">durability</em><br>spear is <b>controlled</b> by <b>cursor</b><br><strong>${tech.isAmmoForGun ? 30 - (tech.tempering ? tech.tempering : 0) : 15 - (tech.tempering ? tech.tempering : 0)}</strong> </em style="color: gray;">durability</em> per ${powerUps.orb.ammo()}`},
+      descriptionFunction() { return `control a <b>spear</b> that has <em style="color: gray;">durability</em><br>spear is <b>controlled</b> by <b>cursor</b><br><strong>${tech.isAmmoForGun ? 30 - (tech.tempering ? tech.tempering : 0) : 15 - (tech.tempering ? tech.tempering : 0)}</strong> </em style="color: gray;">durability</em> per ${powerUps.orb.ammo()}` },
       ammo: Infinity,
       ammoPack: Infinity,
       defaultAmmoPack: Infinity,
@@ -9633,22 +9650,22 @@ const b = {
       durability: 300,
       maxDurability: 300,
       haveEphemera: false,
-      fire() {},
+      fire() { },
       do() {
-        if(!this.haveEphemera) {
+        if (!this.haveEphemera) {
           this.haveEphemera = true;
           simulation.ephemera.push({
             name: "spear",
             do() {
-              if(b.guns[b.activeGun].name !== 'spear') {
+              if (b.guns[b.activeGun].name !== 'spear') {
                 for (let i = 0, len = b.inventory.length; i < len; ++i) {
-                  if(b.guns[b.inventory[i]].name === "spear" && b.guns[b.inventory[i]].spear) {
+                  if (b.guns[b.inventory[i]].name === "spear" && b.guns[b.inventory[i]].spear) {
                     b.guns[b.inventory[i]].cycle = 0;
-                    if(b.guns[b.inventory[i]].constraint1) {
+                    if (b.guns[b.inventory[i]].constraint1) {
                       Composite.remove(engine.world, b.guns[b.inventory[i]].constraint1);
                       b.guns[b.inventory[i]].constraint1 = undefined;
                     }
-                    if(b.guns[b.inventory[i]].constraint2) {
+                    if (b.guns[b.inventory[i]].constraint2) {
                       Composite.remove(engine.world, b.guns[b.inventory[i]].constraint2);
                       b.guns[b.inventory[i]].constraint2 = undefined;
                     }
@@ -9666,20 +9683,20 @@ const b = {
                 }
               }
               for (let i = 0, len = b.inventory.length; i < len; ++i) {
-                if(b.guns[b.inventory[i]].name === "spear") {
+                if (b.guns[b.inventory[i]].name === "spear") {
                   document.getElementById(b.inventory[i]).innerHTML = `${b.guns[b.inventory[i]].name} - ${b.guns[b.inventory[i]].durability}/${b.guns[b.inventory[i]].maxDurability} <em style="font-size: 20px;">durability</em>`
                 }
               }
             },
           })
         }
-        if(this.cycle === 0) {
+        if (this.cycle === 0) {
           const oldEffect = powerUps.ammo.effect;
           powerUps.ammo.effect = () => {
             oldEffect();
             for (let i = 0, len = b.inventory.length; i < len; ++i) {
-              if(b.guns[b.inventory[i]].name === "spear") {
-                b.guns[b.inventory[i]].durability += (tech.isAmmoForGun && b.guns[b.activeGun].name === 'spear') ? 30 - (tech.tempering ? tech.tempering : 0): 15 - (tech.tempering ? tech.tempering : 0);
+              if (b.guns[b.inventory[i]].name === "spear") {
+                b.guns[b.inventory[i]].durability += (tech.isAmmoForGun && b.guns[b.activeGun].name === 'spear') ? 30 - (tech.tempering ? tech.tempering : 0) : 15 - (tech.tempering ? tech.tempering : 0);
               }
             }
           }
@@ -9687,23 +9704,23 @@ const b = {
         this.cycle++;
         this.durability = Math.min(this.maxDurability, Math.max(0, this.durability));
         for (let i = 0, len = b.inventory.length; i < len; ++i) {
-          if(b.guns[b.inventory[i]].name === "spear") {
+          if (b.guns[b.inventory[i]].name === "spear") {
             document.getElementById(b.inventory[i]).innerHTML = `${b.guns[b.inventory[i]].name} - ${this.durability}/${this.maxDurability} <em style="font-size: 20px;">durability</em>`
           }
         }
         if (input.fire && this.durability > 0 && m.fireCDcycle < m.cycle) {
           if (!this.spear && b.guns[b.activeGun].name === 'spear') {
-            ({ spear: this.spear, bladeSegments: this.bladeSegments} = this.createSpear(player.position));
+            ({ spear: this.spear, bladeSegments: this.bladeSegments } = this.createSpear(player.position));
             this.angle = m.angle;
           }
         }
-        if(this.spear) {
+        if (this.spear) {
           // Matter.Body.setVelocity(this.spear, {x: this.spear.velocity.x * 0.99, y: this.spear.velocity.y * 0.99})
-          if(!this.constraint1) {
+          if (!this.constraint1) {
             this.constraint1 = Constraint.create({
               pointA: player.position,
               bodyB: this.spear,
-              pointB: {x: Math.cos(m.angle) * -100, y: Math.sin(m.angle) * -100},
+              pointB: { x: Math.cos(m.angle) * -100, y: Math.sin(m.angle) * -100 },
               stiffness: 0.1,
               damping: 0.0000001815,
               length: 0,
@@ -9711,11 +9728,11 @@ const b = {
             });
             Composite.add(engine.world, this.constraint1);
           }
-          if(!this.constraint2) {
+          if (!this.constraint2) {
             this.constraint2 = Constraint.create({
               pointA: simulation.mouseInGame,
               bodyB: this.spear,
-              pointB: {x: Math.cos(m.angle) * 100, y: Math.sin(m.angle) * 100},
+              pointB: { x: Math.cos(m.angle) * 100, y: Math.sin(m.angle) * 100 },
               stiffness: 0.1,
               damping: 0.0000001815,
               length: 0,
@@ -9724,13 +9741,13 @@ const b = {
             Composite.add(engine.world, this.constraint2);
           }
         }
-        if(this.spear && !input.fire) {
+        if (this.spear && !input.fire) {
           this.cycle = 0;
-          if(this.constraint1) {
+          if (this.constraint1) {
             Composite.remove(engine.world, this.constraint1);
             this.constraint1 = undefined;
           }
-          if(this.constraint2) {
+          if (this.constraint2) {
             Composite.remove(engine.world, this.constraint2);
             this.constraint2 = undefined;
           }
@@ -9748,7 +9765,7 @@ const b = {
         }
         this.collision();
         //this.drawDurability();
-        if(tech.pyroSpear && this.spear) {
+        if (tech.pyroSpear && this.spear) {
           const range = 500 + 140 * Math.sin(simulation.cycle / 100);
           const dmg = 0.03 * (m.damageDone ? m.damageDone : m.dmgScale);
           for (let i = 0; i < mob.length; i++) {
@@ -9767,17 +9784,17 @@ const b = {
           this.drawPerlinWaveCircle(interpolateX, interpolateY, range);
           this.oldSpear.position = this.spear.position;
         }
-        if(tech.shockSpear) {
+        if (tech.shockSpear) {
           this.renderLightning();
-          if(this.spear) {
+          if (this.spear) {
             m.energy -= 0.001;
           }
-        } else if(tech.pyroSpear) {
+        } else if (tech.pyroSpear) {
           this.renderFlame();
         } else {
           this.renderDefault();
         }
-        if(tech.spearArc && this.spear) {
+        if (tech.spearArc && this.spear) {
           const dmg = 0.0001 * (m.damageDone ? m.damageDone : m.dmgScale);
           const arcList = [];
           const damageRadius = 1000;
@@ -9787,7 +9804,7 @@ const b = {
               const sub = Vector.magnitude(Vector.sub(this.spear.position, mob[i].position))
               if (sub < damageRadius + mob[i].radius) {
                 arcList.push(mob[i]);
-                Matter.Body.setVelocity(mob[i], {x: mob[i].velocity.x * 0.95, y:  mob[i].velocity.y * 0.95})
+                Matter.Body.setVelocity(mob[i], { x: mob[i].velocity.x * 0.95, y: mob[i].velocity.y * 0.95 })
               }
             }
           }
@@ -9845,7 +9862,7 @@ const b = {
         return this.lerp(u, this.grad(this.perm[X], x), this.grad(this.perm[X + 1], x - 1));
       },
       drawPerlinWaveCircle(x, y, radius) {
-        if(this.perm == []) {
+        if (this.perm == []) {
           this.setPerm();
         }
         ctx.beginPath();
@@ -9853,7 +9870,7 @@ const b = {
         const noiseScale = 0.9;
         const timeFactor = simulation.cycle * 0.02;
         for (let i = 0; i <= points; i++) {
-          const angle = (i / points) * 2 * Math.PI; 
+          const angle = (i / points) * 2 * Math.PI;
 
           const noiseValue = this.noise(Math.cos(angle + timeFactor) * noiseScale - timeFactor);
 
@@ -9886,9 +9903,9 @@ const b = {
         const handleHeight = 500;
 
         const handle = Bodies.rectangle(x, y, handleWidth, handleHeight, spawn.propsIsNotHoldable);
-        if(!tech.pyroSpear) {
+        if (!tech.pyroSpear) {
           bullet[bullet.length] = handle;
-          bullet[bullet.length - 1].do = () => {};
+          bullet[bullet.length - 1].do = () => { };
         }
 
         const pommelWidth = 30;
@@ -9900,9 +9917,9 @@ const b = {
           { x: x - pommelWidth / 2, y: y + handleHeight / 2 },
         ];
         const pommel = Bodies.fromVertices(x, y + handleHeight / 2, pommelVertices, spawn.propsIsNotHoldable);
-        if(!tech.pyroSpear) {
+        if (!tech.pyroSpear) {
           bullet[bullet.length] = pommel;
-          bullet[bullet.length - 1].do = () => {};
+          bullet[bullet.length - 1].do = () => { };
         }
         const prongWidth = 20;
         const prongHeight = 300;
@@ -9912,12 +9929,12 @@ const b = {
           { x: x - prongOffsetX, y: y - handleHeight / 2 - prongHeight },
           { x: x - prongOffsetX - prongWidth, y: y - handleHeight / 2 - prongHeight / 2 },
           { x: x - prongOffsetX - prongWidth, y: y - handleHeight / 2 },
-          { x: x - prongOffsetX, y: y - handleHeight / 2 - prongHeight / 10},
+          { x: x - prongOffsetX, y: y - handleHeight / 2 - prongHeight / 10 },
         ];
         const leftOuterProng = Bodies.fromVertices(x - prongOffsetX, y - handleHeight / 2, leftOuterProngVertices, spawn.propsIsNotHoldable);
-        if(!tech.pyroSpear) {
+        if (!tech.pyroSpear) {
           bullet[bullet.length] = leftOuterProng;
-          bullet[bullet.length - 1].do = () => {};
+          bullet[bullet.length - 1].do = () => { };
         }
         const leftInnerProngVertices = [
           { x: x - prongOffsetX / 2, y: y - handleHeight / 2 - prongHeight / 1.5 },
@@ -9925,20 +9942,20 @@ const b = {
           { x: x - prongOffsetX / 2 + prongWidth / 2, y: y - handleHeight / 2 - prongHeight / 3 },
         ];
         const leftInnerProng = Bodies.fromVertices(x - prongOffsetX / 2, y - handleHeight / 2, leftInnerProngVertices, spawn.propsIsNotHoldable);
-        if(!tech.pyroSpear) {
+        if (!tech.pyroSpear) {
           bullet[bullet.length] = leftInnerProng;
-          bullet[bullet.length - 1].do = () => {};
+          bullet[bullet.length - 1].do = () => { };
         }
         const rightOuterProngVertices = [
           { x: x + prongOffsetX, y: y - handleHeight / 2 - prongHeight },
           { x: x + prongOffsetX + prongWidth, y: y - handleHeight / 2 - prongHeight / 2 },
           { x: x + prongOffsetX + prongWidth, y: y - handleHeight / 2 },
-          { x: x + prongOffsetX, y: y - handleHeight / 2  - prongHeight / 10},
+          { x: x + prongOffsetX, y: y - handleHeight / 2 - prongHeight / 10 },
         ];
         const rightOuterProng = Bodies.fromVertices(x + prongOffsetX, y - handleHeight / 2, rightOuterProngVertices, spawn.propsIsNotHoldable);
-        if(!tech.pyroSpear) {
+        if (!tech.pyroSpear) {
           bullet[bullet.length] = rightOuterProng;
-          bullet[bullet.length - 1].do = () => {};
+          bullet[bullet.length - 1].do = () => { };
         }
         const rightInnerProngVertices = [
           { x: x + prongOffsetX / 2, y: y - handleHeight / 2 - prongHeight / 1.5 },
@@ -9946,9 +9963,9 @@ const b = {
           { x: x + prongOffsetX / 2 + prongWidth / 2, y: y - handleHeight / 2 - prongHeight / 3 },
         ];
         const rightInnerProng = Bodies.fromVertices(x + prongOffsetX / 2, y - handleHeight / 2, rightInnerProngVertices, spawn.propsIsNotHoldable);
-        if(!tech.pyroSpear) {
+        if (!tech.pyroSpear) {
           bullet[bullet.length] = rightInnerProng;
-          bullet[bullet.length - 1].do = () => {};
+          bullet[bullet.length - 1].do = () => { };
         }
         const middleSmallProngVertices = [
           { x: x, y: y - handleHeight / 2 - prongHeight / 2 },
@@ -9956,9 +9973,9 @@ const b = {
           { x: x + prongWidth / 2, y: y - handleHeight / 2 - prongHeight / 3 },
         ];
         const middleSmallProng = Bodies.fromVertices(x, y - handleHeight / 2, middleSmallProngVertices, spawn.propsIsNotHoldable);
-        if(!tech.pyroSpear) {
+        if (!tech.pyroSpear) {
           bullet[bullet.length] = middleSmallProng;
-          bullet[bullet.length - 1].do = () => {};
+          bullet[bullet.length - 1].do = () => { };
         }
         const spear = Body.create({
           parts: [handle, pommel, leftOuterProng, leftInnerProng, rightOuterProng, rightInnerProng, middleSmallProng],
@@ -9966,18 +9983,18 @@ const b = {
 
         Composite.add(engine.world, spear);
         Matter.Body.setAngle(spear, -m.angle - Math.PI / 2);
-        Matter.Body.setPosition(spear, { 
-          x: x, 
+        Matter.Body.setPosition(spear, {
+          x: x,
           y: y
         });
-        Matter.Body.setVelocity(spear, { 
-          x: 0, 
+        Matter.Body.setVelocity(spear, {
+          x: 0,
           y: 0
         });
         spear.collisionFilter.category = cat.bullet;
         spear.collisionFilter.mask = cat.mobBullet | cat.powerup | cat.mob | cat.body;
         Body.scale(spear, -1, 1, { x, y });
-        if(!tech.pyroSpear) {
+        if (!tech.pyroSpear) {
           return { spear, bladeSegments: [leftOuterProng, leftInnerProng, rightOuterProng, rightInnerProng, middleSmallProng, pommel] };
         } else {
           Body.scale(spear, 1.5, 1.5, { x, y });
@@ -9985,7 +10002,7 @@ const b = {
         }
       },
       renderDefault() {
-        if(this.spear) {
+        if (this.spear) {
           for (let i = 0; i < this.bladeSegments.length; i++) {
             const blade = this.bladeSegments[i];
             const trail = this.bladeTrails[i] || [];
@@ -10013,8 +10030,8 @@ const b = {
 
               alpha += alphaStep;
               ctx.closePath();
-              if(tech.isEnergyHealth) {
-                const eyeColor = m.fieldMeterColor;    
+              if (tech.isEnergyHealth) {
+                const eyeColor = m.fieldMeterColor;
                 const r = eyeColor[1];
                 const g = eyeColor[2];
                 const b = eyeColor[3];
@@ -10026,7 +10043,7 @@ const b = {
               ctx.fill();
             }
           }
-          for(let i = 0; i < this.bladeSegments.length; i++) {
+          for (let i = 0; i < this.bladeSegments.length; i++) {
             ctx.beginPath();
             ctx.lineJoin = "miter";
             ctx.miterLimit = 100;
@@ -10034,7 +10051,7 @@ const b = {
             ctx.lineWidth = 5;
             ctx.fillStyle = "black";
             ctx.moveTo(this.bladeSegments[i].vertices[0].x, this.bladeSegments[i].vertices[0].y);
-            for(let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
+            for (let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
               ctx.lineTo(this.bladeSegments[i].vertices[j].x, this.bladeSegments[i].vertices[j].y)
             };
             ctx.closePath();
@@ -10046,7 +10063,7 @@ const b = {
         }
       },
       renderLightning() {
-        if(this.spear) {
+        if (this.spear) {
           let shock = 20;
           for (let i = 0; i < this.bladeSegments.length; i++) {
             const blade = this.bladeSegments[i];
@@ -10078,7 +10095,7 @@ const b = {
               ctx.stroke();
             }
           }
-          for(let i = 0; i < this.bladeSegments.length; i++) {
+          for (let i = 0; i < this.bladeSegments.length; i++) {
             ctx.beginPath();
             ctx.lineJoin = "miter";
             ctx.miterLimit = 100;
@@ -10086,7 +10103,7 @@ const b = {
             ctx.lineWidth = 10;
             ctx.fillStyle = "white";
             ctx.moveTo(this.bladeSegments[i].vertices[0].x + shock * Math.random() - shock * Math.random(), this.bladeSegments[i].vertices[0].y + shock * Math.random() - shock * Math.random());
-            for(let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
+            for (let j = 0; j < this.bladeSegments[i].vertices.length; j++) {
               ctx.lineTo(this.bladeSegments[i].vertices[j].x + shock * Math.random() - shock * Math.random(), this.bladeSegments[i].vertices[j].y + shock * Math.random() - shock * Math.random())
             };
             ctx.closePath();
@@ -10095,7 +10112,7 @@ const b = {
             ctx.lineJoin = "round";
             ctx.miterLimit = 10;
           }
-          for(let i = 0; i < this.bladeSegments.length - 1; i++) {
+          for (let i = 0; i < this.bladeSegments.length - 1; i++) {
             this.lightning(this.bladeSegments[i].position.x, this.bladeSegments[i].position.y, this.bladeSegments[i + 1].position.x, this.bladeSegments[i + 1].position.y)
           }
         }
@@ -10138,11 +10155,11 @@ const b = {
             }
           }
           const gradient = ctx.createRadialGradient(
-            this.bladeSegments[0].vertices[0].x, 
-            this.bladeSegments[0].vertices[0].y, 
+            this.bladeSegments[0].vertices[0].x,
+            this.bladeSegments[0].vertices[0].y,
             0,
-            this.bladeSegments[0].vertices[0].x, 
-            this.bladeSegments[0].vertices[0].y, 
+            this.bladeSegments[0].vertices[0].x,
+            this.bladeSegments[0].vertices[0].y,
             Math.abs(Math.sin(simulation.cycle / 30)) * 1000
           );
           for (let i = 0; i < this.bladeSegments.length; i++) {
@@ -10206,7 +10223,7 @@ const b = {
         }
       },
       collision() {
-        if(this.spear) {
+        if (this.spear) {
           for (let i = 0; i < mob.length; i++) {
             if (Matter.Query.collides(this.spear, [mob[i]]).length > 0) {
               const dmg = Math.sqrt((m.damageDone ? m.damageDone : m.dmgScale) * Math.sqrt(this.spear.speed)) * (tech.spearEye ? (m.health > 0.01 ? 3 : 1) : 1);
@@ -10218,10 +10235,10 @@ const b = {
                 color: simulation.mobDmgColor,
                 time: simulation.drawTime
               });
-              if(tech.shockSpear) {
+              if (tech.shockSpear) {
                 mobs.statusStun(mob[i], 10);
               }
-              if(this.durability > 0) {
+              if (this.durability > 0) {
                 this.durability--;
               }
               break
@@ -10413,7 +10430,7 @@ const b = {
     },
     {
       name: "MR ferrofluid",
-      descriptionFunction() { return `spray <b>ferrofluid particles</b> that <b>attract</b> and <b>solidify</b><br>drains <b>2.2</b> <b class="color-f">energy</b> per second<br><strong>${this.ammoPack.toFixed(0)}</strong> shots per ${powerUps.orb.ammo()}`},
+      descriptionFunction() { return `spray <b>ferrofluid particles</b> that <b>attract</b> and <b>solidify</b><br>drains <b>2.2</b> <b class="color-f">energy</b> per second<br><strong>${this.ammoPack.toFixed(0)}</strong> shots per ${powerUps.orb.ammo()}` },
       ammo: 24000,
       ammoPack: 300,
       defaultAmmoPack: 300,
@@ -10481,7 +10498,7 @@ const b = {
               const wiggleMag = (m.crouch ? 3 : 9) * Math.cos(Math.sin(simulation.cycle) * 0.09);
               const wiggle = Vector.mult(transverse, wiggleMag * Math.cos(this.cycle * 0.36));
               const velocity = Vector.mult(player.velocity, 0.4);
-              if(m.crouch && Vector.magnitude(Vector.sub(this.position, m.pos)) > (Vector.magnitude(Vector.sub(simulation.mouseInGame, m.pos)) / 10) && !(Vector.magnitude(Vector.sub(this.position, m.pos)) > (Vector.magnitude(Vector.sub(simulation.mouseInGame, m.pos)) * 10))) {
+              if (m.crouch && Vector.magnitude(Vector.sub(this.position, m.pos)) > (Vector.magnitude(Vector.sub(simulation.mouseInGame, m.pos)) / 10) && !(Vector.magnitude(Vector.sub(this.position, m.pos)) > (Vector.magnitude(Vector.sub(simulation.mouseInGame, m.pos)) * 10))) {
                 this.endCycle += 1.01 * this.valueReduction;
                 this.valueReduction *= 0.95;
               }
@@ -10540,9 +10557,9 @@ const b = {
             }
           }
         }
-        if(m.crouch) {
+        if (m.crouch) {
           for (let i = bullet.length - 1; i > 0; --i) {
-            if(bullet[i].isWave2) {
+            if (bullet[i].isWave2) {
               bullet[i].force = Vector.mult(Vector.normalise(Vector.sub(bullet[i].position, simulation.mouseInGame)), -bullet[i].mass * 0.015);
               if (this.speed > 6) {
                 Matter.Body.setVelocity(bullet[i], { x: bullet[i].velocity.x * 0.9, y: bullet[i].velocity.y * 0.9 });
