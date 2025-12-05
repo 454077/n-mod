@@ -349,8 +349,6 @@ try {
   file with them, the game will tell me that not only I have overwritten the wrong file, but also what files are faulty.
 
   This file will also throw the report if there are syntax errors in any of the files.
-  Not only that, it will also correctly identify the files that have syntax errors. (although it will not say what, or where in
-  the file, the syntax errors are)
 
   Let me know what you think! :)
 
