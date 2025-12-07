@@ -8717,6 +8717,70 @@ const tech = {
         tech.isHarpoonFullHealth = false
       }
     },
+    /*{
+			name: "harpoon-bot",
+			descriptionFunction() {
+				return `construct a <strong class='color-bot'>bot</strong> that fires <strong>harpoons</strong> at mobs<br>collects nearby <b>power ups</b>`
+			},
+			isGunTech: false,
+			maxCount: 9,
+			count: 0,
+			frequency: 1,
+            frequencyDefault: 1,
+            isBot: true,
+            isBotTech: true,
+			allowed() {
+				return true
+			},
+			requires: "",
+			effect() {
+                b.harpoonBot();
+                tech.harpoonBot += 1;
+                if(!this.count) {
+                    simulation.ephemera.push({
+                        name: "harpoonBot",
+                        do() {
+                            if (simulation.cycle % 250 === 0) {
+                                let harpoonFound = 0;
+                                for (let i = 0; i < bullet.length; i++) {
+                                    if (bullet[i].botType === "harpoon") {
+                                        harpoonFound++;
+                                    }
+                                }
+                                if (harpoonFound < tech.harpoonBot) {
+                                    for(let i = 0; i < tech.harpoonBot - harpoonFound; i++) {
+                                        b.harpoonBot();
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+			},
+			remove() {
+                tech.harpoonBot = 0;
+				simulation.removeEphemera("harpoonBot")
+			}
+		},
+        {
+            name: "harpoon-bot upgrade",
+            description: "<b>upgrade</b> your harpoon <strong class='color-bot'>bot</strong><br>to deal more <strong class='color-d'>damage</strong>",
+            maxCount: 1,
+            count: 0,
+            frequency: 3,
+            frequencyDefault: 3,
+            isBotTech: true,
+            allowed() {
+                return tech.harpoonBot
+            },
+            requires: "harpoon bot",
+            effect() {
+                tech.isHarpoonBotUpgrade = true
+            },
+            remove() {
+                tech.isHarpoonBotUpgrade = false
+            }
+        },*/
     {
       name: "quasiparticles",
       descriptionFunction() {
