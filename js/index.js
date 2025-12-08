@@ -27,7 +27,7 @@ window.addEventListener('error', error => {
   //console.error(error);
   try {
     let isBrowserSupport = (error.filename !== "") //for some stupid reason, filename is a non-standard error property exclusive to FireFox
-    console.warn(`Script Error in ${error.filename || 'a source file'}: `,error.message)
+    console.warn(`Script Error in ${error.filename || 'a source file'}: `, error.message)
     // simulation.inGameConsole(`<strong style='color:red;'>ERROR:</strong> ${error.message}  <u>${error.filename}:${error.lineno}</u>`)
     simulation.lastLogTime = 0 //prevent spamming by clearing console
     let errorMsg = null
@@ -39,7 +39,7 @@ window.addEventListener('error', error => {
     }
     simulation.inGameConsole(`<strong style='color:red;'>ERROR:</strong> ${errorMsg}`, 480); //show for 8 seconds
   } catch (err) {
-    console.error("Logging Error: ",err)
+    console.error("Logging Error: ", err)
   }
   //}
 });
@@ -55,8 +55,8 @@ Math.seededRandom = function (min = 0, max = 1) { // in order to work 'Math.seed
 
 function seededShuffle(array) {
   var currentIndex = array.length,
-      temporaryValue,
-      randomIndex;
+    temporaryValue,
+    randomIndex;
   // While there remain elements
   while (0 !== currentIndex) {
     // Pick a remaining element...
@@ -1438,9 +1438,9 @@ document.getElementById("history").addEventListener("change", (event) => {
 });
 
 
-function onChatInputChange(e){
+function onChatInputChange(e) {
   if (simulation.testing && simulation.isChatMenuOpen &&
-      !cmdConsole.isHistoryInputFocused && cmdConsole.historyIDX === 0) {
+    !cmdConsole.isHistoryInputFocused && cmdConsole.historyIDX === 0) {
     cmdConsole.cachedCmd = document.getElementById("chat-input").value
   }
 }
@@ -1465,7 +1465,7 @@ document.getElementById("jump-to").addEventListener("mousedown", (event) => {
 window.addEventListener("keydown", function (event) {
   if (simulation.isChatMenuOpen) { //if player is typing in chat, ignore keypresses
     if (cmdConsole.isHistoryInputFocused) {
-    
+
     } else {
       if (event.key === "Escape") { //keypress to close chat window
         simulation.closeChatWindow();
@@ -1697,63 +1697,63 @@ window.addEventListener("keydown", function (event) {
 
     if (simulation.testing) {
       if (event.key === "X") m.death(); //only uppercase
-      if (event.key === "F"){
+      if (event.key === "F") {
         const mode = (m.fieldMode === 0) ? m.fieldUpgrades.length - 1 : m.fieldMode - 1;
         m.setField(mode);
       }
-      if (event.key === "f"){
+      if (event.key === "f") {
         const mode = (m.fieldMode === m.fieldUpgrades.length - 1) ? 0 : m.fieldMode + 1;
         m.setField(mode);
       }
       if (event.key === "Enter" && !simulation.isChatMenuOpen) {
         simulation.openChatMenu();
       }
-      if (event.key === "`"){
+      if (event.key === "`") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "coupling");
       }
-      if (event.key === "~"){
+      if (event.key === "~") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "boost");
       }
-      if (event.key === "1"){
+      if (event.key === "1") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "heal");
       }
-      if (event.key === "2"){
+      if (event.key === "2") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "ammo");
       }
-      if (event.key === "3"){
+      if (event.key === "3") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "research");
       }
-      if (event.key === "4"){
+      if (event.key === "4") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "gun");
       }
-      if (event.key === "5"){
+      if (event.key === "5") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "field");
       }
-      if (event.key === "6"){
+      if (event.key === "6") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "tech");
       }
-      if (event.key === "7"){
+      if (event.key === "7") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "difficulty");
       }
-      if (event.key === "8"){
+      if (event.key === "8") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "instructions");
       }
-      if (event.key === "9"){
+      if (event.key === "9") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "warp");
       }
-      if (event.key === "0"){
+      if (event.key === "0") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "entanglement");
       }
-      if (event.key === "-"){
+      if (event.key === "-") {
         powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "settings");
       }
-      if (event.key === "*"){
+      if (event.key === "*") {
         spawn.bodyRect(simulation.mouseInGame.x, simulation.mouseInGame.y, 50, 50);
       }
-      if (event.key === "("){
+      if (event.key === "(") {
         spawn.randomMobByLevelsCleared(simulation.mouseInGame.x, simulation.mouseInGame.y);
       }
-      if (event.key === ")"){
+      if (event.key === ")") {
         spawn.randomLevelBoss(simulation.mouseInGame.x, simulation.mouseInGame.y);
       }
       switch (event.key.toLowerCase()) {
@@ -1817,8 +1817,8 @@ window.addEventListener("keydown", function (event) {
           level.nextLevel();
           break
         case "j":
-          for (let i = 0, len = mob.length; i < len; ++i){
-            if (mob[i].isFinalBoss){
+          for (let i = 0, len = mob.length; i < len; ++i) {
+            if (mob[i].isFinalBoss) {
               simulation.inGameConsole("<strong style='color:red;'>finalBoss</strong>: Your testing powers are useless against me.")
             } else if (!mob[i].isZombie) {
               mob[i].damage(Infinity, true)
@@ -2012,6 +2012,10 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
     localSettings.pauseMenuDetailsOpen = [true, false, false, true]
     localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
   }
+  if (localSettings.techHistory === undefined) {
+    localSettings.techHistory = []
+    localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+  }
 } else {
   console.log('setting default localSettings')
   const isAllowed = localSettings.isAllowed //don't overwrite isAllowed value
@@ -2033,7 +2037,8 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
     key: undefined,
     isHideImages: true, //default to hide images
     isHideHUD: false,
-    pauseMenuDetailsOpen: [true, false, false, true]
+    pauseMenuDetailsOpen: [true, false, false, true],
+    techHistory: [],
   };
   input.setDefault()
   if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage

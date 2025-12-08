@@ -312,6 +312,12 @@ const powerUps = {
       if (tech.isCancelTech) {
         tech.canTechReroll = true
       }
+      //add to list of techHistory in local storage
+      if (localSettings.isAllowed && !simulation.isCheating && !m.isSwitchingWorlds) {
+        localSettings.techHistory.push(tech.tech[index].name)
+        if (localSettings.techHistory.length > 1000) localSettings.techHistory.shift() //prevent the local storage from taking up too much space by remove oldest tech names
+        localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+      }
       simulation.inGameConsole(`<div class="circle-grid tech"></div> &nbsp; <span class='color-var'>tech</span>.giveTech("<strong class='color-text'>${tech.tech[index].name}</strong>")`);
       tech.giveTech(index)
     }
@@ -1157,7 +1163,7 @@ const powerUps = {
     }
   },
   cancelText(type) {
-    if (tech.isSuperDeterminism || type === "constraint") {
+    if (tech.isSuperDeterminism || type === "constraint" || type === "entanglement") {
       return `<div></div>`
     } else if (tech.isCancelTech && (
       (type === "gun" && tech.cancelGunCount < tech.isCancelCount && tech.canGunReroll) ||
