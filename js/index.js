@@ -1,6 +1,6 @@
 setTimeout(() => {
   fileLoads.isIndexJS = true; //for file handling in fileTester.js
-}, 100);
+}, 10);
 
 //list of the recent github hashes, shortened to the first 7 digits of the full hash.
 //the last element of the array is the most recent commit
@@ -34,8 +34,9 @@ window.addEventListener('error', error => {
     if (isBrowserSupport) {
       errorMsg = (error.stack && error.stack.replace(/\n/g, "<br>")) || (error.message + ` <u>${error.filename}:${error.lineno}</u>`)
     } else {
-      errorMsg = `Uncaught Error. <u>:Full error information is not available
-    <br>due to browser incompatibility with</u> <a href="lib/warning.html" target="_blank">non-standard properties</a>`
+      errorMsg = `${err.name}. <u>:${error.message}</u>`
+      /*errorMsg = `Uncaught Error. <u>:Full error information is not available
+    <br>due to browser incompatibility with</u> <a href="lib/warning.html" target="_blank">non-standard properties</a>`*/
     }
     simulation.inGameConsole(`<strong style='color:red;'>ERROR:</strong> ${errorMsg}`, 480); //show for 8 seconds
   } catch (err) {
@@ -1203,6 +1204,41 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
     document.getElementById("experiment-grid").style.display = "none"
     simulation.paused = false;
     requestAnimationFrame(cycle);
+  },
+  sound: {
+    tone(frequency, end = 1000, gain = 0.05) {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); //setup audio context
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      gainNode.gain.value = gain; //controls volume
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      oscillator.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
+      oscillator.frequency.value = frequency; // value in hertz
+      oscillator.start();
+      setTimeout(() => {
+        audioCtx.suspend()
+        audioCtx.close()
+      }, end)
+      // return audioCtx
+    },
+    portamento(frequency, end = 1000, shiftRate = 10, gain = 0.05) {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); //setup audio context
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      gainNode.gain.value = gain; //controls volume
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      oscillator.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
+      oscillator.frequency.value = frequency; // value in hertz
+      oscillator.start();
+      for (let i = 0, len = end * 0.1; i < len; i++) oscillator.frequency.setValueAtTime(frequency + i * shiftRate, audioCtx.currentTime + i * 0.01);
+      setTimeout(() => {
+        audioCtx.suspend()
+        audioCtx.close()
+      }, end)
+      // return audioCtx
+    }
   }
 }
 

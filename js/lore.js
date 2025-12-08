@@ -44,9 +44,9 @@ const lore = {
     // document.getElementById("experiment-button").style.visibility = (localSettings.loreCount === 0) ? "hidden" : "visible"
     simulation.inGameConsole(`<span class='color-var'>lore</span>.unlockTesting()`, Infinity);
     try {
-      sound.portamento(50)
-      sound.portamento(83.333)
-      sound.portamento(166.666)
+      build.sound.portamento(50)
+      build.sound.portamento(83.333)
+      build.sound.portamento(166.666)
     } catch (err) {
       simulation.inGameConsole(`<strong style='color:red;'>ERROR:</strong> Script error in <a href='js/lore.js>lore.js</a>. <u>:${err}</u>`);
     }

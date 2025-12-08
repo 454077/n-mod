@@ -1,12 +1,12 @@
 const jsSrcs = [
   {
     name: "Matter",
-    src: 'lib/matter.min.js' 
+    src: 'lib/matter.min.js'
   },
   {
     name: "Prototypes",
     src: 'lib/prototypes.js'
-  },   
+  },
   {
     name: "Simulation",
     src: "js/simulation.js"
@@ -36,13 +36,39 @@ const jsSrcs = [
     src: "js/entities/spawn.js"
   },
   {
-    name: "Level",
-    src: "js/level/level.js"
+    name: "Level Handler",
+    src: "js/level/levelHandler.js"
   },
   {
     name: "Level List",
     src: "js/level/levelList.js"
   },
+  /*
+  {
+    name: "Main Levels",
+    src: "js/level/mainLevels.js"
+  },
+  {
+    name: "Training Levels",
+    src: "js/level/trainingLevels.js"
+  },
+  {
+    name: "Community Levels",
+    src: "js/level/communityLevels.js"
+  },
+  {
+    name: "Lore Levels",
+    src: "js/level/loreLevels.js"
+  },
+  {
+    name: "Removed Levels",
+    src: "js/level/removedLevels.js"
+  },
+  {
+    name: "Mod Levels",
+    src: "js/level/modLevels.js"
+  },
+  */
   {
     name: "Lore",
     src: "js/lore.js"
@@ -78,7 +104,16 @@ const fileLoads = { //each of these values is (supposed to be) set to true in it
   isBulletJS: false,
   isMobJS: false,
   isSpawnJS: false,
-  isLevelJS: false,
+  isLevelHandlerJS: false,
+  isLevelListJS: false,
+  /*
+  isMainLevelsJS: false,
+  isTrainingLevelsJS: false,
+  isCommunityLevelsJS: false,
+  isLoreLevelsJS: false,
+  isRemovedLevelsJS: false,
+  isModLevelsJS: false,
+  */
   isLoreJS: false,
   isEngineJS: false,
   isIndexJS: false,
@@ -86,11 +121,12 @@ const fileLoads = { //each of these values is (supposed to be) set to true in it
   isAudioPlayer: false,
   isCommandConsoleJS: false
 };
+//const fullLevelList = {}
 let startBtn = document.getElementById("start-button"), trainBtn = document.getElementById("training-button"),
-    experimentBtn = document.getElementById("experiment-button"), splashStart = document.getElementById("splash"),
-    infoDiv = document.getElementById("info"), communityMaps = document.getElementById("community-maps"),
-    hideHUD = document.getElementById("hide-hud"), hideImages = document.getElementById("hide-images"),
-    bannedLevels = document.getElementById("banned")
+  experimentBtn = document.getElementById("experiment-button"), splashStart = document.getElementById("splash"),
+  infoDiv = document.getElementById("info"), communityMaps = document.getElementById("community-maps"),
+  hideHUD = document.getElementById("hide-hud"), hideImages = document.getElementById("hide-images"),
+  bannedLevels = document.getElementById("banned")
 try {
   let errors = [], dotCount = 0, text = ""
   setTimeout(() => {
@@ -104,9 +140,9 @@ try {
       experimentBtn.innerHTML = `<text stroke='none' fill='#333' stroke-width="2" font-size="15px",
             	sans-serif" x="10" y="32">${text}</text>`;
       document.title = `n-mod (${text})`
-      dotCount = (dotCount + 1)%4
+      dotCount = (dotCount + 1) % 4
     }, 250);
-    for (let i = 0; i <= jsSrcs.length; i ++) {
+    for (let i = 0; i <= jsSrcs.length; i++) {
       if (i < jsSrcs.length) { //load each .js file
         let tag = document.createElement('script'), obj = jsSrcs[i]
         tag.src = obj.src
@@ -128,7 +164,7 @@ try {
           if (errors.length > 0) { //if any files are not properly defined, overwrite document with error report
             document.body.style.backgroundColor = "white";
             let text = `<h1 style="color:red"><u>ERROR LOADING THE FOLLOWING FILES:</u></h1><hr><ul>`
-            errors.forEach(function(item) { //compile list of error locations
+            errors.forEach(function (item) { //compile list of error locations
               text += `<li><a href="${item.src}">${item.name}</a></li>`
             });
             text += `</ul><hr>Please define and/or fix the files at these source locations.`
@@ -213,7 +249,8 @@ try {
             <text x="599" y="438">field</text>
         </g>
             `//when game finishes loading, start splash screen animation
-            
+
+            //Object.assign(fullLevelList, mainLevels, trainingLevels, communityLevels, removedLevels, modLevels, loreLevels); //populate level list
             if (localSettings) {
               communityMaps.checked = localSettings.isCommunityMaps
               hideHUD.checked = localSettings.isHideHUD
@@ -241,49 +278,12 @@ try {
               localSettings.isCommunityMaps = simulation.isCommunityMaps
               if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
             });
-
-            const sound = {
-              tone(frequency, end = 1000, gain = 0.05) {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); //setup audio context
-                const oscillator = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                gainNode.gain.value = gain; //controls volume
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                oscillator.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
-                oscillator.frequency.value = frequency; // value in hertz
-                oscillator.start();
-                setTimeout(() => {
-                  audioCtx.suspend()
-                  audioCtx.close()
-                }, end)
-                // return audioCtx
-              },
-              portamento(frequency, end = 1000, shiftRate = 10, gain = 0.05) {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); //setup audio context
-                const oscillator = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                gainNode.gain.value = gain; //controls volume
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                oscillator.type = "sine"; // 'sine' 'square', 'sawtooth', 'triangle' and 'custom'
-                oscillator.frequency.value = frequency; // value in hertz
-                oscillator.start();
-                for (let i = 0, len = end * 0.1; i < len; i++) oscillator.frequency.setValueAtTime(frequency + i * shiftRate, audioCtx.currentTime + i * 0.01);
-                setTimeout(() => {
-                  audioCtx.suspend()
-                  audioCtx.close()
-                }, end)
-                // return audioCtx
-              }
-            }
             infoDiv.style.visibility = 'visible'
-            startBtn.onclick = function(){tryRunning.start()}
-            trainBtn.onclick = function(){tryRunning.training()}
-            experimentBtn.onclick = function(){tryRunning.experiment()}
-            splashStart.onclick = function(){tryRunning.start()}
+            startBtn.onclick = function () { tryRunning.start() }
+            trainBtn.onclick = function () { tryRunning.training() }
+            experimentBtn.onclick = function () { tryRunning.experiment() }
+            splashStart.onclick = function () { tryRunning.start() }
             document.body.appendChild(container); //append script loader (created in scriptLoader.js)
-            
             /*
             const todoDetails = document.getElementById("todo-list")
             todoDetails.addEventListener("toggle", function () {
@@ -316,7 +316,7 @@ try {
                 }
               }
             })*/
-            
+
           }
         }, 250 * Object.values(fileLoads).length + 100); //ensure .js files are loaded BEFORE attempting error check
       }
@@ -339,10 +339,10 @@ try {
   **************************************************************************************************
 
 
-	I wrote this file because previously, I kept accidentally overwriting the wrong .js file after making changes to the code.
-	And when I went to test the changes made (by refreshing the index.html page in my browser, so n-gon could recognize that
-	there were any changes in its code) I wouldn't know that I had saved my changes to the wrong file, until I tried running the
-	game and discovered that it wouldn't run. To fix this, I decided to engineer a way for the game to attempt to load its .js
+  I wrote this file because previously, I kept accidentally overwriting the wrong .js file after making changes to the code.
+  And when I went to test the changes made (by refreshing the index.html page in my browser, so n-gon could recognize that
+  there were any changes in its code) I wouldn't know that I had saved my changes to the wrong file, until I tried running the
+  game and discovered that it wouldn't run. To fix this, I decided to engineer a way for the game to attempt to load its .js
   files, see what code it's missing, and, if it detects that it's missing some of its functional code, overwrite the document
   with an error report containing the locations of the faulty/undefined files. After a couple days of testing, debugging,
   rinse and repeat, it was done. My file tester was working. Now, whenever I save changes for one file, but overwrite another
@@ -354,4 +354,4 @@ try {
 
     -R3d5t0n3_GUY
 
-*/    
+*/

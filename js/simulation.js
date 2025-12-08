@@ -881,6 +881,7 @@ splashReturn() {
 fpsInterval: 0, //set in startGame
 then: null,
 startGame(isBuildRun = false, isTrainingRun = false) {
+  //level.fullLevelList = mainLevels.appendObjects([trainingLevels, communityLevels, removedLevels, modLevels, loreLevels]);
   simulation.isTextLogOpen = true
   simulation.clearMap()
   if (!isBuildRun) { //if a build run logic flow returns to "experiment-button").addEventListener

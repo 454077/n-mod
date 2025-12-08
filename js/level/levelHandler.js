@@ -1,5 +1,5 @@
 setTimeout(() => {
-  fileLoads.isLevelJS = true; //for file handling in fileTester.js
+  fileLoads.isLevelHandlerJS = true; //for file handling in fileTester.js
 }, 10);
 
 let body = []; //non static bodies
@@ -25,8 +25,9 @@ const level = {
                      "harpoon"],
     removedCommunityLevels: ["lock", "reservoir", "interferometer", "diamagnetism", "run", "biohazard", "stereoMadness",
 		"yingYang", "staircase", "buttonbutton", "downpour", "underpass", "cantilever", "shipwreck",
-		"unchartedCave", "dojo", "arena", "flappyGon", "rings", "trial", "soft", "movers", "gettingOverIt",
-        "movementTech", "descent", "split", "boundary", "bifurcate"],
+		"unchartedCave", "dojo", "arena", "flappyGon", "rings", "trial", "soft", "movers"],
+    modSpecificLevels: [ "gettingOverIt", "movementTech", "descent", "split", "boundary", "bifurcate"],
+    //fullLevelList: {},
     levels: [],
     start() {
         if (level.levelsCleared === 0) { //this code only runs on the first level
@@ -80,7 +81,7 @@ const level = {
             // spawn.bodyRect(575, -700, 150, 150);  //block mob line of site on testing
             // level.interferometer()
             // level.testing()
-
+            
             levelList[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
 
             // for (let i = 0; i < 1; i++) spawn.finalBoss(1100 + 100 * i, -100)
@@ -246,7 +247,7 @@ const level = {
             for (let i = 0; i < len; i++) powerUps.spawn(player.position.x + 90 * (Math.random() - 0.5), player.position.y + 90 * (Math.random() - 0.5), "heal", false);
         }
         if (tech.interestRate > 0) {
-            // const rate = ((levelList[level.levels[level.onLevel]].name === "final" || levelList[level.levels[level.onLevel]].name === "subway") ? 1 / 3 : 1) * tech.interestRate //this effect triggers extra times on these final levels
+            // const rate = ((fullLevelList[level.levels[level.onLevel]].name === "final" || fullLevelList[level.levels[level.onLevel]].name === "subway") ? 1 / 3 : 1) * tech.interestRate //this effect triggers extra times on these final levels
             let rate = tech.interestRate
             if (level.onLevel < level.levels.length - 1) {//make sure it's not on the lore level which has an undefined name
                 const levelName = level.levels[level.onLevel]

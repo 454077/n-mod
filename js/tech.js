@@ -252,9 +252,9 @@ const tech = {
         }
       }
       console.log('cheating')
-      sound.tone(250)
-      sound.tone(300)
-      sound.tone(375)
+      build.sound.tone(250)
+      build.sound.tone(300)
+      build.sound.tone(375)
     }
   },
   haveGunCheck(name, needActive = true) {
@@ -13006,33 +13006,33 @@ const tech = {
 
         delay = 1000
         setTimeout(() => {
-          sound.suspend()
+          build.sound.suspend()
           powerUps.spawn(m.pos.x + 160 * (Math.random() - 0.5), m.pos.y + 160 * (Math.random() - 0.5), "heal");
           setTimeout(() => {
-            sound.resume()
+            build.sound.resume()
             setTimeout(() => {
-              sound.suspend()
+              build.sound.suspend()
               powerUps.spawn(m.pos.x + 160 * (Math.random() - 0.5), m.pos.y + 160 * (Math.random() - 0.5), "heal");
               setTimeout(() => {
-                sound.resume()
+                build.sound.resume()
                 setTimeout(() => {
-                  sound.suspend()
+                  build.sound.suspend()
                   powerUps.spawn(m.pos.x + 160 * (Math.random() - 0.5), m.pos.y + 160 * (Math.random() - 0.5), "heal");
                   setTimeout(() => {
-                    sound.resume()
+                    build.sound.resume()
                     setTimeout(() => {
-                      sound.suspend()
+                      build.sound.suspend()
                       powerUps.spawn(m.pos.x + 160 * (Math.random() - 0.5), m.pos.y + 160 * (Math.random() - 0.5), "heal");
                       setTimeout(() => {
-                        sound.resume()
+                        build.sound.resume()
                         setTimeout(() => {
-                          sound.suspend()
+                          build.sound.suspend()
                           powerUps.spawn(m.pos.x + 160 * (Math.random() - 0.5), m.pos.y + 160 * (Math.random() - 0.5), "heal");
                           setTimeout(() => {
-                            sound.resume()
+                            build.sound.resume()
                             setTimeout(() => {
-                              sound.suspend()
-                              sound.close()
+                              build.sound.suspend()
+                              build.sound.close()
                               powerUps.spawn(m.pos.x + 160 * (Math.random() - 0.5), m.pos.y + 160 * (Math.random() - 0.5), "heal");
                             }, delay);
                           }, delay);
@@ -14683,7 +14683,7 @@ const tech = {
             if (this.count && this.researchSpawned < 12 && !(this.state.length % 10)) {
               this.researchSpawned++
               powerUps.spawn(m.pos.x - 50 + 100 * (Math.random() - 0.5), m.pos.y + 100 * (Math.random() - 0.5), "research");
-              sound.portamento(300, 600, 100, 0.03)//portamento(frequency, end = 1000, shiftRate = 10, gain = 0.05) {
+              build.sound.portamento(300, 600, 100, 0.03)//portamento(frequency, end = 1000, shiftRate = 10, gain = 0.05) {
             }
             setTimeout(() => {
               loop()
@@ -14755,7 +14755,7 @@ const tech = {
             if (this.count && this.researchSpawned < 12 && !(this.state.length % 10)) {
               this.researchSpawned++
               powerUps.spawn(m.pos.x - 50 + 100 * (Math.random() - 0.5), m.pos.y + 100 * (Math.random() - 0.5), "research");
-              sound.portamento(300, 600, 100, 0.03)//portamento(frequency, end = 1000, shiftRate = 10, gain = 0.05) {
+              build.sound.portamento(300, 600, 100, 0.03)//portamento(frequency, end = 1000, shiftRate = 10, gain = 0.05) {
             }
             setTimeout(() => {
               loop()
