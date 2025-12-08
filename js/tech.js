@@ -4798,7 +4798,7 @@ const tech = {
             freqMap.set(str, (freqMap.get(str) || 0) + 1);
           }
           const unique = [...new Set(arr)]; // Get unique strings in order of first appearance
-          return unique.sort((a, b) => freqMap.get(a) - freqMap.get(b)); // Sort by frequency (ascending), maintaining original order for same frequency
+          return unique.sort((a, b) => freqMap.get(b) - freqMap.get(a)); // Sort by frequency (descending), maintaining original order for same frequency
         }
         const sorted = sortByFrequency(localSettings.techHistory)
 
@@ -4848,7 +4848,7 @@ const tech = {
             freqMap.set(str, (freqMap.get(str) || 0) + 1);
           }
           const unique = [...new Set(arr)]; // Get unique strings in order of first appearance
-          return unique.sort((a, b) => freqMap.get(a) - freqMap.get(b)); // Sort by frequency (ascending), maintaining original order for same frequency
+          return unique.sort((a, b) => freqMap.get(b) - freqMap.get(a)); // Sort by frequency (descending), maintaining original order for same frequency
         }
         const sorted = sortByFrequency(localSettings.techHistory)
 
