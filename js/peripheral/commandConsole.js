@@ -13,7 +13,7 @@ const cmdConsole = {
   cachedCmd: "",
   requestCmd(string) {
     simulation.closeChatWindow();
-    if (string.replace(/\s/g,"") != "") {
+    if (string.replace(/\s/g, "") != "") {
       if (cmdConsole.history[cmdConsole.history.length - 1] !== string) {
         document.getElementById("history").max = cmdConsole.history.length + 2
         cmdConsole.history.push(string)
@@ -45,7 +45,11 @@ const cmdConsole = {
         try {
           let item = cmdConsole.cmdList[cmdConsole.cmdIDX]
           string = string.slice(item.name.length + 1) //remove the command name from its input
-          item.effect(string);
+          if (item.checkSyntax(string)[0]) { //if syntax is correct
+            item.effect(string);
+          } else {
+            throw new SyntaxError(item.checkSyntax(string)[1] || "Syntax logic is not defined");
+          }
         } catch (err) { //if an error occurs during execution
           document.getElementById('text-log').innerHTML = oldHTML //revert inGameConsole, in case logging occurred during execution
           simulation.lastLogTime = 0 //clear console
@@ -70,7 +74,7 @@ const cmdConsole = {
   },
   checkForName(name) {
     let result = false
-    result = cmdConsole.cmdList.findIndex((itm) =>{
+    result = cmdConsole.cmdList.findIndex((itm) => {
       return itm.name === name
     });
     return result
@@ -78,7 +82,7 @@ const cmdConsole = {
   isUpDnSwitch: false,
   switchCmd(num, setTo = false) {
     let hist = cmdConsole.history, chatInput = document.getElementById('chat-input'), historyInput = document.getElementById("history")
-    if (cmdConsole.cachedCmd.replace(/\s/g,"") != "" && cmdConsole.cachedCmd !== hist[hist.length - 1]) hist.push(cmdConsole.cachedCmd);
+    if (cmdConsole.cachedCmd.replace(/\s/g, "") != "" && cmdConsole.cachedCmd !== hist[hist.length - 1]) hist.push(cmdConsole.cachedCmd);
     if (setTo) {
       cmdConsole.historyIDX = num
     } else {
@@ -92,55 +96,60 @@ const cmdConsole = {
   cmdList: [
     {
       name: "run",
-      effect(input) {
+      checkSyntax(input) {
         let pos = [input.indexOf("{"), input.lastIndexOf("}")];
-        if (input.replace(/\s/g,"").startsWith("function(){")) {
+        if (input.replace(/\s/g, "").startsWith("function(){")) {
           let trailing = input.slice(pos[1] + 1)
-          if (trailing.replace(/\s/g,"") === "" || trailing.replace(/\s/g,"").startsWith("//")) {
+          if (trailing.replace(/\s/g, "") === "" || trailing.replace(/\s/g, "").startsWith("//")) {
             let invalidPhrases = ["document", "EventListener", "innerHTML", "outerHTML", "getElementsBy", "getElementBy", "prototype", "createElement",
-				"appendChild", "removeChild", "eval", "runTemp", "console.", "const "], isInvalid = false, regExpTest = /cmdConsole(?!\.history)/;
-            	//this command should NOT access or alter HTML DOM, nor should it alter JS prototypes or request other commands, for security reasons
+              "appendChild", "removeChild", "eval", "runTemp", "console.", "const "], isInvalid = false, regExpTest = /cmdConsole(?!\.history)/;
+            //this command should NOT access or alter HTML DOM, nor should it alter JS prototypes or request other commands, for security reasons
             isInvalid = regExpTest.test(input);
             for (let i = 0, len = invalidPhrases.length; i < len; i++) {
               let item = invalidPhrases[i]
               if (input.includes(item)) isInvalid = true
-            } 
+            }
             if (isInvalid) {
-              throw new SyntaxError(`<strong class='color-var'>/run</strong> should NOT access any of the following:
+              return [false, `<strong class='color-var'>/run</strong> should NOT access any of the following:
               <ul>
               	<li>HTML DOM</li>
                 <li>JS Prototypes</li>
                 <li>Command Execution</li>
                 <li>Event Listeners</li>
-              </ul>`);
+              </ul>`]
             } else {
-              let runTemp = () => {
-                eval(input.substring(pos[0] + 1, pos[1]))
-              };
-              /*
-              Executing JS code from a string is an EXTREME SECURITY RISK;
-              With eval(), malicious code can be executed without your consent,
-              and third-party code can see the scope of your application, which can possibly lead to attacks.
-              		-warning from W3schools.com
-
-              I have put a trust system in place, so, HANDLE eval() WITH CARE HERE, AND DO NOT USE IT IN YOUR WEBSITES!
-              		-R3d5t0n3_GUY
-            */
-              runTemp();
+              return [true, ""];
             }
           } else {
-            throw new SyntaxError(`at "/run function... ..}&nbsp; <strong>&gt;&gt;&gt;<span style='color:red';>${trailing}</span>&lt;&lt;&lt; here</strong>`)
+            return [false, `at "/run function... ..}&nbsp; <strong>&gt;&gt;&gt;<span style='color:red';>${trailing}</span>&lt;&lt;&lt; here</strong>`]
           }
         } else {
           let fault = input.substring(0, (pos[0] > -1 ? pos[0] + 1 : input.length - 1));
-          throw new SyntaxError(`at "/run &nbsp; <strong>&gt;&gt;&gt;<span style='color:red';>${fault}</span>&lt;&lt;&lt; here</strong>`)
+          return [false, `at "/run &nbsp; <strong>&gt;&gt;&gt;<span style='color:red';>${fault}</span>&lt;&lt;&lt; here</strong>`]
         }
+        return
+      },
+      effect(input) {
+        let pos = [input.indexOf("{"), input.lastIndexOf("}")];
+        let runTemp = () => {
+          eval(input.substring(pos[0] + 1, pos[1]))
+        };
+        /*
+        Executing JS code from a string is an EXTREME SECURITY RISK;
+        With eval(), malicious code can be executed without your consent,
+        and third-party code can see the scope of your application, which can possibly lead to attacks.
+            -warning from W3schools.com
+
+        I have put a trust system in place, so, HANDLE eval() WITH CARE HERE, AND DO NOT USE IT IN YOUR WEBSITES!
+            -R3d5t0n3_GUY
+      */
+        runTemp();
       }
     },
     {
       name: "help",
       effect(input) {
-        
+
       }
     },
   ] //will expand the list

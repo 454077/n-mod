@@ -6,7 +6,7 @@ setTimeout(() => {
 const scripts = [
   { 
     name: 'Minimap',
-    url: 'js/minimap.js',
+    url: 'js/peripheral/minimap.js',
     loaded: false,
     attempt: 0,
     afterLoad() {},

@@ -13,11 +13,11 @@ const jsSrcs = [
   },
   {
     name: "Player",
-    src: "js/player.js"
+    src: "js/entities/player.js"
   },
   {
     name: "PowerUp",
-    src: "js/powerup.js"
+    src: "js/entities/powerup.js"
   },
   {
     name: "Tech",
@@ -25,23 +25,23 @@ const jsSrcs = [
   },
   {
     name: "Bullet",
-    src: "js/bullet.js"
+    src: "js/entities/bullet.js"
   },
   {
     name: "Mob",
-    src: "js/mob.js"
+    src: "js/entities/mob.js"
   },
   {
     name: "Spawn",
-    src: "js/spawn.js"
+    src: "js/entities/spawn.js"
   },
   {
     name: "Level",
-    src: "js/level.js"
+    src: "js/level/level.js"
   },
   {
     name: "Level List",
-    src: "js/levelList.js"
+    src: "js/level/levelList.js"
   },
   {
     name: "Lore",
@@ -57,15 +57,15 @@ const jsSrcs = [
   },
   {
     name: "Script Loader",
-    src: "js/scriptLoader.js"
+    src: "js/peripheral/scriptLoader.js"
   },
   {
     name: "Audio Player",
-    src: "js/audioPlayer.js"
+    src: "js/peripheral/audioPlayer.js"
   },
   {
     name: "Command Console",
-    src: "js/commandConsole.js"
+    src: "js/peripheral/commandConsole.js"
   }
 ];
 const fileLoads = { //each of these values is (supposed to be) set to true in its respective .js file
