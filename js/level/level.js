@@ -446,6 +446,25 @@ const level = {
             document.getElementById("right-HUD").style.top = "15px";
         }
     },
+     inGameText(x, y, text, count = 240, color = `rgb(200, 200, 200)`) {  //max width around 900-1000
+        let xAdjusted = x - text.length * 29 / 2
+        // simulation.draw.font.drawString('abcdefghijklmnopqrstuvwxyzdnasijfnibdiasbfuyabndkjbsdufdbaisfbkadsbfkusbfdkuhbsdfubdsaifbadosifbiousadbfiuasdbfiuasdbifubasi', x, y)
+        simulation.draw.font.word = new Path2D()
+        simulation.draw.font.drawString(text, xAdjusted, y)
+        simulation.ephemera.push({
+            name: "in game text",
+            onLevel: level.levels[level.onLevel],
+            count: count,
+            do() {
+                count--
+                if (count < 0 || !m.alive || this.onLevel !== level.levels[level.onLevel]) simulation.removeEphemera(this)
+                ctx.strokeStyle = color
+                ctx.lineWidth = 3// + Math.random()
+                ctx.beginPath()
+                ctx.stroke(simulation.draw.font.word)
+            },
+        })
+    },
     constraintDescription1: "", //used in pause menu and console
     constraintDescription2: "",
     constraint: [

@@ -14805,6 +14805,24 @@ const tech = {
       }
     },
     {
+        name: "chatter",
+        description: `you can listen in on what mobs are saying after you damage them`,
+        maxCount: 1,
+        count: 0,
+        frequency: 0,
+        isJunk: true,
+        allowed() {
+            return true
+        },
+        requires: "",
+        effect() {
+            tech.isChatter = true;
+        },
+        remove() {
+            tech.isChatter = false;
+        }
+    },
+    {
       name: "cosmogonic myth",
       description: `<span style = "opacity: 9%;">open a portal to a primordial version of reality<br>in 5 minutes close the portal, spawn 1 of each power up</span>`,
       maxCount: 1,
