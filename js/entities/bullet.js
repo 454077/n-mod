@@ -4577,10 +4577,15 @@ const b = {
   // **************************************************************************************************
   // **************************************************************************************************
   totalBots() {
-    return tech.dynamoBotCount + tech.foamBotCount + tech.soundBotCount + tech.nailBotCount + tech.laserBotCount + tech.boomBotCount + tech.orbitBotCount + tech.plasmaBotCount + tech.missileBotCount
+    return tech.dynamoBotCount + tech.foamBotCount + tech.soundBotCount + tech.nailBotCount +
+      tech.laserBotCount + tech.boomBotCount + tech.orbitBotCount + tech.plasmaBotCount +
+      tech.missileBotCount + tech.harpoonBotCount
   },
   hasBotUpgrade() {
-    return tech.isNailBotUpgrade + tech.isFoamBotUpgrade + tech.isBoomBotUpgrade + tech.isLaserBotUpgrade + tech.isOrbitBotUpgrade + tech.isDynamoBotUpgrade + tech.isSoundBotUpgrade
+    return tech.isNailBotUpgrade + tech.isFoamBotUpgrade + tech.isBoomBotUpgrade +
+      tech.isLaserBotUpgrade + tech.isOrbitBotUpgrade + tech.isDynamoBotUpgrade +
+      tech.isSoundBotUpgrade + tech.isMissileBotUpgrade + tech.isPlasmaBotUpgrade +
+      tech.isHarpoonBotUpgrade
   },
   convertBotsTo(type) { //type can be a string like "dynamoBotCount"
     const totalPermanentBots = b.totalBots()
@@ -4647,6 +4652,10 @@ const b = {
       tech.missileBotCount--
       return
     }
+    if (tech.harpoonBotCount > 1) {
+      tech.harpoonBotCount--
+      return
+    }
     if (tech.plasmaBotCount > 1) {
       tech.plasmaBotCount--
       return
@@ -4662,6 +4671,7 @@ const b = {
     tech.boomBotCount = 0;
     tech.plasmaBotCount = 0;
     tech.missileBotCount = 0;
+    tech.harpoonBotCount = 0;
   },
   respawnBots() {
     for (let i = 0; i < tech.dynamoBotCount; i++) b.dynamoBot({
@@ -4700,10 +4710,10 @@ const b = {
       x: player.position.x + 50 * (Math.random() - 0.5),
       y: player.position.y + 50 * (Math.random() - 0.5)
     })
-    /*for (let i = 0; i < tech.harpoonBotCount; i++) b.harpoonBot({
+    for (let i = 0; i < tech.harpoonBotCount; i++) b.harpoonBot({
       x: player.position.x + 50 * (Math.random() - 0.5),
       y: player.position.y + 50 * (Math.random() - 0.5)
-    })*/
+    })
     if (tech.isIntangible && m.isCloak) {
       for (let i = 0; i < bullet.length; i++) {
         if (bullet[i].botType) bullet[i].collisionFilter.mask = cat.map | cat.bullet | cat.mobBullet | cat.mobShield
@@ -5272,7 +5282,6 @@ const b = {
     })
     Composite.add(engine.world, bullet[me]); //add bullet to world
   },
-  /*
   harpoonBot(position = { x: player.position.x + 50 * (Math.random() - 0.5), y: player.position.y + 50 * (Math.random() - 0.5) }, isKeep = true) {
     const me = bullet.length;
     const dir = m.angle;
@@ -5339,9 +5348,9 @@ const b = {
                 dist < 300000 &&
                 Matter.Query.ray(map, this.position, powerUp[i].position).length === 0 &&
                 Matter.Query.ray(body, this.position, powerUp[i].position).length === 0 &&
-                !(powerUp[i].name == "heal" && m.health == m.maxHealth) &&
-                !shot
-              ) {
+                !(powerUp[i].name == "heal" && (m.health == m.maxHealth || (tech.isEnergyHealth && !powerUps.healGiveMaxEnergy))) &&
+                  !shot
+                ) {
                 const angle = Math.atan2(powerUp[i].position.y - this.position.y, powerUp[i].position.x - this.position.x)
                 const unit = Vector.normalise(Vector.sub(Vector.add(powerUp[i].position, Vector.mult(powerUp[i].velocity, Math.sqrt(dist) / 60)), this.position))
                 if (this.isUpgraded) {
@@ -5715,9 +5724,7 @@ const b = {
       }
     }
     Composite.add(engine.world, bullet[me]); //add bullet to world
-  }
   },
-  */
   laserBot(position = { x: player.position.x + 50 * (Math.random() - 0.5), y: player.position.y + 50 * (Math.random() - 0.5) }, isKeep = true) {
     const me = bullet.length;
     const dir = m.angle;

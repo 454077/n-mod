@@ -8815,70 +8815,63 @@ const tech = {
         tech.isHarpoonFullHealth = false
       }
     },
-    /*{
+    {
       name: "harpoon-bot",
       descriptionFunction() {
-        return `construct a <strong class='color-bot'>bot</strong> that fires <strong>harpoons</strong> at mobs<br>collects nearby <b>power ups</b>`
+        return `construct a <strong class='color-bot'>bot</strong> that fires <strong>harpoons</strong> at mobs<br>collects nearby <strong>power ups</strong>`
       },
-      isGunTech: false,
+      isGunTech: true,
       maxCount: 9,
       count: 0,
       frequency: 1,
-            frequencyDefault: 1,
-            isBot: true,
-            isBotTech: true,
+      frequencyDefault: 1,
+      isBot: true,
+      isBotTech: true,
       allowed() {
         return true
       },
       requires: "",
       effect() {
-                b.harpoonBot();
-                tech.harpoonBot += 1;
-                if(!this.count) {
-                    simulation.ephemera.push({
-                        name: "harpoonBot",
-                        do() {
-                            if (simulation.cycle % 250 === 0) {
-                                let harpoonFound = 0;
-                                for (let i = 0; i < bullet.length; i++) {
-                                    if (bullet[i].botType === "harpoon") {
-                                        harpoonFound++;
-                                    }
-                                }
-                                if (harpoonFound < tech.harpoonBot) {
-                                    for(let i = 0; i < tech.harpoonBot - harpoonFound; i++) {
-                                        b.harpoonBot();
-                                    }
-                                }
-                            }
-                        }
-                    })
-                }
+        b.harpoonBot();
+        tech.harpoonBotCount += 1;
       },
       remove() {
-                tech.harpoonBot = 0;
-        simulation.removeEphemera("harpoonBot")
+        tech.harpoonBot = 0;
       }
     },
-        {
-            name: "harpoon-bot upgrade",
-            description: "<b>upgrade</b> your harpoon <strong class='color-bot'>bot</strong><br>to deal more <strong class='color-d'>damage</strong>",
-            maxCount: 1,
-            count: 0,
-            frequency: 3,
-            frequencyDefault: 3,
-            isBotTech: true,
-            allowed() {
-                return tech.harpoonBot
-            },
-            requires: "harpoon bot",
-            effect() {
-                tech.isHarpoonBotUpgrade = true
-            },
-            remove() {
-                tech.isHarpoonBotUpgrade = false
-            }
-        },*/
+    {
+      name: "harpoon-bot upgrade",
+      description: `<strong>convert</strong> your <strong class='color-bot'>bots</strong> to <strong class='color-bot'>harpoon-bots</strong>
+      <br>increased <strong class='color-d'>damage</strong> and <em>fire rate</em>`,
+      maxCount: 1,
+      isGunTech: true,
+      count: 0,
+      frequency: 3,
+      frequencyDefault: 3,
+      isBotTech: true,
+      allowed() {
+        return tech.harpoonBotCount > 1
+      },
+      requires: "two or more harpoon-bots and no other bot upgrade",
+      effect() {
+        tech.isHarpoonBotUpgrade = true
+        b.convertBotsTo("harpoon-bot")
+        for (let i = 0; i < bullet.length; i++) {
+          if (bullet[i].botType === 'harpoon') bullet[i].isUpgraded = true
+        }
+        tech.setBotTechFrequency()
+        tech.setTechFrequency("harpoon-bot", 5)
+      },
+      remove() {
+        if (this.count) {
+          for (let i = 0; i < bullet.length; i++) {
+            if (bullet[i].botType === 'harpoon') bullet[i].isUpgraded = false
+          }
+          tech.setBotTechFrequency(1)
+        }
+        tech.isHarpoonBotUpgrade = false
+      }
+    },
     {
       name: "quasiparticles",
       descriptionFunction() {
@@ -9346,7 +9339,7 @@ const tech = {
     {
       name: "photonic resonance",
       descriptionFunction() {
-        return `<strong class='color-laser'>laser</strong> damage and <strong class='color-f'>energy </strong> drain increases the longer you fire`
+        return `<strong class='color-laser'>laser</strong> damage and <strong class='color-f'>energy</strong> drain increases the longer you fire`
       },
       maxCount: 1,
       count: 0,
@@ -9380,7 +9373,8 @@ const tech = {
     {
       name: "size-weight illusion",
       descriptionFunction() {
-        return `follow your cursor when sword is active<br><b>1.1x</b> <b class="color-d">damage</b>`
+        return `follow your cursor when sword is active
+        <br><strong>1.1x</strong> <strong class="color-d">damage</strong>`
       },
       isGunTech: true,
       isNScytheTech: true,
@@ -9402,7 +9396,7 @@ const tech = {
     {
       name: "silicon carbide",
       descriptionFunction() {
-        return `crouch hold fire to charge <b>stab</b><br><b>1.5x</b> <b class="color-d">damage</b>`
+        return `crouch hold fire to charge <strong>stab</strong><br><strong>1.5x</strong> <strong class="color-d">damage</strong>`
       },
       isGunTech: true,
       isNScytheTech: true,
@@ -9424,7 +9418,7 @@ const tech = {
     {
       name: "cantors theorem",
       descriptionFunction() {
-        return `sword size <b>scales</b> by <b class="color-h">health</b><br><b>1.1x</b> <b class="color-d">damage</b>`
+        return `sword size <strong>scales</strong> by <strong class="color-h">health</strong><br><strong>1.1x</strong> <strong class="color-d">damage</strong>`
       },
       isGunTech: true,
       isNScytheTech: true,
@@ -9446,7 +9440,7 @@ const tech = {
     {
       name: "plasmon",
       descriptionFunction() {
-        return `increase sword range by <b>3x</b><br><em>plasmon is beyond visible perception</em>`
+        return `increase sword range by <strong>3x</strong><br><em>plasmon is beyond visible perception</em>`
       },
       isGunTech: true,
       isNScytheTech: true,
@@ -9468,7 +9462,7 @@ const tech = {
     {
       name: "greatsword",
       descriptionFunction() {
-        return `<b>2x</b> sword <b class="color-d">damage</b><br><b>0.75x</b> sword <b class="color-speed">speed</b>`
+        return `<strong>2x</strong> sword <strong class="color-d">damage</strong><br><strong>0.75x</strong> sword <strong class="color-speed">speed</strong>`
       },
       isGunTech: true,
       isNScytheTech: true,
@@ -9496,7 +9490,7 @@ const tech = {
     {
       name: "longsword",
       descriptionFunction() {
-        return `<b>1.7x</b> sword <em>length</em> and <b class="color-d">damage</b><br><b>0.6x</b> swing <b class="color-speed">speed</b>`
+        return `<strong>1.7x</strong> sword <em>length</em> and <strong class="color-d">damage</strong><br><strong>0.6x</strong> swing <strong class="color-speed">speed</strong>`
       },
       isGunTech: true,
       isNScytheTech: true,
@@ -9668,8 +9662,8 @@ const tech = {
     },
     {
       name: "The Necromancer",
-      description: `scythe blades <b>infect</b> mobs
-            <br><b>infected</b> mobs <b>resurrect</b> as <b>zombies</b> upon <b>death</b>`,
+      description: `scythe blades <strong>infect</strong> mobs
+            <br><strong>infected</strong> mobs <strong>resurrect</strong> as <strong>zombies</strong> upon <strong>death</strong>`,
       isGunTech: true,
       isNScytheTech: true,
       maxCount: 1,
@@ -9690,7 +9684,7 @@ const tech = {
     {
       name: "titanium nitride",
       descriptionFunction() {
-        return `scythe now uses <b class='color-ammo'>ammo</b> instead of <strong class="color-h">health</strong>
+        return `scythe now uses <strong class='color-ammo'>ammo</strong> instead of <strong class="color-h">health</strong>
                 <br><strong>+24%</strong> <strong class='color-junk'>JUNK</strong> to <strong class='color-m'>tech</strong> pool`
       },
       isGunTech: true,
@@ -9777,8 +9771,8 @@ const tech = {
     {
       name: "genetic drift",
       descriptionFunction() {
-        return `<b>scythe</b> is swung and no longer drains <b class="color-h">health</b>
-                <br>scythe has <em>durability</em> and is <b>slightly longer</b>`
+        return `<strong>scythe</strong> is swung and no longer drains <strong class="color-h">health</strong>
+                <br>scythe has <em>durability</em> and is <strong>slightly longer</strong>`
       },
       isGunTech: true,
       isNScytheTech: true,
@@ -9813,7 +9807,7 @@ const tech = {
     {
       name: "protoporphyrin IX",
       descriptionFunction() {
-        return `<b class="color-h">health</b> is converted to <b>spear</b> <em>durability</em>
+        return `<strong class="color-h">health</strong> is converted to <strong>spear</strong> <em>durability</em>
                 	<br>when spear <em>durability</em> reaches 0`
       },
       isGunTech: true,
@@ -9894,8 +9888,8 @@ const tech = {
     {
       name: "dry lightning",
       descriptionFunction() {
-        return `imbue <b>spear</b> with <b style="color: rgb(220, 20, 220);">energy</b>
-                	<br>mobs are <b class="color-s">stunned</b> by <b>spear</b>`
+        return `imbue <strong>spear</strong> with <strong style="color: rgb(220, 20, 220);">energy</strong>
+                	<br>mobs are <strong class="color-s">stunned</strong> by <strong>spear</strong>`
       },
       isGunTech: true,
       isNScytheTech: true,
@@ -9917,8 +9911,8 @@ const tech = {
     {
       name: "arc discharge",
       descriptionFunction() {
-        return `spear <b style="color: rgb(220, 20, 220);">lightning</b> may strike nearby mobs
-                	<br>increases <b>probability</b> and <b style="color: rgb(220, 20, 220);">energy</b> cost`
+        return `spear <strong style="color: rgb(220, 20, 220);">lightning</strong> may strike nearby mobs
+                	<br>increases <strong>probability</strong> and <strong style="color: rgb(220, 20, 220);">energy</strong> cost`
       },
       isGunTech: true,
       maxCount: 9,
@@ -9939,8 +9933,8 @@ const tech = {
     {
       name: "polonium-210",
       descriptionFunction() {
-        return `gather <b>polonium-210</b> into spear
-                	<br>crouching <b>charges</b> a ball of polonium and <b class="color-f">energy</b>`
+        return `gather <strong>polonium-210</strong> into spear
+                	<br>crouching <strong>charges</strong> a ball of polonium and <strong class="color-f">energy</strong>`
       },
       isGunTech: true,
       isNScytheTech: true,
@@ -10211,8 +10205,8 @@ const tech = {
     {
       name: "blood transfusion",
       descriptionFunction() {
-        return `sacrifice <b class="color-h">health</b> onto your spear
-                	<br>-6 <b class="color-h">health</b>/second but <b>3x</b> spear <b class="color-d">damage</b>`
+        return `sacrifice <strong class="color-h">health</strong> onto your spear
+                	<br>-6 <strong class="color-h">health</strong>/second but <strong>3x</strong> spear <strong class="color-d">damage</strong>`
       },
       isGunTech: true,
       isNScytheTech: true,
@@ -10296,7 +10290,7 @@ const tech = {
     {
       name: "heart meridian",
       descriptionFunction() {
-        return `reduce <b class="color-h">health</b> drain by <b>10x</b><br><b class="color-f">energy</b> will randomly drain`
+        return `reduce <strong class="color-h">health</strong> drain by <strong>10x</strong><br><strong class="color-f">energy</strong> will randomly drain`
       },
       isGunTech: true,
       isNScytheTech: true,
@@ -10318,7 +10312,7 @@ const tech = {
     {
       name: "pyroflux",
       descriptionFunction() {
-        return `<b>1.5x</b> spear <b>size</b><br><b class="color-d">damage</b> nearby mobs`
+        return `<strong>1.5x</strong> spear <strong>size</strong><br><strong class="color-d">damage</strong> nearby mobs`
       },
       isGunTech: true,
       maxCount: 1,
@@ -10358,7 +10352,7 @@ const tech = {
     },
     {
       name: "tactical efficiency",
-      description: `increased <strong>sniper</strong> fire rate, decreased bullet <strong>speed</strong>`,
+      description: `increased <strong>sniper</strong> <em>fire rate</em>, decreased bullet <strong>speed</strong>`,
       isGunTech: true,
       isNHancedTech: true,
       maxCount: 4,
@@ -10439,7 +10433,7 @@ const tech = {
     {
       name: "neodymium magnet",
       descriptionFunction() {
-        return `MMRF <b>condenses</b> into a spiked ball<br>increased <b class="color-d">damage</b> and <b class="color-f">energy</b> drain`
+        return `MMRF <strong>condenses</strong> into a spiked ball<br>increased <strong class="color-d">damage</strong> and <strong class="color-f">energy</strong> drain`
       },
       isGunTech: true,
       isNScytheTech: true,
@@ -12122,7 +12116,7 @@ const tech = {
     {
       name: "tachyon condensation",
       descriptionFunction() {
-        return `after <b>colliding</b> with mobs<br>deal <b class="color-d">damage</b> based on <b class="color-speed"">speed</b>`
+        return `after <strong>colliding</strong> with mobs<br>deal <strong class="color-d">damage</strong> based on <strong class="color-speed"">speed</strong>`
       },
       isFieldTech: true,
       isNScytheTech: true,
@@ -12580,7 +12574,7 @@ const tech = {
       effect() {
         document.getElementById("seed").placeholder = Math.initialSeed = String(616)
         Math.seed = Math.abs(Math.hash(Math.initialSeed)) //update randomizer seed in case the player changed it
-        simulation.inGameConsole(`<span class='color-var'>m</span>.chat("<b>Wait a minute... this isn't the Miami Hotline</b>")`)
+        simulation.inGameConsole(`<span class='color-var'>m</span>.chat("<strong>Wait a minute... this isn't the Miami Hotline</strong>")`)
       },
       remove() { }
     },

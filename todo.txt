@@ -1,5 +1,5 @@
 ************************************************ TODO ******************************************
-•Integrate sword, scythe, spear, sniper shells, and MRFF as their own bullets, rather than being defined in their respective guns
+•Get game to properly load level list files before removing levelList.js
 •Finish Work-in-progress tech
 •Add bossbar for boundaryBoss
 •Add localSettings loading and clearing
