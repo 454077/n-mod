@@ -172,6 +172,11 @@ summary {
   background-color: #eee;
 }
 
+.custom-file-button {
+  font-family: sans-serif;
+  cursor: pointer;
+}
+
 #start-button {
   position: absolute;
   bottom: 108px;
@@ -1871,7 +1876,9 @@ summary {
   /* box-shadow: 4px 4px 4px hsla(240, 0%, 17%, 0.14); */
 }
 
-.tooltip {}
+.tooltip {
+  font-family: inherit;
+}
 
 .tooltip .tooltiptext {
   visibility: hidden;
