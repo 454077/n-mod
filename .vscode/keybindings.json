@@ -1,0 +1,40 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "shift+tab",
+        "command": "ShortcutMenuBar.beautify"
+    },
+    {
+        "key": "shift+backspace",
+        "command": "keybindings.editor.resetKeybinding"
+    },
+    {
+        "key": "alt+s",
+        "command": "explorer.download"
+    },
+    {
+        "key": "ctrl+alt+k",
+        "command": "workbench.action.openGlobalKeybindingsFile"
+    },
+    {
+        "key": "ctrl+s ctrl+u",
+        "command": "workbench.action.openSettingsJson"
+    },
+    {
+        "key": "ctrl+k ctrl+u",
+        "command": "-editor.action.removeCommentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+s ctrl+d",
+        "command": "workbench.action.openRawDefaultSettings"
+    },
+    {
+        "key": "ctrl+d ctrl+k",
+        "command": "workbench.action.openDefaultKeybindingsFile"
+    },
+    {
+        "key": "ctrl+s ctrl+a",
+        "command": "workbench.action.openApplicationSettingsJson"
+    }
+]
