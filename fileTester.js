@@ -1,11 +1,11 @@
 const jsSrcs = [
   {
     name: "Initialization",
-    src: 'js/init.js'
+    src: 'js/core/init.js'
   },
   {
     name: "On Load Ended",
-    src: 'js/onLoadEnd.js'
+    src: 'js/core/onLoadEnd.js'
   },
   {
     name: "Matter",
@@ -17,7 +17,7 @@ const jsSrcs = [
   },
   {
     name: "Simulation",
-    src: "js/simulation.js"
+    src: "js/core/simulation.js"
   },
   {
     name: "Player",
@@ -79,15 +79,15 @@ const jsSrcs = [
   */
   {
     name: "Lore",
-    src: "js/lore.js"
+    src: "js/core/lore.js"
   },
   {
     name: "Engine",
-    src: "js/engine.js"
+    src: "js/core/engine.js"
   },
   {
     name: "Index",
-    src: "js/index.js"
+    src: "js/core/index.js"
   },
   {
     name: "Script Loader",
