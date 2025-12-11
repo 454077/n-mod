@@ -571,30 +571,61 @@ const powerUps = {
         document.getElementById("choose-grid").style.transitionDuration = "0s";
       }
       //build level info
-      document.getElementById("choose-grid").classList.add('choose-grid-no-images');
-      document.getElementById("choose-grid").classList.remove('choose-grid');
-      document.getElementById("choose-grid").style.gridTemplateColumns = "200px"//adjust this to increase the width of the whole menu, but mostly the center column
-      let text = `<div class="choose-grid-module" style="font-size: 1.5rem;color:rgb(110,155,160);text-align:center;" onclick="powerUps.warp.load('${level.levels[level.onLevel + 1]}')" title="Warp to the next level"><strong>WARP</strong></div>`
+      /* document.getElementById("choose-grid").classList.add('choose-grid-no-images');
+      document.getElementById("choose-grid").classList.remove('choose-grid');*/
+      let text = `<div class="choose-grid-module" style="font-size: 1.5rem;color:rgb(110,155,160);text-align:center;" onclick="powerUps.warp.load('${level.levels[level.onLevel + 1]}')" title="Warp to the next level"><strong>WARP</strong></div>`,
+      style = "", what = "", width, tag1 = `<div class="choose-grid-module" style="font-size: 1rem;padding-left:5px;" onclick="powerUps.warp.load('`,
+      tag2 = `<div class="choose-grid-module" style="color:rgb(110,155,160);background-color:#444;text-align:center;">level.`;
+      if (canvas.width < 1710) {
+        width = "238px"
+      } else if (canvas.width < 1950) {
+        width = "283px"
+      } else {
+        width = "320px"
+      }
+      //if (localSettings.isHideImages) {
+        document.getElementById("choose-grid").style.gridTemplateColumns = width
+      /* } else {
+        document.getElementById("choose-grid").style.gridTemplateColumns = `repeat(3, 200px)` //adjust this to increase the width of the whole menu, but mostly the center column
+        text += "<div></div>"
+      } */
+
       text += `<div class="choose-grid-module" id="exit" style="font-size: 1rem;color:rgb(110,155,160);text-align:right;padding-right:5px;"><strong>cancel</strong></div>`
       text += `<div class="choose-grid-module" style="font-size: 1rem;color:rgb(110,155,160);background-color:#444;text-align:center;">level.uniqueLevels</div>`
       for (let i = 0; i < level.uniqueLevels.length; i++) {
-        text += `<div class="choose-grid-module" style="font-size: 1rem;padding-left:5px;" onclick="powerUps.warp.load('${level.uniqueLevels[i]}')">${level.uniqueLevels[i]}</div>`   //id="uniqueLevels-warp-${i}"
+        what = level.uniqueLevels[i]
+        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
+        text += `${tag1 + what}')" ${style}>${what}</div>`   //id="uniqueLevels-warp-${i}"
       }
-      text += `<div class="choose-grid-module" style="color:rgb(110,155,160);background-color:#444;text-align:center;">level.playableLevels</div>`
+      text += `${tag2}playableLevels</div>`
       for (let i = 0; i < level.playableLevels.length; i++) {
-        text += `<div class="choose-grid-module" style="padding-left:5px;" onclick="powerUps.warp.load('${level.playableLevels[i]}')">${level.playableLevels[i]}</div>`
+        what = level.playableLevels[i]
+        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
+        text += `${tag1 + what}')" ${style}>${what}</div>`
       }
-      text += `<div class="choose-grid-module" style="color:rgb(110,155,160);background-color:#444;text-align:center;">level.communityLevels</div>`
+      text += `${tag2}communityLevels</div>`
       for (let i = 0; i < level.communityLevels.length; i++) {
-        text += `<div class="choose-grid-module" style="padding-left:5px;" onclick="powerUps.warp.load('${level.communityLevels[i]}')">${level.communityLevels[i]}</div>`
+        what = level.communityLevels[i]
+        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
+        text += `${tag1 + what}')" ${style}>${what}</div>`
       }
-      text += `<div class="choose-grid-module" style="color:rgb(110,155,160);background-color:#444;text-align:center;">level.trainingLevels</div>`
+      text += `${tag2}trainingLevels</div>`
       for (let i = 0; i < level.trainingLevels.length; i++) {
-        text += `<div class="choose-grid-module" style="padding-left:5px;" onclick="powerUps.warp.load('${level.trainingLevels[i]}')">${level.trainingLevels[i]}</div>`
+        what = level.trainingLevels[i]
+        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
+        text += `${tag1 + what}')" ${style}>${what}</div>`
       }
-      text += `<div class="choose-grid-module" style="color:rgb(110,155,160);background-color:#444;text-align:center;">level.removedCommunityLevels</div>`
+      text += `${tag2}removedCommunityLevels</div>`
       for (let i = 0; i < level.removedCommunityLevels.length; i++) {
-        text += `<div class="choose-grid-module" style="padding-left:5px;" onclick="powerUps.warp.load('${level.removedCommunityLevels[i]}')">${level.removedCommunityLevels[i]}</div>`
+        what = level.removedCommunityLevels[i]
+        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
+        text += `${tag1 + what}')" ${style}>${what}</div>`
+      }
+      text += `${tag2}modSpecificLevels</div>`
+      for (let i = 0; i < level.modSpecificLevels.length; i++) {
+        what = level.modSpecificLevels[i]
+        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
+        text += `${tag1 + what}')" ${style}>${what}</div>`
       }
       document.getElementById("choose-grid").innerHTML = text
       //show level info
