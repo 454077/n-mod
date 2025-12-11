@@ -15,7 +15,6 @@ I have made some changes:
 <ul>
   <li><em>Lorentz Transformation</em> stacks to 3×, and effects stack properly</li>
   <li>added <em>missile-bot</em> and <em>plasma-bot</em> upgrades</li>
-  <li>removed certain maps that either had bugs related to testing, now only accecible via warp powerUp</li>
   <li>Changed testing keybinds:
     <ul>
       <li>` spawns coupling</li>
