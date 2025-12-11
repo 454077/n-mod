@@ -8817,10 +8817,9 @@ const tech = {
     },
     {
       name: "harpoon-bot",
-      descriptionFunction() {
-        return `construct a <strong class='color-bot'>bot</strong> that fires <strong>harpoons</strong> at mobs<br>collects nearby <strong>power ups</strong>`
-      },
-      isGunTech: true,
+      description: `use ${powerUps.orb.research(1)}to trade your <strong>harpoon</strong> ${powerUps.orb.gun()}
+      <br>for a <strong class='color-bot'>bot</strong> that fires <strong>harpoons</strong>`,
+      //isGunTech: true,
       maxCount: 9,
       count: 0,
       frequency: 1,
@@ -8828,15 +8827,23 @@ const tech = {
       isBot: true,
       isBotTech: true,
       allowed() {
-        return true
+        return tech.haveGunCheck("harpoon", false) && (build.isExperimentSelection || powerUps.research.count > 0)
       },
-      requires: "",
+      requires: "harpoon",
       effect() {
         b.harpoonBot();
         tech.harpoonBotCount += 1;
+        if (tech.haveGunCheck("harpoon", false)) b.removeGun("harpoon") //remove your last gun
+        if (powerUps.research.count > 0) powerUps.research.changeRerolls(-1)
       },
       remove() {
-        tech.harpoonBot = 0;
+        if (this.count) {
+          tech.harpoonBotCount = 0;
+          b.clearPermanentBots();
+          b.respawnBots();
+          if (!tech.haveGunCheck("harpoon", false)) b.giveGuns("harpoon")
+          powerUps.research.changeRerolls(1)
+        }
       }
     },
     {
