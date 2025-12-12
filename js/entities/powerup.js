@@ -574,8 +574,9 @@ const powerUps = {
       /* document.getElementById("choose-grid").classList.add('choose-grid-no-images');
       document.getElementById("choose-grid").classList.remove('choose-grid');*/
       let text = `<div class="choose-grid-module" style="font-size: 1.5rem;color:rgb(110,155,160);text-align:center;" onclick="powerUps.warp.load('${level.levels[level.onLevel + 1]}')" title="Warp to the next level"><strong>WARP</strong></div>`,
-      style = "", what = "", width, tag1 = `<div class="choose-grid-module" style="font-size: 1rem;padding-left:5px;" onclick="powerUps.warp.load('`,
-      tag2 = `<div class="choose-grid-module" style="color:rgb(110,155,160);background-color:#444;text-align:center;">level.`;
+      style = "", what = "", width, tag1 = `<div class="${localSettings.isHideImages ? "choose-grid-module" : "choose-grid-module card-background"}" style="font-size: 1rem;padding-left:5px;" onclick="powerUps.warp.load('`,
+      tag2 = `<div class="choose-grid-module" style="color:rgb(110,155,160);background-color:#444;text-align:center;">level.`,
+      tag3 = "</div>" + (localSettings.isHideImages ? "" : "</div>");
       if (canvas.width < 1710) {
         width = "238px"
       } else if (canvas.width < 1950) {
@@ -594,38 +595,38 @@ const powerUps = {
       text += `<div class="choose-grid-module" style="font-size: 1rem;color:rgb(110,155,160);background-color:#444;text-align:center;">level.uniqueLevels</div>`
       for (let i = 0; i < level.uniqueLevels.length; i++) {
         what = level.uniqueLevels[i]
-        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
-        text += `${tag1 + what}')" ${style}>${what}</div>`   //id="uniqueLevels-warp-${i}"
+        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"><div class="card-title"`
+        text += `${tag1 + what}')" ${style}>${what + tag3}`
       }
       text += `${tag2}playableLevels</div>`
       for (let i = 0; i < level.playableLevels.length; i++) {
         what = level.playableLevels[i]
-        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
-        text += `${tag1 + what}')" ${style}>${what}</div>`
+        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"><div class="card-title"`
+        text += `${tag1 + what}')" ${style}>${what + tag3}`
       }
       text += `${tag2}communityLevels</div>`
       for (let i = 0; i < level.communityLevels.length; i++) {
         what = level.communityLevels[i]
-        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
-        text += `${tag1 + what}')" ${style}>${what}</div>`
+        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"><div class="card-title"`
+        text += `${tag1 + what}')" ${style}>${what + tag3}`
       }
       text += `${tag2}trainingLevels</div>`
       for (let i = 0; i < level.trainingLevels.length; i++) {
         what = level.trainingLevels[i]
-        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
-        text += `${tag1 + what}')" ${style}>${what}</div>`
+        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"><div class="card-title"`
+        text += `${tag1 + what}')" ${style}>${what + tag3}`
       }
       text += `${tag2}removedCommunityLevels</div>`
       for (let i = 0; i < level.removedCommunityLevels.length; i++) {
         what = level.removedCommunityLevels[i]
-        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
-        text += `${tag1 + what}')" ${style}>${what}</div>`
+        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"><div class="card-title"`
+        text += `${tag1 + what}')" ${style}>${what + tag3}`
       }
       text += `${tag2}modSpecificLevels</div>`
       for (let i = 0; i < level.modSpecificLevels.length; i++) {
         what = level.modSpecificLevels[i]
         style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
-        text += `${tag1 + what}')" ${style}>${what}</div>`
+        text += `${tag1 + what}')" ${style}>${what + tag3}`
       }
       document.getElementById("choose-grid").innerHTML = text
       //show level info
@@ -666,7 +667,7 @@ const powerUps = {
         let text = `<div class="grid-container" style = "font-size:1rem;padding: 0px;"><pre><strong class='lore-text'>LOCAL SETTINGS:</strong><hr>`,
             keys = Object.keys(localSettings), values = Object.values(localSettings)
         for (let i = 0; i < keys.length; i++) {
-          if (Object.values(values[i]) && !Array.isArray(values[i])) { //if a value is an object, display its properties, instead of '[object Object]'
+          if (typeof(values[i]) === "object" && values[i] !== null && !Array.isArray(values[i])) { //if a value is an object, display its properties, instead of '[object Object]'
             text += `<br>•<u>${keys[i]}</u>:`  
             let subkeys = Object.keys(values[i]), subvalues = Object.values(values[i])
             for (let j = 0; j < subkeys.length; j++) {
@@ -677,7 +678,7 @@ const powerUps = {
               }
             }
           } else {
-            text += `<br>•<u>${keys[i]}</u>: ${values[i]}`
+            text += `<br>•<u>${keys[i]}</u>: ${values[i].toString()}`
           }
         }
         text += `</pre></div><div class="choose-grid-module" id="exit" style="text-align: center;font-size: 1.3rem;">exit</div>`
