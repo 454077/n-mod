@@ -85,18 +85,18 @@ const m = {
   jumpForce: 0.42,
   setMovement() {
     m.Fx = tech.baseFx * m.fieldFx * m.squirrelFx / player.mass //base player mass is 5
-    m.jumpForce = tech.baseJumpForce * m.fieldJump * m.squirrelJump  / player.mass / player.mass //base player mass is 5
-    if (tech.isFastTime){
+    m.jumpForce = tech.baseJumpForce * m.fieldJump * m.squirrelJump / player.mass / player.mass //base player mass is 5
+    if (tech.isFastTime) {
       m.Fx *= Math.pow(1.5, tech.fasterTime);
       m.jumpForce *= Math.pow(1.13, tech.fasterTime);
     }
     if (tech.isFastAir) {
       m.FxAir *= Math.pow(1.5, tech.fasterAir)
-      if (((m.fieldMode === 0) || (m.fieldMode === 11)) && (m.coupling > 0)){
+      if (((m.fieldMode === 0) || (m.fieldMode === 11)) && (m.coupling > 0)) {
         m.FxAir *= 1 + Math.abs(Math.log(m.coupling + 1)) / 5;
       }
     }
-    if (((m.fieldMode === 0) || (m.fieldMode === 11)) && (m.coupling > 0)){
+    if (((m.fieldMode === 0) || (m.fieldMode === 11)) && (m.coupling > 0)) {
       m.Fx *= 1 + Math.abs(Math.log(m.coupling + 1)) / 5;
       m.jumpForce *= 1 + Math.abs(Math.log(m.coupling + 1)) / 7;
     }
@@ -327,7 +327,7 @@ const m = {
     m.throwCharge = 4;
     m.holdingTarget = who
     m.isHolding = true;
-    m.fieldUpgrades[4].endoThermic(0.6) 
+    m.fieldUpgrades[4].endoThermic(0.6)
   },
   alive: false,
   isSwitchingWorlds: false,
@@ -382,7 +382,7 @@ const m = {
       let loop = () => {
         if (!(m.cycle % 10)) {
           if (stunning) {
-            for (let i = 0; i < mob.length; i++) mobs.statusStun(mob[i], 300) 
+            for (let i = 0; i < mob.length; i++) mobs.statusStun(mob[i], 300)
           }
           if (totalTech > 0 && m.alive) {
             totalTech--
@@ -968,8 +968,8 @@ const m = {
       if (isDefense) dmg *= Math.pow(m.defense(), 0.6)
       m.energy -= dmg //scale damage with heal reduction difficulty
       if (m.energy < 0 || isNaN(m.energy)) { //taking deadly damage
-        if (tech.isDeathAvoid && powerUps.research.count && 
-            ((tech.deathsAvoidedThisLevel || 0) < (tech.isAnthropicExtended + 1 || 1)) ) {
+        if (tech.isDeathAvoid && powerUps.research.count &&
+          ((tech.deathsAvoidedThisLevel || 0) < (tech.isAnthropicExtended + 1 || 1))) {
           tech.deathsAvoidedThisLevel++
           powerUps.research.changeRerolls(-1)
           simulation.inGameConsole(`<span class='color-var'>m</span>.<span class='color-r'>research</span><span class='color-symbol'>--</span><br>${powerUps.research.count}`)
@@ -999,8 +999,8 @@ const m = {
       if (isDefense) dmg *= m.defense()
       m.health -= dmg;
       if (m.health < 0 || isNaN(m.health)) {
-        if (tech.isDeathAvoid && powerUps.research.count > 0 && 
-            ((tech.deathsAvoidedThisLevel || 0) < (tech.isAnthropicExtended + 1 || 1)) ) { //&& Math.random() < 0.5
+        if (tech.isDeathAvoid && powerUps.research.count > 0 &&
+          ((tech.deathsAvoidedThisLevel || 0) < (tech.isAnthropicExtended + 1 || 1))) { //&& Math.random() < 0.5
           tech.deathsAvoidedThisLevel++
           m.health = 0.05
           powerUps.research.changeRerolls(-1)
@@ -1509,17 +1509,17 @@ const m = {
 
       m.draw = function () {
         if (input.up &&
-            m.buttonCD_jump + 20 < m.cycle &&
-            !m.onGround &&
-            !Matter.Query.region([...map, ...body], {
-          min: { x: m.pos.x - 40, y: m.pos.y - 30 },
-          max: { x: m.pos.x + 40, y: m.pos.y - 10 }
-        }).length &&
-            Matter.Query.region([...map, ...body], {
-          min: { x: m.pos.x - 40, y: m.pos.y },
-          max: { x: m.pos.x + 40, y: m.pos.y + 95 }
-        }).length
-           ) {
+          m.buttonCD_jump + 20 < m.cycle &&
+          !m.onGround &&
+          !Matter.Query.region([...map, ...body], {
+            min: { x: m.pos.x - 40, y: m.pos.y - 30 },
+            max: { x: m.pos.x + 40, y: m.pos.y - 10 }
+          }).length &&
+          Matter.Query.region([...map, ...body], {
+            min: { x: m.pos.x - 40, y: m.pos.y },
+            max: { x: m.pos.x + 40, y: m.pos.y + 95 }
+          }).length
+        ) {
           // m.jump()
 
           m.buttonCD_jump = m.cycle; //can't jump again until 20 cycles pass
@@ -2654,8 +2654,8 @@ const m = {
         ctx.beginPath();
         ctx.moveTo(-30, 0);
         ctx.bezierCurveTo(-65, -75,
-                          -5, 150 + (5 * Math.sin(simulation.cycle / 10)),
-                          -70 + (10 * Math.sin(simulation.cycle / 10)), 0 + (10 * Math.sin(simulation.cycle / 10)));
+          -5, 150 + (5 * Math.sin(simulation.cycle / 10)),
+          -70 + (10 * Math.sin(simulation.cycle / 10)), 0 + (10 * Math.sin(simulation.cycle / 10)));
         ctx.strokeStyle = "#333";
         ctx.lineWidth = 4;
         ctx.stroke();
@@ -2813,7 +2813,7 @@ const m = {
         `);
       var b64Start = 'data:image/svg+xml;base64,';
       var image64 = b64Start + svg64;
-      if(!m.img) m.img = new Image();
+      if (!m.img) m.img = new Image();
       m.img.src = image64;
       simulation.isAutoZoom = true;
       m.hardLandCDScale = 1
@@ -2853,7 +2853,7 @@ const m = {
         ctx.lineWidth = 2;
         ctx.stroke();
         if (!(m.angle > -Math.PI / 2 && m.angle < Math.PI / 2)) ctx.scale(1, -1); //here is the flip
-        ctx.drawImage(m.img, -m.img.width/2, -m.img.height/2);
+        ctx.drawImage(m.img, -m.img.width / 2, -m.img.height / 2);
         ctx.restore();
         m.yOff = m.yOff * 0.85 + m.yOffGoal * 0.15; //smoothly move leg height towards height goal
         powerUps.boost.draw()
@@ -3955,42 +3955,42 @@ const m = {
     }
   },
   hold() { },
-  couplingDescription(couple = m.coupling){
+  couplingDescription(couple = m.coupling) {
     switch (m.fieldMode) {
       case 0: //field emitter
         return `<strong>all</strong> effects`
-        case 1: //standing wave
+      case 1: //standing wave
         // return `<span style = 'font-size:95%;'><strong>deflecting</strong> condenses +${couple.toFixed(1)} <strong class='color-s'>ice IX</strong></span>`
         return `+${(couple * 5).toFixed(0)} maximum <strong class='color-f'>energy</strong>`
-        case 2: //perfect diamagnetism
+      case 2: //perfect diamagnetism
         return `<span style = 'font-size:95%;'><strong>deflecting</strong> condenses ${(0.1 * couple).toFixed(2)} <strong class='color-s'>ice IX</strong></span>`
-        // return `<span style = 'font-size:89%;'><strong>invulnerable</strong> <strong>+${2*couple}</strong> seconds post collision</span>`
-        case 3: //negative mass
+      // return `<span style = 'font-size:89%;'><strong>invulnerable</strong> <strong>+${2*couple}</strong> seconds post collision</span>`
+      case 3: //negative mass
         return `<strong>${(0.973 ** couple).toFixed(2)}x</strong> <strong class='color-defense'>damage taken</strong>`
-        case 4: //assembler
+      case 4: //assembler
         return `<strong>+${(0.6 * couple).toFixed(1)}</strong> <strong class='color-f'>energy</strong> per second`
-        case 5: //plasma
+      case 5: //plasma
         return `<strong>${(1 + 0.015 * couple).toFixed(3)}x</strong> <strong class='color-d'>damage</strong>`
-        case 6: //time dilation
+      case 6: //time dilation
         return `<strong>+${(1 + 0.05 * couple).toFixed(2)}x</strong> longer <strong style='letter-spacing: 2px;'>stopped time</strong>` //<strong>movement</strong>, <strong>jumping</strong>, and 
-        case 7: //cloaking
+      case 7: //cloaking
         // return `<strong>${(1 + 3.3 * couple).toFixed(3)}x</strong> ambush <strong class='color-d'>damage</strong>`
         return `<strong>${(1 + 0.05 * couple).toFixed(3)}x</strong> ambush <strong class='color-d'>damage</strong>`
-        case 8: //pilot wave
+      case 8: //pilot wave
         return `<strong>${(1 + 0.05 * couple).toFixed(2)}x</strong> <strong class='color-block'>block</strong> collision <strong class='color-d'>damage</strong>`
-        case 9: //wormhole
+      case 9: //wormhole
         return `<span style = 'font-size:89%;'>after eating <strong class='color-block'>blocks</strong> <strong>+${(2 * couple).toFixed(0)}</strong> <strong class='color-f'>energy</strong></span>`
-        case 10: //grappling hook
+      case 10: //grappling hook
         return `<span style="opacity: 1;">${powerUps.orb.ammo(1)}</span> give ${(4 * couple).toFixed(1)}% more ammo`
-        case 11: //tachyonic field
+      case 11: //tachyonic field
         return `<strong>${(1 + Math.abs(Math.log(m.coupling + 1)) / 5).toFixed(3)}x</strong> <strong class='color-speed'>movement</strong> and <strong>jumping</strong>`
-        case 12: //energy condenser
+      case 12: //energy condenser
         return `<strong>${(1 + 0.05 * couple).toFixed(3)}x</strong> healing from <span style="opacity: 1">${powerUps.orb.heal(1)}</span>`
-        case 13: //Einstein's shield
+      case 13: //Einstein's shield
         return `<strong>deflecting</strong> <strong class='color-stun'>stuns</strong> mobs for ${Math.pow(1.25, couple / 16).toFixed(3)} seconds`
-        case 14: //matter displacement
+      case 14: //matter displacement
         return `<strong>${(1 + Math.abs(Math.log(m.coupling + 1)) / 5).toFixed(3)}x longer</strong> <strong class="color-invulnerable">immunity</strong>`
-        default: //any new fields until a coupling effect is added to them
+      default: //any new fields until a coupling effect is added to them
         return `no effect`
     }
   },
@@ -4095,6 +4095,10 @@ const m = {
       } else if (m.fieldMode === 10) { //grappling hook
         simulation.inGameConsole(`Matter<span class='color-symbol'>.</span>Body<span class='color-symbol'>.</span>setPosition<span class='color-symbol'>(</span>player<span class='color-symbol'>, {</span> x<span class='color-symbol'>:</span> 0<span class='color-symbol'>,</span> y<span class='color-symbol'>:</span> 0 <span class='color-symbol'>})</span> 
       	&nbsp; &nbsp; <em style ="float: right; font-family: monospace;font-size:1rem;color:#055;">//↑↑↓↓</em>`);
+      } else if (m.fieldMode === 11) { //tachyonic field
+        simulation.inGameConsole(`<span class='color-var'>m</span>.<strong class='color-f'>energy</strong> <span class='color-symbol'>=</span> 
+        <span class='color-var'>m</span>.<strong class='color-f'>maxEnergy</strong>
+        &nbsp; &nbsp; <em style ="float: right; font-family: monospace;font-size:1rem;color:#055;">//←↑→↓↓</em>`)
       } else if (m.fieldMode === 12) { //energy condenser
         simulation.inGameConsole(`<div class="circle-grid heal"></div> &nbsp; <span class='color-var'>m</span>.health <span class='color-symbol'>=</span> <span class='color-var'>m</span>.maxHealth 
       	&nbsp; &nbsp; <em style ="float: right; font-family: monospace;font-size:1rem;color:#055;">//→↓←↓↓</em>`)
@@ -4848,12 +4852,11 @@ const m = {
         return `${simulation.molecularMode === 0 ? "<strong class='color-p' style='letter-spacing: 2px;'>spores" : simulation.molecularMode === 1 ? "<strong>missiles" : simulation.molecularMode === 2 ? "<strong class='color-s'>ice IX" : "<strong>drones"}</strong>`
       },
       description: `use <strong class='color-f'>energy</strong> to <strong>deflect</strong> mobs
-      				<br>excess <strong class='color-f'>energy</strong> used to <strong class='color-print'>print</strong> ${
-      simulation.molecularMode === 0 ? "<strong class='color-p' style='letter-spacing: 2px;'>spores" :
-      simulation.molecularMode === 1 ? "<strong>missiles" :
-      simulation.molecularMode === 2 ? "<strong class='color-s'>ice IX" :
-      "<strong>drones"
-    }</strong>
+      				<br>excess <strong class='color-f'>energy</strong> used to <strong class='color-print'>print</strong> ${simulation.molecularMode === 0 ? "<strong class='color-p' style='letter-spacing: 2px;'>spores" :
+          simulation.molecularMode === 1 ? "<strong>missiles" :
+            simulation.molecularMode === 2 ? "<strong class='color-s'>ice IX" :
+              "<strong>drones"
+        }</strong>
                     <br><strong>12</strong> <strong class='color-f'>energy</strong> per second
                     <em style ="float: right; font-family: monospace;font-size:1rem;color:#fff;">↓→↓←↑↑↓</em>`,
       setDescription() {
@@ -4863,12 +4866,12 @@ const m = {
         if (tech.isEndothermic) {
           const len = 10 * drain
           if (Math.random() < len) {
-             for (let i = 0; i < len; i++) {
+            for (let i = 0; i < len; i++) {
               b.iceIX(1)
             }
           }
         }
-      }, 
+      },
       keyLog: [null, null, null, null, null, null, null],
       effect: () => {
         //store event function so it can be found and removed in m.setField()
@@ -7001,10 +7004,10 @@ const m = {
               const range = 300
               for (let i = 0; i < mob.length; i++) {
                 if (!mob[i].isBadTarget &&
-                    !mob[i].isInvulnerable &&
-                    Vector.magnitude(Vector.sub(m.pos, mob[i].position)) < range &&
-                    Matter.Query.ray(map, m.pos, mob[i].position).length === 0
-                   ) {
+                  !mob[i].isInvulnerable &&
+                  Vector.magnitude(Vector.sub(m.pos, mob[i].position)) < range &&
+                  Matter.Query.ray(map, m.pos, mob[i].position).length === 0
+                ) {
                   m.energy -= 0.1
                   if (m.fieldCDcycle < m.cycle + 20) m.fieldCDcycle = m.cycle + 20
                   const angle = Math.atan2(mob[i].position.y - player.position.y, mob[i].position.x - player.position.x);
@@ -7038,8 +7041,26 @@ const m = {
       				<br>multiply <strong class='color-speed'>momentum</strong> <strong>exponentially</strong>
                     <br>16 <strong class="color-f">energy</strong> per second`,
       canMove: false,
+      keyLog: [null, null, null, null, null],
       haveEphemera: false,
       effect() {
+        m.fieldEvent = function (event) {
+          m.fieldUpgrades[m.fieldMode].keyLog.shift() //remove first element
+          m.fieldUpgrades[m.fieldMode].keyLog.push(event.code) //add new key to end
+          const patternA = ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown", "ArrowDown"]
+          const patternB = [input.key.left, input.key.up, input.key.right, input.key.down, input.key.down]
+          const arraysEqual = (a, b) => a.length === b.length && a.every((val, i) => val === b[i]);
+          if (arraysEqual(m.fieldUpgrades[m.fieldMode].keyLog, patternA) || arraysEqual(m.fieldUpgrades[m.fieldMode].keyLog, patternB)) {
+            m.energy = Math.max(m.maxEnergy, m.energy);
+            m.fieldUpgrades[m.fieldMode].canMove = true;
+            m.drawRegenEnergy();
+            simulation.inGameConsole(`<span class='color-var'>m</span>.<strong class='color-f'>energy</strong> <span class='color-symbol'>=</span> 
+              	<span class='color-var'>m</span>.<strong class='color-f'>maxEnergy</strong>
+              	<em style ="float: right; font-family: monospace;font-size:1rem;color:#055;">//←↑→↓↓</em>`)
+          }
+        }
+        window.addEventListener("keydown", m.fieldEvent);
+
         m.fieldMeterColor = "#D12";
         m.hold = () => {
           m.fieldFx = 1 + Math.abs(Math.log(m.coupling + 1)) / 5;
@@ -7107,8 +7128,8 @@ const m = {
               oldPosition: { x: player.position.x, y: player.position.y },
               drain: 0.02,
               do() {
-                if(m.energy > 0.1 && input.field) {
-                  Matter.Body.setVelocity(player, {x: player.velocity.x * 1.08, y: player.velocity.y * 1.08});
+                if (m.energy > 0.1 && input.field) {
+                  Matter.Body.setVelocity(player, { x: player.velocity.x * 1.08, y: player.velocity.y * 1.08 });
                   m.energy -= this.drain;
                   // this.lightning((m.pos.x + this.oldPosition.x) / 2, (m.pos.y + this.oldPosition.y) / 2, m.pos.x + Math.random() * 20 - Math.random() * 20, m.pos.y + Math.random() * 20 - Math.random() * 20, "rgb(220, 20, 60)", 3);
                   this.drawLightningArc(m.pos, 50);
@@ -7119,12 +7140,12 @@ const m = {
                     color: "rgba(220,20,60,0.4)",
                     time: 15
                   });
-                  if(!(simulation.cycle % 100)) {
-                    this.oldPosition = {x: (m.pos.x + this.oldPosition.x) / 2, y: (m.pos.y + this.oldPosition.y) / 2};
+                  if (!(simulation.cycle % 100)) {
+                    this.oldPosition = { x: (m.pos.x + this.oldPosition.x) / 2, y: (m.pos.y + this.oldPosition.y) / 2 };
                   }
                 } else {
-                  for(let i = 0; i < m.fieldUpgrades.length; i++) {
-                    if(m.fieldUpgrades[i].name === "tachyonic field") {
+                  for (let i = 0; i < m.fieldUpgrades.length; i++) {
+                    if (m.fieldUpgrades[i].name === "tachyonic field") {
                       m.fieldUpgrades[i].haveEphemera = false;
                     }
                   }
@@ -7166,7 +7187,7 @@ const m = {
                 //ctx.arc(where.x, where.y, radius, 0, 2 * Math.PI);
                 ctx.lineJoin = "miter"
                 ctx.miterLimit = 100;
-                if(isCoolColors) {
+                if (isCoolColors) {
                   ctx.strokeStyle = "white";
                   ctx.shadowColor = "rgba(220, 20, 60, 0.9)";
                   ctx.shadowBlur = 5;
@@ -7197,8 +7218,8 @@ const m = {
           } else if ((input.field && m.fieldCDcycle < m.cycle)) {
             if (m.energy > m.fieldRegen) m.energy -= m.fieldRegen
             m.grabPowerUp();
-            if(typeof m.lookForPickUp == 'function') { //lookForPickUp is changed in newer versions to lookForBlock
-              m.lookForPickUp(); 
+            if (typeof m.lookForPickUp == 'function') { //lookForPickUp is changed in newer versions to lookForBlock
+              m.lookForPickUp();
             } else {
               m.lookForBlock();
             }
@@ -7225,10 +7246,10 @@ const m = {
           m.fieldUpgrades[12].keyLog.shift() //remove first element
           m.fieldUpgrades[12].keyLog.push(event.code) //add new key to end
           const patternA = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowDown", "ArrowDown"],
-                patternB = [input.key.right, input.key.down, input.key.left, input.key.down, input.key.down]
+            patternB = [input.key.right, input.key.down, input.key.left, input.key.down, input.key.down]
           const arraysEqual = (a, b) => a.length === b.length && a.every((val, i) => val === b[i]);
           if (arraysEqual(m.fieldUpgrades[12].keyLog, patternA) ||
-              arraysEqual(m.fieldUpgrades[12].keyLog, patternB)){
+            arraysEqual(m.fieldUpgrades[12].keyLog, patternB)) {
             if (m.energy > m.maxEnergy * 0.9) {
               simulation.inGameConsole(`<div class="circle-grid heal"></div> &nbsp; <span class='color-var'>m</span>.health <span class='color-symbol'>=</span> 
               	<span class='color-var'>m</span>.maxHealth
@@ -7256,8 +7277,8 @@ const m = {
           } else if ((input.field && m.fieldCDcycle < m.cycle)) { //not hold but field button is pressed
             if (m.energy > m.fieldRegen) m.energy -= m.fieldRegen
             m.grabPowerUp();
-            if(typeof m.lookForPickUp == 'function') { //lookForPickUp is changed in newer versions to lookForBlock
-              m.lookForPickUp(); 
+            if (typeof m.lookForPickUp == 'function') { //lookForPickUp is changed in newer versions to lookForBlock
+              m.lookForPickUp();
             } else {
               m.lookForBlock();
             }
@@ -7308,8 +7329,8 @@ const m = {
           const arraysEqual = (a, b) => a.length === b.length && a.every((val, i) => val === b[i]);
           if (arraysEqual(m.fieldUpgrades[m.fieldMode].keyLog, patternA) || arraysEqual(m.fieldUpgrades[m.fieldMode].keyLog, patternB)) {
             let diffAngle = Vector.angle(m.pos, m.fieldPosition),
-                speedDir = Math.sign(diffAngle - m.angle),
-                fieldDist = Vector.magnitude(Vector.sub(m.pos, m.fieldPosition))
+              speedDir = Math.sign(diffAngle - m.angle),
+              fieldDist = Vector.magnitude(Vector.sub(m.pos, m.fieldPosition))
             simulation.inGameConsole(`m<span class='color-symbol'>.</span>fieldAngle <span class='color-symbol'>±=</span>
             ${Math.sqrt(4 / Vector.magnitude(Vector.sub(m.pos, m.fieldPosition))).toFixed(3)} &nbsp; &nbsp; <em style ="float: right; font-family: monospace;font-size:1rem;color:#055;">//↑←↓→↧`)
             simulation.ephemera.push({
@@ -7323,7 +7344,7 @@ const m = {
                 if (input.field || !input.down) simulation.removeEphemera(this.name)
                 this.speed = Math.sqrt(4 / this.dist)
                 this.angle += this.speed * this.dir
-                let mult = Vector.mult({x: Math.cos(this.angle),y: Math.sin(this.angle)}, this.dist)
+                let mult = Vector.mult({ x: Math.cos(this.angle), y: Math.sin(this.angle) }, this.dist)
                 Matter.Body.setPosition(this.speedCalc, Vector.add(m.pos, mult))
                 m.fieldPosition = this.speedCalc.position
               }
@@ -7489,8 +7510,8 @@ const m = {
             if (m.energy > m.fieldRegen) {
               m.energy -= m.fieldRegen
               m.grabPowerUp();
-              if(typeof m.lookForPickUp == 'function') { //lookForPickUp is changed in newer versions to lookForBlock
-                m.lookForPickUp(); 
+              if (typeof m.lookForPickUp == 'function') { //lookForPickUp is changed in newer versions to lookForBlock
+                m.lookForPickUp();
               } else {
                 m.lookForBlock();
               }
@@ -7576,8 +7597,8 @@ const m = {
           m.fieldUpgrades[14].keyLog.shift() //remove first element
           m.fieldUpgrades[14].keyLog.push(event.code) //add new key to end
           const patternA = ["ArrowDown", "ArrowDown", "ArrowUp", "ArrowUp", "ArrowDown"],
-                patternB = [input.key.down, input.key.down, input.key.up, input.key.up, input.key.down,],
-                scanResults = []
+            patternB = [input.key.down, input.key.down, input.key.up, input.key.up, input.key.down,],
+            scanResults = []
           const arraysEqual = (a, b) => a.length === b.length && a.every((val, i) => val === b[i]);
           const drain = 0.16, maxRange = 10000, scannerYrange = m.height * 10
           const scanner = Matter.Bodies.rectangle(m.pos.x, m.pos.y + m.height, m.width * 3 - 1, 10);
@@ -7589,7 +7610,7 @@ const m = {
                 x: m.pos.x,
                 y: m.pos.y + m.height
               })
-              for (let i = 0, dist = maxRange / m.width; i < dist; i+=3) {
+              for (let i = 0, dist = maxRange / m.width; i < dist; i += 3) {
                 Matter.Body.setPosition(scanner, {
                   x: scanner.position.x - m.width * 3,
                   y: scanner.position.y
@@ -7597,16 +7618,16 @@ const m = {
                 //simulation.inGameConsole(scanner.position.y);
                 if (
                   (Matter.Query.ray(map, scanner.position,
-                                    {
-                    x: scanner.position.x,
-                    y: scanner.position.y + scannerYrange
-                  }, m.width * 1.5).length > 0 && Matter.Query.collides(scanner, map).length === 0) ||
+                    {
+                      x: scanner.position.x,
+                      y: scanner.position.y + scannerYrange
+                    }, m.width * 1.5).length > 0 && Matter.Query.collides(scanner, map).length === 0) ||
                   (Matter.Query.ray(body, scanner.position,
-                                    {
-                    x: scanner.position.x,
-                    y: scanner.position.y + scannerYrange
-                  }, m.width * 1.5).length > 0 && Matter.Query.collides(scanner, body).length === 0)
-                ){
+                    {
+                      x: scanner.position.x,
+                      y: scanner.position.y + scannerYrange
+                    }, m.width * 1.5).length > 0 && Matter.Query.collides(scanner, body).length === 0)
+                ) {
                   scanResults.push(scanner.position.x)
                 }
               }
@@ -7615,7 +7636,7 @@ const m = {
                 x: m.pos.x,
                 y: m.pos.y + m.height
               })
-              for (let i = 0, dist = maxRange / m.width; i < dist; i+=3) {
+              for (let i = 0, dist = maxRange / m.width; i < dist; i += 3) {
                 Matter.Body.setPosition(scanner, {
                   x: scanner.position.x + m.width * 3,
                   y: scanner.position.y
@@ -7623,23 +7644,23 @@ const m = {
                 ///simulation.inGameConsole(scanner.position.y);
                 if (
                   (Matter.Query.ray(map, scanner.position,
-                                    {
-                    x: scanner.position.x,
-                    y: scanner.position.y + scannerYrange
-                  }, m.width * 1.5).length > 0 && Matter.Query.collides(scanner, map).length === 0) ||
+                    {
+                      x: scanner.position.x,
+                      y: scanner.position.y + scannerYrange
+                    }, m.width * 1.5).length > 0 && Matter.Query.collides(scanner, map).length === 0) ||
                   (Matter.Query.ray(body, scanner.position,
-                                    {
-                    x: scanner.position.x,
-                    y: scanner.position.y + scannerYrange
-                  }, m.width * 1.5).length > 0 && Matter.Query.collides(scanner, body).length === 0)
-                ){
+                    {
+                      x: scanner.position.x,
+                      y: scanner.position.y + scannerYrange
+                    }, m.width * 1.5).length > 0 && Matter.Query.collides(scanner, body).length === 0)
+                ) {
                   scanResults.push(scanner.position.x)
                 }
               }
               Composite.remove(engine.world, scanner)
               if (scanResults.length > 0) {
                 let idx = Math.floor(Math.random() * scanResults.length), h = scanResults[idx]
-                simulation.translatePlayerAndCamera({ x: h - 150, y: m.pos.y - 30}) //too jerky 
+                simulation.translatePlayerAndCamera({ x: h - 150, y: m.pos.y - 30 }) //too jerky 
                 //Matter.Body.setPosition(player, { x: m.pos.x, y: h - 90 });
                 requestAnimationFrame(() => {
                   Matter.Body.setVelocity(player, { x: 0, y: 0 });
@@ -7674,8 +7695,8 @@ const m = {
           } else if (input.field && (m.fieldCDcycle < m.cycle)) { //not hold but field button is pressed
             if (m.energy > m.fieldRegen) m.energy -= m.fieldRegen
             m.grabPowerUp();
-            if(typeof m.lookForPickUp == 'function') { //lookForPickUp is changed in newer versions to lookForBlock
-              m.lookForPickUp(); 
+            if (typeof m.lookForPickUp == 'function') { //lookForPickUp is changed in newer versions to lookForBlock
+              m.lookForPickUp();
             } else {
               m.lookForBlock();
             }
@@ -7709,83 +7730,83 @@ const m = {
         x: 29.979168754143455,
         y: 4.748337243898336
       },
-                      {
-                        x: 27.04503734408824,
-                        y: 13.7801138209198
-                      },
-                      {
-                        x: 21.462582474874278,
-                        y: 21.462582475257523
-                      },
-                      {
-                        x: 13.780113820536943,
-                        y: 27.045037344471485
-                      },
-                      {
-                        x: 4.74833724351507,
-                        y: 29.979168754526473
-                      },
-                      {
-                        x: -4.748337245049098,
-                        y: 29.979168754526473
-                      },
-                      {
-                        x: -13.780113822071026,
-                        y: 27.045037344471485
-                      },
-                      {
-                        x: -21.46258247640829,
-                        y: 21.462582475257523
-                      },
-                      {
-                        x: -27.045037345621797,
-                        y: 13.7801138209198
-                      },
-                      {
-                        x: -29.979168755677012,
-                        y: 4.748337243898336
-                      },
-                      {
-                        x: -29.979168755677012,
-                        y: -4.7483372446656045
-                      },
-                      {
-                        x: -27.045037345621797,
-                        y: -13.78011382168726
-                      },
-                      {
-                        x: -21.46258247640829,
-                        y: -21.462582476024817
-                      },
-                      {
-                        x: -13.780113822071026,
-                        y: -27.045037345239006
-                      },
-                      {
-                        x: -4.748337245049098,
-                        y: -29.97916875529422
-                      },
-                      {
-                        x: 4.74833724351507,
-                        y: -29.97916875529422
-                      },
-                      {
-                        x: 13.780113820536943,
-                        y: -27.045037345239006
-                      },
-                      {
-                        x: 21.462582474874278,
-                        y: -21.462582476024817
-                      },
-                      {
-                        x: 27.04503734408824,
-                        y: -13.78011382168726
-                      },
-                      {
-                        x: 29.979168754143455,
-                        y: -4.7483372446656045
-                      }
-                     ]
+      {
+        x: 27.04503734408824,
+        y: 13.7801138209198
+      },
+      {
+        x: 21.462582474874278,
+        y: 21.462582475257523
+      },
+      {
+        x: 13.780113820536943,
+        y: 27.045037344471485
+      },
+      {
+        x: 4.74833724351507,
+        y: 29.979168754526473
+      },
+      {
+        x: -4.748337245049098,
+        y: 29.979168754526473
+      },
+      {
+        x: -13.780113822071026,
+        y: 27.045037344471485
+      },
+      {
+        x: -21.46258247640829,
+        y: 21.462582475257523
+      },
+      {
+        x: -27.045037345621797,
+        y: 13.7801138209198
+      },
+      {
+        x: -29.979168755677012,
+        y: 4.748337243898336
+      },
+      {
+        x: -29.979168755677012,
+        y: -4.7483372446656045
+      },
+      {
+        x: -27.045037345621797,
+        y: -13.78011382168726
+      },
+      {
+        x: -21.46258247640829,
+        y: -21.462582476024817
+      },
+      {
+        x: -13.780113822071026,
+        y: -27.045037345239006
+      },
+      {
+        x: -4.748337245049098,
+        y: -29.97916875529422
+      },
+      {
+        x: 4.74833724351507,
+        y: -29.97916875529422
+      },
+      {
+        x: 13.780113820536943,
+        y: -27.045037345239006
+      },
+      {
+        x: 21.462582474874278,
+        y: -21.462582476024817
+      },
+      {
+        x: 27.04503734408824,
+        y: -13.78011382168726
+      },
+      {
+        x: 29.979168754143455,
+        y: -4.7483372446656045
+      }
+      ]
       // 
       Matter.Body.setVertices(player, Matter.Vertices.create(points, player))
       player.parts.pop()
