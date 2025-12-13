@@ -185,7 +185,7 @@ try {
           } else {
             fileLoads.onLoadEnd();
           }
-        }, 250 * Object.values(fileLoads).length + 100); //ensure .js files are loaded BEFORE attempting error check
+        }, 300 * Object.values(fileLoads).length + 100); //ensure .js files are loaded BEFORE attempting error check
       }
     }
     fileLoads.isFileTesterJS = true

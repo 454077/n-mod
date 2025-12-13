@@ -7051,12 +7051,14 @@ const m = {
           const patternB = [input.key.left, input.key.up, input.key.right, input.key.down, input.key.down]
           const arraysEqual = (a, b) => a.length === b.length && a.every((val, i) => val === b[i]);
           if (arraysEqual(m.fieldUpgrades[m.fieldMode].keyLog, patternA) || arraysEqual(m.fieldUpgrades[m.fieldMode].keyLog, patternB)) {
-            m.energy = Math.max(m.maxEnergy, m.energy);
             m.fieldUpgrades[m.fieldMode].canMove = true;
-            m.drawRegenEnergy();
-            simulation.inGameConsole(`<span class='color-var'>m</span>.<strong class='color-f'>energy</strong> <span class='color-symbol'>=</span> 
+            if (m.energy < m.maxEnergy) {
+              m.energy = m.maxEnergy;
+              m.drawRegenEnergy();
+              simulation.inGameConsole(`<span class='color-var'>m</span>.<strong class='color-f'>energy</strong> <span class='color-symbol'>=</span> 
               	<span class='color-var'>m</span>.<strong class='color-f'>maxEnergy</strong>
               	<em style ="float: right; font-family: monospace;font-size:1rem;color:#055;">//←↑→↓↓</em>`)
+            }
           }
         }
         window.addEventListener("keydown", m.fieldEvent);
