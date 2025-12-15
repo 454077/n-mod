@@ -12201,7 +12201,7 @@ const tech = {
         const loop = () => {
           if ((simulation.isChoosing) && m.alive && !build.isExperimentSelection) {
             const dmg = Math.floor(27 * Math.random()) * 0.01
-            this.text = `<strong style = "font-family: 'Courier New', monospace;">+${(1 + dmg).toFixed(2).padStart(2, '0')}x</strong> <strong class='color-d'>damage</strong>`
+            this.text = `<strong style = "font-family: "Chakra Petch", 'Courier New', monospace;">+${(1 + dmg).toFixed(2).padStart(2, '0')}x</strong> <strong class='color-d'>damage</strong>`
             this.damage = 1 + dmg
             if (document.getElementById(`damage-JUNK-id${this.id}`)) document.getElementById(`damage-JUNK-id${this.id}`).innerHTML = this.text
             setTimeout(() => {
@@ -12257,7 +12257,7 @@ const tech = {
             count += 4.5
             const waves = 2 * Math.sin(count * 0.0133) + Math.sin(count * 0.013) + 0.5 * Math.sin(count * 0.031) + 0.33 * Math.sin(count * 0.03)
             this.spawnCount = Math.floor(100 * Math.abs(waves))
-            this.text = `spawn <strong style = "font-family: 'Courier New', monospace;">${this.spawnCount.toLocaleString(undefined, { minimumIntegerDigits: 3 })}</strong> ${powerUps.orb.boost(1)}<br>that give <strong>${(1 + powerUps.boost.damage).toFixed(2)}x</strong> <strong class='color-d'>damage</strong> for <strong>${(powerUps.boost.duration / 60).toFixed(0)}</strong> seconds</span>`
+            this.text = `spawn <strong style = "font-family: "Chakra Petch", 'Courier New', monospace;">${this.spawnCount.toLocaleString(undefined, { minimumIntegerDigits: 3 })}</strong> ${powerUps.orb.boost(1)}<br>that give <strong>${(1 + powerUps.boost.damage).toFixed(2)}x</strong> <strong class='color-d'>damage</strong> for <strong>${(powerUps.boost.duration / 60).toFixed(0)}</strong> seconds</span>`
             if (document.getElementById(`boost-JUNK-id${this.id}`)) document.getElementById(`boost-JUNK-id${this.id}`).innerHTML = this.text
             setTimeout(() => {
               loop()
@@ -14695,7 +14695,7 @@ const tech = {
           loop()
         }, 300);
         this.id++
-        return `<span id = "cellular-rule-id${this.id}" style = "letter-spacing: -0.5px;font-size: 100%;line-height: normal;font-family: 'Courier New', monospace;">${this.outputText()}</span>`
+        return `<span id = "cellular-rule-id${this.id}" style = "letter-spacing: -0.5px;font-size: 100%;line-height: normal;font-family: "Chakra Petch", 'Courier New', monospace;">${this.outputText()}</span>`
       },
       outputText() {
         let text = "<pre>"
@@ -14767,7 +14767,7 @@ const tech = {
           loop()
         }, 300);
         this.id++
-        return `<span id = "cellular-rule-id${this.id}" style = "letter-spacing: -0.5px;font-size: 100%;line-height: normal;font-family: 'Courier New', monospace;">${this.outputText()}</span>`
+        return `<span id = "cellular-rule-id${this.id}" style = "letter-spacing: -0.5px;font-size: 100%;line-height: normal;font-family: "Chakra Petch", 'Courier New', monospace;">${this.outputText()}</span>`
       },
       outputText() {
         let text = "<pre>"

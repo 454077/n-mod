@@ -1013,14 +1013,14 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
         <div style="display: grid;grid-template-columns: repeat(3, 1fr);row-gap: 10px;column-gap: 25px;grid-auto-rows: minmax(5px, auto);margin:-5px 0px 10px 25px;line-height: 100%;">
             <div style="grid-column: 1;grid-row: 2 / 4;">
                 <svg class="SVG-button" onclick="build.startExperiment()" width="150" height="70" >
-                    <g stroke='none' fill='#333' stroke-width="2" font-size="65px" font-family="Ariel, sans-serif">
+                    <g stroke='none' fill='#333' stroke-width="2" font-size="65px" font-family="Chakra Petch, sans-serif">
                         <text x="10" y="57">start</text>
                     </g>
                 </svg>
             </div>
             <div style="grid-column: 2;grid-row: 2;">
                 <svg class="SVG-button" onclick="build.reset()" width="50" height="25">
-                    <g stroke='none' fill='#333' stroke-width="2" font-size="17px" font-family="Ariel, sans-serif">
+                    <g stroke='none' fill='#333' stroke-width="2" font-size="17px" font-family="Chakra Petch, sans-serif">
                         <text x="5" y="18">reset</text>
                     </g>
                 </svg>
