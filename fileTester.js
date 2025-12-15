@@ -48,11 +48,6 @@ const jsSrcs = [
     src: "js/level/levelHandler.js"
   },
   {
-    name: "Level List",
-    src: "js/level/levelList.js"
-  },
-  /*
-  {
     name: "Main Levels",
     src: "js/level/mainLevels.js"
   },
@@ -76,7 +71,6 @@ const jsSrcs = [
     name: "Mod Levels",
     src: "js/level/modLevels.js"
   },
-  */
   {
     name: "Lore",
     src: "js/core/lore.js"
@@ -115,15 +109,12 @@ const fileLoads = { //each of these values is (supposed to be) set to true in it
   isMobJS: false,
   isSpawnJS: false,
   isLevelHandlerJS: false,
-  isLevelListJS: false,
-  /*
   isMainLevelsJS: false,
   isTrainingLevelsJS: false,
   isCommunityLevelsJS: false,
   isLoreLevelsJS: false,
   isRemovedLevelsJS: false,
   isModLevelsJS: false,
-  */
   isLoreJS: false,
   isEngineJS: false,
   isIndexJS: false,
@@ -184,6 +175,7 @@ try {
             favIcon.href = 'Error.png'
           } else {
             fileLoads.onLoadEnd();
+            level.populateLevelList();
           }
         }, 300 * Object.values(fileLoads).length + 100); //ensure .js files are loaded BEFORE attempting error check
       }

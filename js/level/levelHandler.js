@@ -27,7 +27,13 @@ const level = {
 		"yingYang", "staircase", "buttonbutton", "downpour", "underpass", "cantilever", "shipwreck",
 		"unchartedCave", "dojo", "arena", "flappyGon", "rings", "trial", "soft", "movers"],
     modSpecificLevels: [ "gettingOverIt", "movementTech", "descent", "split", "boundary", "bifurcate"],
-    //fullLevelList: {},
+    fullLevelList: {},
+    populateLevelList() {
+        let levelLists = [mainLevels, trainingLevels, communityLevels, removedLevels, modLevels, loreLevels]
+        levelLists.forEach(item => {
+            Object.assign(level.fullLevelList, item)
+        });
+    },
     levels: [],
     start() {
         if (level.levelsCleared === 0) { //this code only runs on the first level
@@ -82,7 +88,7 @@ const level = {
             // level.interferometer()
             // level.testing()
             
-            levelList[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
+            level.fullLevelList[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
 
             // for (let i = 0; i < 1; i++) spawn.finalBoss(1100 + 100 * i, -100)
             // for (let i = 0; i < 1; i++) spawn.slasher2(1100 + 100 * i, -200, 50)
@@ -120,7 +126,7 @@ const level = {
         } else {
             spawn.setSpawnList(); //picks a couple mobs types for a themed random mob spawns
             // spawn.pickList = ["focuser", "focuser"]
-            levelList[level.levels[level.onLevel]](); //picks the current map from the the levels array
+            level.fullLevelList[level.levels[level.onLevel]](); //picks the current map from the the levels array
             if (!simulation.isCheating && !build.isExperimentRun && !simulation.isTraining) {
                 localSettings.runCount += level.levelsCleared //track the number of total runs locally
                 localSettings.levelsClearedLastGame = level.levelsCleared
@@ -247,7 +253,7 @@ const level = {
             for (let i = 0; i < len; i++) powerUps.spawn(player.position.x + 90 * (Math.random() - 0.5), player.position.y + 90 * (Math.random() - 0.5), "heal", false);
         }
         if (tech.interestRate > 0) {
-            // const rate = ((fullLevelList[level.levels[level.onLevel]].name === "final" || fullLevelList[level.levels[level.onLevel]].name === "subway") ? 1 / 3 : 1) * tech.interestRate //this effect triggers extra times on these final levels
+            // const rate = ((level.fullLevelList[level.levels[level.onLevel]].name === "final" || level.fullLevelList[level.levels[level.onLevel]].name === "subway") ? 1 / 3 : 1) * tech.interestRate //this effect triggers extra times on these final levels
             let rate = tech.interestRate
             if (level.onLevel < level.levels.length - 1) {//make sure it's not on the lore level which has an undefined name
                 const levelName = level.levels[level.onLevel]

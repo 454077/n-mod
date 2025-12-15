@@ -115,36 +115,4 @@ fileLoads.onLoadEnd = function () {
     experimentBtn.onclick = function () { tryRunning.experiment() }
     splashStart.onclick = function () { tryRunning.start() }
     document.body.appendChild(container); //append script loader (created in scriptLoader.js)
-    /*
-    const todoDetails = document.getElementById("todo-list")
-    todoDetails.addEventListener("toggle", function () {
-      if (todoDetails.open) {
-        try {
-          let todoIframe = document.getElementById("todo-file")
-          let todoContent = todoIframe.contentDocument || todoIframe.contentWindow.contentDocument;
-          const todoSpan = document.getElementById("todo-iframe")
-          todoContent = todoContent.body.textContent;
-          setTimeout(() => {
-            todoSpan.innerHTML = todoContent
-          }, 500)
-        } catch (err) {
-          window.alert(err)
-        }
-      }
-    })
-    const aboutDetails = document.getElementById("about")
-    aboutDetails.addEventListener("toggle", function () {
-      if (aboutDetails.open) {
-        try {
-          let ReadMeIframe = document.getElementById("README-file")
-          let ReadMeContent = ReadMeIframe.contentDocument || ReadMeIframe.contentWindow.contentDocument;
-          const ReadMeSpan = document.getElementById("README-span")
-          setTimeout(() => {
-            ReadMeSpan.innerHTML = ReadMeContent.innerHTML
-          }, 500)
-        } catch (err) {
-          window.alert(err)
-        }
-      }
-    })*/
 };
