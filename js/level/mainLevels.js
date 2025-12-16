@@ -19,15 +19,16 @@ const mainLevels = {
             }
 
             if (localSettings.levelsClearedLastGame < 3) {
+                //powerUps.spawn(2095 + 2 * Math.random(), -1270, "heal", false);
             } else if (!build.isExperimentRun) {
                 simulation.trails(70)
                 //bonus power ups for clearing runs in the last game
                 if (!simulation.isCheating && localSettings.levelsClearedLastGame > 1) {
                     let entangled = false
-                    for (let i = 0; i < localSettings.levelsClearedLastGame / 2; i++) {
-                        if (Math.random() < 0.1 && !entangled) {
-                            entangled = true
-                            powerUps.spawn(2095 + 2 * Math.random(), -1270 - 50 * i, "entanglement", false); //chance to spawn entanglement (max of 1)
+                    for (let i = 0; i < Math.ceil(localSettings.levelsClearedLastGame / 1.5); i++) {
+                        if (Math.random() < 0.25 && localSettings.entanglement && !entangled) {
+                            if (Math.random() < 0.37) entangled = true
+                            powerUps.spawn(2095 + 2 * Math.random(), -1270 - 50 * i, "entanglement", false); //chance to spawn entanglement
                         } else {
                             powerUps.spawn(2095 + 2 * Math.random(), -1270 - 50 * i, "tech", false); //spawn a tech for levels cleared in last game
                         }
