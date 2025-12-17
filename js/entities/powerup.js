@@ -1324,24 +1324,24 @@ const powerUps = {
         ${m.fieldUpgrades[choose].description}</div></div>`
   },
   techText(choose, click) {
-    const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
+    const techCountText = tech.tech[choose].count > 0 ? ` (${tech.tech[choose].count + 1}x)` : "";
     const style = localSettings.isHideImages || tech.tech[choose].isLore ? powerUps.hideStyle : (tech.tech[choose].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[choose].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/${tech.tech[choose].name}.webp")'` : `style = 'background-image: url("img/${tech.tech[choose].name}.webp"), url("img/junk.webp")'`)
     return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}"${style}>
                 <div class="card-text">
-                <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
+                <div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[choose].name + techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
   },
   instantTechText(choose, click) {
-    const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
+    const techCountText = tech.tech[choose].count > 0 ? ` (${tech.tech[choose].count + 1}x)` : "";
     const style = localSettings.isHideImages || tech.tech[choose].isLore ? powerUps.hideStyle : (tech.tech[choose].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[choose].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/${tech.tech[choose].name}.webp")'` : `style = 'background-image: url("img/${tech.tech[choose].name}.webp"), url("img/junk.webp")'`)
     // <div class="circle-grid tech"></div>
     return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}"${style}>
                 <div class="card-text">
-                <div class="grid-title"> <div class="circle-grid-instant"></div> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
+                <div class="grid-title"> <div class="circle-grid-instant"></div> &nbsp; ${tech.tech[choose].name + techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
   },
   skinTechText(choose, click) {
-    const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
+    const techCountText = tech.tech[choose].count > 0 ? ` (${tech.tech[choose].count + 1}x)` : "";
     const style = localSettings.isHideImages ? powerUps.hideStyle : (tech.tech[choose].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[choose].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/${tech.tech[choose].name}.webp")'` : `style = 'background-image: url("img/${tech.tech[choose].name}.webp"), url("img/junk.webp")'`)
     return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}"${style}>
                 <div class="card-text">
@@ -1350,11 +1350,11 @@ const powerUps = {
                     <div class="circle-grid-skin"></div>
                     <div class="circle-grid-skin-eye"></div>
                 </span>
-                &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
+                &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[choose].name + techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
   },
   fieldTechText(choose, click) {
-    const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
+    const techCountText = tech.tech[choose].count > 0 ? ` (${tech.tech[choose].count + 1}x)` : "";
     const style = localSettings.isHideImages ? powerUps.hideStyle : (tech.tech[choose].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[choose].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/${tech.tech[choose].name}.webp")'` : `style = 'background-image: url("img/${tech.tech[choose].name}.webp"), url("img/junk.webp")'`)
     return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}"${style}>
                 <div class="card-text">
@@ -1363,11 +1363,11 @@ const powerUps = {
                     <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
                     <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
                 </span>
-                &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
+                &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${tech.tech[choose].name + techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
   },
   gunTechText(choose, click) {
-    const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
+    const techCountText = tech.tech[choose].count > 0 ? ` (${tech.tech[choose].count + 1}x)` : "";
     const style = localSettings.isHideImages ? powerUps.hideStyle : (tech.tech[choose].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[choose].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/${tech.tech[choose].name}.webp")'` : `style = 'background-image: url("img/${tech.tech[choose].name}.webp"), url("img/junk.webp")'`)
     return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}"${style}>
                 <div class="card-text">
@@ -1376,11 +1376,11 @@ const powerUps = {
                     <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
                     <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
                 </span>
-                &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
+                &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${tech.tech[choose].name + techCountText}</div>
                 ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
   },
   junkTechText(choose, click) {
-    const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
+    const techCountText = tech.tech[choose].count > 0 ? ` (${tech.tech[choose].count + 1}x)` : "";
     const style = localSettings.isHideImages ? powerUps.hideStyle : (tech.tech[choose].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[choose].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/${tech.tech[choose].name}.webp")'` : `style = 'background-image: url("img/${tech.tech[choose].name}.webp"), url("img/junk.webp")'`)
     if (!localSettings.isHideImages) {
       // setTimeout(() => { //delay so that the html element exists
@@ -1474,11 +1474,11 @@ const powerUps = {
             }
             if (botTech.length > 0) { //pick random bot tech
               const choose = botTech[Math.floor(Math.random() * botTech.length)];
-              const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
+              const techCountText = tech.tech[choose].count > 0 ? ` (${tech.tech[choose].count + 1}x)` : "";
               const style = localSettings.isHideImages ? powerUps.hideStyle : (tech.tech[choose].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[choose].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/${tech.tech[choose].name}.webp")'` : `style = 'background-image: url("img/${tech.tech[choose].name}.webp"), url("img/junk.webp")'`)
               text += `<div class="choose-grid-module card-background" onclick="powerUps.choose('tech',${choose})" ${style}>
                                     <div class="card-text">
-                                    <div class="grid-title"><span  style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
+                                    <div class="grid-title"><span  style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span> &nbsp; ${tech.tech[choose].name + techCountText}</div>
                                     ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
             }
           }
@@ -1547,11 +1547,11 @@ const powerUps = {
             }
             if (botTech.length > 0) { //pick random bot tech
               const choose = botTech[Math.floor(Math.random() * botTech.length)];
-              const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
+              const techCountText = tech.tech[choose].count > 0 ? ` (${tech.tech[choose].count + 1}x)` : "";
               const style = localSettings.isHideImages ? powerUps.hideStyle : (tech.tech[choose].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[choose].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/${tech.tech[choose].name}.webp")'` : `style = 'background-image: url("img/${tech.tech[choose].name}.webp"), url("img/junk.webp")'`)
               text += `<div class="choose-grid-module card-background" onclick="powerUps.choose('tech',${choose})" ${style}>
                                     <div class="card-text">
-                                    <div class="grid-title"><span  style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
+                                    <div class="grid-title"><span  style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span> &nbsp; ${tech.tech[choose].name + techCountText}</div>
                                     ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
             }
           }
@@ -1688,11 +1688,11 @@ const powerUps = {
               // const isCount = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count+1}x)` : "";
               // text += `<div class="choose-grid-module" onclick="powerUps.choose('tech',${choose})"><div class="grid-title">          <span  style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span>  &nbsp; ${tech.tech[choose].name} ${isCount}</div>          ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div>`
               const choose = botTech[Math.floor(Math.random() * botTech.length)];
-              const techCountText = tech.tech[choose].count > 0 ? `(${tech.tech[choose].count + 1}x)` : "";
+              const techCountText = tech.tech[choose].count > 0 ? ` (${tech.tech[choose].count + 1}x)` : "";
               const style = localSettings.isHideImages ? powerUps.hideStyle : (tech.tech[choose].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[choose].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/${tech.tech[choose].name}.webp")'` : `style = 'background-image: url("img/${tech.tech[choose].name}.webp"), url("img/junk.webp")'`)
               text += `<div class="choose-grid-module card-background" onclick="powerUps.choose('tech',${choose})" ${style}>
                                     <div class="card-text">
-                                    <div class="grid-title"><span  style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span> &nbsp; ${tech.tech[choose].name} ${techCountText}</div>
+                                    <div class="grid-title"><span  style = "font-size: 150%;font-family: 'Courier New', monospace;">⭓▸●■</span> &nbsp; ${tech.tech[choose].name + techCountText}</div>
                                     ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
             }
           }
@@ -1745,6 +1745,7 @@ const powerUps = {
             }
             for (let j = 0, len = (tech.isMicroTransactions || 1); j < len; j++) {
               const choose = skins[Math.floor(Math.seededRandom(0, skins.length))] //pick an element from the array of options
+              const techCountText = tech.tech[choose].count > 0 ? ` (${tech.tech[choose].count + 1}x)` : "";
               const style = localSettings.isHideImages ? powerUps.hideStyle : (tech.tech[choose].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (!tech.tech[choose].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/${tech.tech[choose].name}.webp")'` : `style = 'background-image: url("img/${tech.tech[choose].name}.webp"), url("img/junk.webp")'`)
               text += `<div class="choose-grid-module card-background" onclick="
               				tech.giveTech(${choose});
@@ -1754,7 +1755,7 @@ const powerUps = {
                     <div class="card-text">
               		<div class="grid-title"><div class="circle-grid research"></div>
                     <span style = 'font-size:90%; font-weight: 100; letter-spacing: -1.5px;'>microtransaction:</span>
-                    <br>${tech.tech[choose].name}</div>
+                    <br>${tech.tech[choose].name + techCountText}</div>
                     ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
               //simulation.inGameConsole(style)
             }
