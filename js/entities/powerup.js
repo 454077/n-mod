@@ -622,8 +622,8 @@ const powerUps = {
     for (let i = 0; i < levelSubList.length; i++) {
         let what = levelSubList[i]
         let style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
-        let tagClass = localSettings.isHideImages ? "choose-grid-module" : "choose-grid-module card-background><div class=\"grid-title\""
-        returnText += `${openTag + what}')" ${style}><div class="${tagClass}">${what}</div></div>`
+        let tagClass = localSettings.isHideImages ? "choose-grid-module" : `choose-grid-module card-background><div class="grid-title"`
+        returnText += `${openTag + what}')" ${style}><div class="${tagClass}" style="font-size: 1rem;">${what}</div></div>`
       }
     return returnText;
   },
