@@ -4063,8 +4063,8 @@ const tech = {
     {
       name: "maintenance",
       descriptionFunction() {
-        return `spawn ${powerUps.orb.gun()} and get <strong>2x</strong> <em class='flicker'>frequency</em> for ${powerUps.orb.gunTech()} <strong class='color-choice'><span>ch</span><span>oi</span><span>ces</span></strong>
-        <br><strong>+6%</strong> chance for <strong class='color-junk'>JUNK</strong> <strong class='color-choice'><span>ch</span><span>oi</span><span>ces</span></strong>`;
+        return `<strong>2x</strong> <em class='flicker'>frequency</em> for ${powerUps.orb.tech()} with <strong class='color-h'>healing</strong>
+        <br>spawn ${powerUps.orb.heal(13)}`
       },
       isPacifist: true,
       maxCount: 1,
