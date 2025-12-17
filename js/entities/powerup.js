@@ -576,7 +576,7 @@ const powerUps = {
       let text = `<div class="choose-grid-module" style="font-size: 1.5rem;color:rgb(110,155,160);text-align:center;" onclick="powerUps.warp.load('${level.levels[level.onLevel + 1]}')" title="Warp to the next level"><strong>WARP</strong></div>`,
       width, tag1 = `<div class="${localSettings.isHideImages ? "choose-grid-module" : "choose-grid-module card-background"}" style="font-size: 1rem;padding-left:5px;" onclick="powerUps.warp.load('`,
       tag2 = function(list){
-        return `</div><div ${list ? `id="${list}"`: "class='warp-grid-column'"}><div class="choose-grid-module" style="color:rgb(110,155,160);background-color:#444;text-align:center;">level.`
+        return `</div><div ${list ? `id="${list}"`: "class='warp-grid-column'"}><div class="choose-grid-module" style="color:rgb(110,155,160);background-color:#444;text-align:center;">level.${list}</div>`
       }
       if (canvas.width < 1710) {
         width = "952px"
@@ -595,15 +595,15 @@ const powerUps = {
       text += `<div class="choose-grid-module" id="exit" style="font-size: 1rem;color:rgb(110,155,160);text-align:right;padding-right:5px;"><strong>cancel</strong></div>`
       text += `<div id="warp-choose-grid"><div id="uniqueLevels"><div class="choose-grid-module" style="font-size: 1rem;color:rgb(110,155,160);background-color:#444;text-align:center;">level.uniqueLevels</div>`
       text += powerUps.warpText(level.uniqueLevels, tag1);
-      text += `${tag2("playableLevels")}playableLevels</div>`
+      text += tag2("playableLevels");
       text += powerUps.warpText(level.playableLevels, tag1);
-      text += `${tag2("communityLevels")}communityLevels</div>`
+      text += tag2("communityLevels");
       text += powerUps.warpText(level.communityLevels, tag1);
-      text += `${tag2("trainingLevels")}trainingLevels</div>`
+      text += tag2("trainingLevels");
       text += powerUps.warpText(level.trainingLevels, tag1);
-      text += `${tag2("removedCommunityLevels")}removedCommunityLevels</div>`
+      text += tag2("removedCommunityLevels");
       text += powerUps.warpText(level.removedCommunityLevels, tag1);
-      text += `${tag2("modSpecificLevels")}modSpecificLevels</div>`
+      text += tag2("modSpecificLevels");
       text += powerUps.warpText(level.modSpecificLevels, tag1);
       text += `</div></div>`
       document.getElementById("choose-grid").innerHTML = text
@@ -616,6 +616,16 @@ const powerUps = {
         powerUps.warp.exit()
       });
     },
+  },
+  warpText (levelSubList, openTag) {
+    let returnText = ""
+    for (let i = 0; i < levelSubList.length; i++) {
+        let what = levelSubList[i]
+        let style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
+        let tagClass = localSettings.isHideImages ? "choose-grid-module" : "choose-grid-module card-background><div class=\"grid-title\""
+        returnText += `${openTag + what}')" ${style}><div class="${tagClass}">${what}</div></div>`
+      }
+    return returnText;
   },
   settings: {
     name: "settings",
@@ -1171,15 +1181,6 @@ const powerUps = {
         simulation.updateGunHUD();
       }
     }
-  },
-  warpText (levelSubList, openTag) {
-    let returnText = ""
-    for (let i = 0; i < levelSubList.length; i++) {
-        let what = levelSubList[i]
-        let style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
-        returnText += `${openTag + what}')" ${style}><div class="card-title">${what}</div></div>`
-      }
-    return returnText;
   },
   cancelText(type) {
     if (tech.isSuperDeterminism || type === "constraint" || type === "entanglement") {

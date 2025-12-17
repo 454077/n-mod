@@ -1281,6 +1281,7 @@ startGame(isBuildRun = false, isTrainingRun = false) {
   simulation.then = Date.now();
   //lore.unlockTesting()
   simulation.loop = simulation.normalLoop
+  powerUps.warp.exit(); //fixing a bug with picking up powerups after starting the game
   requestAnimationFrame(cycle); //starts game loop
 },
 clearTimeouts() {
