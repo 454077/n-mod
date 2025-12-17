@@ -1,7 +1,7 @@
 const jsSrcs = [
   {
     name: "Initialization",
-    src: 'js/core/init.js'
+    src: 'js/loading/init.js'
   },
   {
     name: "On Load Ended",
