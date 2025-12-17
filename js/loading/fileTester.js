@@ -5,7 +5,7 @@ const jsSrcs = [
   },
   {
     name: "On Load Ended",
-    src: 'js/core/onLoadEnd.js'
+    src: 'js/loading/onLoadEnd.js'
   },
   {
     name: "Matter",
