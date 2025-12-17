@@ -525,22 +525,22 @@ summary {
 @media (min-width: 1710px) and (max-width: 1950px) {
 
   .experiment-grid-module,
-    .choose-grid-module,
-      .pause-grid-module,
-        .research-cancel {
-          line-height: 143%;
-          font-size: 0.68em;
-        }
+  .choose-grid-module,
+  .pause-grid-module,
+  .research-cancel {
+    line-height: 143%;
+    font-size: 0.68em;
+  }
 
   .research-cancel {
     font-size: 0.9em;
   }
 
   #experiment-grid,
-    .choose-grid,
-      .pause-grid {
-        grid-template-columns: repeat(auto-fit, 340px);
-      }
+  .choose-grid,
+  .pause-grid {
+    grid-template-columns: repeat(auto-fit, 340px);
+  }
 
   .card-background {
     height: 290px;
@@ -556,21 +556,21 @@ summary {
 @media (max-width: 1709px) {
 
   .experiment-grid-module,
-    .choose-grid-module,
-      .pause-grid-module {
-        line-height: 139%;
-        font-size: 0.58em;
-      }
+  .choose-grid-module,
+  .pause-grid-module {
+    line-height: 139%;
+    font-size: 0.58em;
+  }
 
   .research-cancel {
     font-size: 0.8em;
   }
 
   #experiment-grid,
-    .choose-grid,
-      .pause-grid {
-        grid-template-columns: repeat(auto-fit, 285px);
-      }
+  .choose-grid,
+  .pause-grid {
+    grid-template-columns: repeat(auto-fit, 285px);
+  }
 
   .card-background {
     height: 240px;
@@ -584,10 +584,10 @@ summary {
 
 /* .card-text */
 .choose-grid-no-images .card-text,
-  .choose-grid-no-images .research-card,
-    .choose-grid-no-images .cancel-card {
-      border-radius: 5px;
-    }
+.choose-grid-no-images .research-card,
+.choose-grid-no-images .cancel-card {
+  border-radius: 5px;
+}
 
 .experiment-grid-module:hover .card-text {
   background-color: var(--hover-card-color);
@@ -840,13 +840,13 @@ summary {
 
 .metallic-sparkle {
   background: linear-gradient(90deg,
-                              #c38aa6,
-                              #e6c0d9,
-                              #dca4c6,
-                              #c38aa6,
-                              #e6c0d9,
-                              #dca4c6,
-                              #c38aa6);
+      #c38aa6,
+      #e6c0d9,
+      #dca4c6,
+      #c38aa6,
+      #e6c0d9,
+      #dca4c6,
+      #c38aa6);
   background-size: 200% 100%;
   background-clip: text;
   color: transparent;
@@ -1327,9 +1327,9 @@ summary {
 @keyframes randomize {
 
   0%,
-    100% {
-      font-family: "Mojangles", Arial;
-    }
+  100% {
+    font-family: "Mojangles", Arial;
+  }
 
   20% {
     font-family: "Chakra Petch", Times New Roman;
@@ -1433,6 +1433,37 @@ summary {
   background-color: var(--card-color);
 }
 
+#warp-choose-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  column-gap: 4px;
+  padding: 2px;
+}
+
+#uniqueLevels {
+  grid-column-start: 1;
+}
+
+#playableLevels {
+  grid-column-start: 2;
+}
+
+#communityLevels {
+  grid-column-start: 3;
+}
+
+#trainingLevels {
+  grid-column-start: 4;
+}
+
+#removedCommunityLevels {
+  grid-column-start: 5;
+}
+
+#modSpecificLevels {
+  grid-column-start: 6;
+}
+
 .flipX {
   animation: 14s anim-flipX linear infinite;
 }
@@ -1454,114 +1485,114 @@ summary {
 @keyframes fieldColorCycle {
   0% {
     background-color: rgb(255, 255, 255)
-}
-
-100% {
-  background-color: rgb(0, 204, 255)
-}
-}
-
-  @keyframes techColorCycle {
-    0% {
-      background-color: hsl(253, 100%, 100%)
   }
 
-100% {
-  background-color: hsl(253, 100%, 90%)
-}
+  100% {
+    background-color: rgb(0, 204, 255)
+  }
 }
 
-  @keyframes bgColor {
-    0% {
-      background-color: rgb(63, 218, 216)
+@keyframes techColorCycle {
+  0% {
+    background-color: hsl(253, 100%, 100%)
   }
 
-10% {
-  background-color: rgb(47, 201, 226)
-}
-
-20% {
-  background-color: rgb(28, 127, 238)
-}
-
-30% {
-  background-color: rgb(95, 21, 242)
-}
-
-40% {
-  background-color: rgb(186, 12, 248)
-}
-
-50% {
-  background-color: rgb(251, 7, 217)
-}
-
-60% {
-  background-color: rgba(255, 0, 0)
-}
-
-70% {
-  background-color: rgb(255, 0, 0)
-}
-
-80% {
-  background-color: rgb(255, 154, 0)
-}
-
-90% {
-  background-color: rgb(208, 222, 33)
-}
-
-100% {
-  background-color: rgb(79, 220, 74)
-}
-}
-
-  @keyframes textColor {
-    0% {
-      color: rgb(63, 218, 216)
-    }
-
-    10% {
-      color: rgb(47, 201, 226)
-    }
-
-    20% {
-      color: rgb(28, 127, 238)
-    }
-
-    30% {
-      color: rgb(95, 21, 242)
-    }
-
-    40% {
-      color: rgb(186, 12, 248)
-    }
-
-    50% {
-      color: rgb(251, 7, 217)
-    }
-
-    60% {
-      color: rgba(255, 0, 0)
-    }
-
-    70% {
-      color: rgb(255, 0, 0)
-    }
-
-    80% {
-      color: rgb(255, 154, 0)
-    }
-
-    90% {
-      color: rgb(208, 222, 33)
-    }
-
-    100% {
-      color: rgb(79, 220, 74)
-    }
+  100% {
+    background-color: hsl(253, 100%, 90%)
   }
+}
+
+@keyframes bgColor {
+  0% {
+    background-color: rgb(63, 218, 216)
+  }
+
+  10% {
+    background-color: rgb(47, 201, 226)
+  }
+
+  20% {
+    background-color: rgb(28, 127, 238)
+  }
+
+  30% {
+    background-color: rgb(95, 21, 242)
+  }
+
+  40% {
+    background-color: rgb(186, 12, 248)
+  }
+
+  50% {
+    background-color: rgb(251, 7, 217)
+  }
+
+  60% {
+    background-color: rgba(255, 0, 0)
+  }
+
+  70% {
+    background-color: rgb(255, 0, 0)
+  }
+
+  80% {
+    background-color: rgb(255, 154, 0)
+  }
+
+  90% {
+    background-color: rgb(208, 222, 33)
+  }
+
+  100% {
+    background-color: rgb(79, 220, 74)
+  }
+}
+
+@keyframes textColor {
+  0% {
+    color: rgb(63, 218, 216)
+  }
+
+  10% {
+    color: rgb(47, 201, 226)
+  }
+
+  20% {
+    color: rgb(28, 127, 238)
+  }
+
+  30% {
+    color: rgb(95, 21, 242)
+  }
+
+  40% {
+    color: rgb(186, 12, 248)
+  }
+
+  50% {
+    color: rgb(251, 7, 217)
+  }
+
+  60% {
+    color: rgba(255, 0, 0)
+  }
+
+  70% {
+    color: rgb(255, 0, 0)
+  }
+
+  80% {
+    color: rgb(255, 154, 0)
+  }
+
+  90% {
+    color: rgb(208, 222, 33)
+  }
+
+  100% {
+    color: rgb(79, 220, 74)
+  }
+}
 
 .link {
   color: #000;
@@ -1600,24 +1631,24 @@ summary {
   0% {
     color: transparent;
     text-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
-}
-
-100% {
-  /* font-weight: 800; */
-  color: #000;
-  text-shadow: 0 0 0px rgba(0, 0, 0, 0.5);
-}
-}
-
-  .fade-in {
-    opacity: 0;
-    animation: 2s ease 1.5s normal forwards 1 fadein;
   }
 
-    .fade-in-fast {
-      opacity: 0;
-      animation: 1.5s ease 1s normal forwards 1 fadein;
-    }
+  100% {
+    /* font-weight: 800; */
+    color: #000;
+    text-shadow: 0 0 0px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: 2s ease 1.5s normal forwards 1 fadein;
+}
+
+.fade-in-fast {
+  opacity: 0;
+  animation: 1.5s ease 1s normal forwards 1 fadein;
+}
 
 .fade-in-faster {
   opacity: 0;
@@ -1641,9 +1672,9 @@ summary {
 }
 
 .draw-lines-a {
-    stroke-dasharray: 15;
-    stroke-dashoffset: 15;
-    animation: dash 2.4s ease-in forwards;
+  stroke-dasharray: 15;
+  stroke-dashoffset: 15;
+  animation: dash 2.4s ease-in forwards;
 }
 
 .draw-lines-d {
@@ -1659,27 +1690,27 @@ summary {
 }
 
 .draw-lines-dot {
-    stroke-dasharray: 5;
-    stroke-dashoffset: 5;
-    animation: dash 2.4s ease-in forwards;
+  stroke-dasharray: 5;
+  stroke-dashoffset: 5;
+  animation: dash 2.4s ease-in forwards;
 }
 
 .draw-lines-g {
-    stroke-dasharray: 17;
-    stroke-dashoffset: 17;
-    animation: dash 2.4s ease-in forwards;
+  stroke-dasharray: 17;
+  stroke-dashoffset: 17;
+  animation: dash 2.4s ease-in forwards;
 }
 
 .draw-lines-i {
-    stroke-dasharray: 10;
-    stroke-dashoffset: 10;
-    animation: dash 2.4s ease-in forwards;
+  stroke-dasharray: 10;
+  stroke-dashoffset: 10;
+  animation: dash 2.4s ease-in forwards;
 }
 
 .draw-lines-l {
-    stroke-dasharray: 13;
-    stroke-dashoffset: 13;
-    animation: dash 2.4s ease-in forwards;
+  stroke-dasharray: 13;
+  stroke-dashoffset: 13;
+  animation: dash 2.4s ease-in forwards;
 }
 
 .draw-lines-m {

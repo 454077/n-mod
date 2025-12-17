@@ -574,15 +574,16 @@ const powerUps = {
       /* document.getElementById("choose-grid").classList.add('choose-grid-no-images');
       document.getElementById("choose-grid").classList.remove('choose-grid');*/
       let text = `<div class="choose-grid-module" style="font-size: 1.5rem;color:rgb(110,155,160);text-align:center;" onclick="powerUps.warp.load('${level.levels[level.onLevel + 1]}')" title="Warp to the next level"><strong>WARP</strong></div>`,
-      style = "", what = "", width, tag1 = `<div class="${localSettings.isHideImages ? "choose-grid-module" : "choose-grid-module card-background"}" style="font-size: 1rem;padding-left:5px;" onclick="powerUps.warp.load('`,
-      tag2 = `<div class="choose-grid-module" style="color:rgb(110,155,160);background-color:#444;text-align:center;">level.`,
-      tag3 = "</div>" + (localSettings.isHideImages ? "" : "</div>");
+      style = (localSettings.isHideImages? "span" : "div"), width, tag1 = `<div class="${localSettings.isHideImages ? "choose-grid-module" : "choose-grid-module card-background"}" style="font-size: 1rem;padding-left:5px;" onclick="powerUps.warp.load('`,
+      tag2 = function(list){
+        return `</${style}></div><div ${list ? `id="${list}"`: "class='warp-grid-column'"}><div class="choose-grid-module" style="color:rgb(110,155,160);background-color:#444;text-align:center;">level.`
+      }, tag3 = "</div>" + (localSettings.isHideImages ? "" : "</div>");
       if (canvas.width < 1710) {
-        width = "238px"
+        width = "952px"
       } else if (canvas.width < 1950) {
-        width = "283px"
+        width = "1132px"
       } else {
-        width = "320px"
+        width = "1280px"
       }
       //if (localSettings.isHideImages) {
         document.getElementById("choose-grid").style.gridTemplateColumns = width
@@ -592,42 +593,19 @@ const powerUps = {
       } */
 
       text += `<div class="choose-grid-module" id="exit" style="font-size: 1rem;color:rgb(110,155,160);text-align:right;padding-right:5px;"><strong>cancel</strong></div>`
-      text += `<div class="choose-grid-module" style="font-size: 1rem;color:rgb(110,155,160);background-color:#444;text-align:center;">level.uniqueLevels</div>`
-      for (let i = 0; i < level.uniqueLevels.length; i++) {
-        what = level.uniqueLevels[i]
-        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"><div class="card-title"`
-        text += `${tag1 + what}')" ${style}>${what + tag3}`
-      }
-      text += `${tag2}playableLevels</div>`
-      for (let i = 0; i < level.playableLevels.length; i++) {
-        what = level.playableLevels[i]
-        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"><div class="card-title"`
-        text += `${tag1 + what}')" ${style}>${what + tag3}`
-      }
-      text += `${tag2}communityLevels</div>`
-      for (let i = 0; i < level.communityLevels.length; i++) {
-        what = level.communityLevels[i]
-        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"><div class="card-title"`
-        text += `${tag1 + what}')" ${style}>${what + tag3}`
-      }
-      text += `${tag2}trainingLevels</div>`
-      for (let i = 0; i < level.trainingLevels.length; i++) {
-        what = level.trainingLevels[i]
-        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"><div class="card-title"`
-        text += `${tag1 + what}')" ${style}>${what + tag3}`
-      }
-      text += `${tag2}removedCommunityLevels</div>`
-      for (let i = 0; i < level.removedCommunityLevels.length; i++) {
-        what = level.removedCommunityLevels[i]
-        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"><div class="card-title"`
-        text += `${tag1 + what}')" ${style}>${what + tag3}`
-      }
-      text += `${tag2}modSpecificLevels</div>`
-      for (let i = 0; i < level.modSpecificLevels.length; i++) {
-        what = level.modSpecificLevels[i]
-        style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
-        text += `${tag1 + what}')" ${style}>${what + tag3}`
-      }
+      text += `<div id="warp-choose-grid"><div id="uniqueLevels"><div class="choose-grid-module" style="font-size: 1rem;color:rgb(110,155,160);background-color:#444;text-align:center;">level.uniqueLevels</div><${style}>`
+      text += powerUps.warpText(level.uniqueLevels, tag1, tag3,);
+      text += `${tag2("playableLevels")}playableLevels</div><${style}>`
+      text += powerUps.warpText(level.playableLevels, tag1, tag3,);
+      text += `${tag2("communityLevels")}communityLevels</div><${style}>`
+      text += powerUps.warpText(level.communityLevels, tag1, tag3,);
+      text += `${tag2("trainingLevels")}trainingLevels</div><${style}>`
+      text += powerUps.warpText(level.trainingLevels, tag1, tag3,);
+      text += `${tag2("removedCommunityLevels")}removedCommunityLevels</div><${style}>`
+      text += powerUps.warpText(level.removedCommunityLevels, tag1, tag3,);
+      text += `${tag2("modSpecificLevels")}modSpecificLevels</div><${style}>`
+      text += powerUps.warpText(level.modSpecificLevels, tag1, tag3,);
+      text += `</${style}></div></div>`
       document.getElementById("choose-grid").innerHTML = text
       //show level info
       document.getElementById("choose-grid").style.opacity = "1"
@@ -1193,6 +1171,15 @@ const powerUps = {
         simulation.updateGunHUD();
       }
     }
+  },
+  warpText (levelSubList, openTag, closeTag) {
+    let returnText = ""
+    for (let i = 0; i < levelSubList.length; i++) {
+        let what = levelSubList[i]
+        let style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"><div class="card-title"`
+        returnText += `${openTag + what}')" ${style}>${what + closeTag}`
+      }
+    return returnText;
   },
   cancelText(type) {
     if (tech.isSuperDeterminism || type === "constraint" || type === "entanglement") {
