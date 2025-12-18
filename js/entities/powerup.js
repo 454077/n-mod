@@ -574,7 +574,7 @@ const powerUps = {
       /* document.getElementById("choose-grid").classList.add('choose-grid-no-images');
       document.getElementById("choose-grid").classList.remove('choose-grid');*/
       let text = `<div class="choose-grid-module" style="font-size: 1.5rem;color:rgb(110,155,160);text-align:center;" onclick="powerUps.warp.load('${level.levels[level.onLevel + 1]}')" title="Warp to the next level"><strong>WARP</strong></div>`,
-      width, tag1 = `<div class="${localSettings.isHideImages ? "choose-grid-module" : "choose-grid-module card-background"}" style="font-size: 1rem;padding-left:5px;" onclick="powerUps.warp.load('`,
+      width, tag1 = `<div class="${localSettings.isHideImages ? "choose-grid-module" : "choose-grid-module card-background"}" onclick="powerUps.warp.load('`,
       tag2 = function(list){
         return `</div><div ${list ? `id="${list}"`: "class='warp-grid-column'"}><div class="choose-grid-module" style="color:rgb(110,155,160);background-color:#444;text-align:center;">level.${list}</div>`
       }
@@ -621,9 +621,9 @@ const powerUps = {
     let returnText = ""
     for (let i = 0; i < levelSubList.length; i++) {
         let what = levelSubList[i]
-        let style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
-        let tagClass = localSettings.isHideImages ? "choose-grid-module" : `choose-grid-module card-background><div class="grid-title"`
-        returnText += `${openTag + what}')" ${style}><div class="${tagClass}" style="font-size: 1rem;">${what}</div></div>`
+        let style = localSettings.isHideImages ? powerUps.hideStyle : `style="max-height: 8rem; font-size: 1rem;padding-left:5px; background-image: url('img/level/${what}.webp'), url('img/junk.webp');"`
+        let tagClass = localSettings.isHideImages ? `<div class="choose-grid-module grid-title" style="font-size:1rem">${what}</div>` : what
+        returnText += `${openTag + what}')" ${style}>${tagClass}</div>`
       }
     return returnText;
   },
