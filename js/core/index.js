@@ -654,7 +654,7 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
     const ejectClass = (tech.isPauseEjectTech && !simulation.isChoosing) ? 'pause-eject' : ''
     for (let i = 0, len = tech.tech.length; i < len; i++) {
       if (tech.tech[i].count > 0) {
-        const style = (localSettings.isHideImages || tech.tech[i].isLore) ? `style="height:auto;"` : (tech.tech[i].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[i].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/${tech.tech[i].name}.webp")'` : `style = 'background-image: url("img/${tech.tech[i].name}.webp"), url("img/junk.webp")'`)
+        const style = (localSettings.isHideImages || tech.tech[i].isLore) ? `style="height:auto;"` : (tech.tech[i].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[i].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/tech/${tech.tech[i].name}.webp")'` : `style = 'background-image: url("img/tech/${tech.tech[i].name}.webp"), url("img/junk.webp")'`)
         const techCountText = tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : "";
         if (tech.tech[i].isInstant) {
           // text += `<div class="pause-grid-module" id ="${i}-pause-tech"  style = "border: 0px; opacity:0.5; font-size: 60%; line-height: 130%; margin: 1px; padding: 6px;"><div class="grid-title">${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div></div>`
@@ -1045,7 +1045,7 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
     }
     for (let i = 0, len = tech.tech.length; i < len; i++) {
       if (localSettings.isJunkExperiment && !tech.tech[i].isLore) {
-        const style = localSettings.isHideImages ? hideStyle : (tech.tech[i].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[i].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/${tech.tech[i].name}.webp")'` : `style = "background-image: url('img/${tech.tech[i].name}.webp'), url('img/junk.webp')"`)
+        const style = localSettings.isHideImages ? hideStyle : (tech.tech[i].isWIP ? `style = 'background-image: url("img/WIP.webp")'` : (tech.tech[i].isJunk) ? `style = 'background-image: url("img/junk.webp"), url("img/tech/${tech.tech[i].name}.webp")'` : `style = "background-image: url('img/tech/${tech.tech[i].name}.webp'), url('img/junk.webp')"`)
         if ((tech.tech[i].allowed() || tech.tech[i].count > 0) && (!tech.tech[i].isInstant || localSettings.isJunkExperiment)) { // || tech.tech[i].name === "+1 cardinality") { //|| tech.tech[i].name === "leveraged investment"
           text += `<div id="tech-${i}" class="experiment-grid-module card-background ${tech.tech[i].count ? "build-tech-selected" : ""}" onclick="build.choosePowerUp(${i},'tech')" ${style}>`
         } else { //disabled
