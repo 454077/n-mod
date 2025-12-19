@@ -12188,8 +12188,11 @@ const tech = {
             tech.tech[i].frequency = (tech.tech[i].frequencyDefault || 2)
           }
         }
-        if (build.isExperimentSelection) build.updateExperimentTechHUD();
-        simulation.updateTechHUD();
+        if (build.isExperimentSelection) {
+          build.populateGrid();
+        } else {
+          simulation.updateTechHUD();
+        }
       },
       remove() { }
     },
