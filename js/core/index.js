@@ -2130,7 +2130,7 @@ if (!localSettings.isHideImages) {
     for (let i = 0, len = b.guns.length; i < len; i++) urls.push("img/gun/" + b.guns[i].name + ".webp")
     for (let i = 1, len = m.fieldUpgrades.length; i < len; i++) urls.push("img/field/" + m.fieldUpgrades[i].name + ".webp")
     for (let i = 0, len = tech.tech.length; i < len; i++) {
-      if (!tech.tech[i].isLore) urls.push("img/" + tech.tech[i].name + ".webp")
+      if (!tech.tech[i].isLore) urls.push("img/tech/" + tech.tech[i].name + ".webp")
     }
     let images = new Array()
     for (let i = 0; i < urls.length; i++) {
