@@ -1,16 +1,15 @@
 ************************************************ TODO ******************************************
-•Get game to properly load level list files before removing levelList.js
 •Finish Work-in-progress tech
 •Add bossbar for boundaryBoss
 •Add localSettings loading and clearing
 •Add more commands to chat menu
 
 ******************************************* WORK-IN-PROGRESS ************************************
-•Image directiry shifting
+•Image directory shifting
 •More images in warp menu
 
 ********************************************* POSTPONED ******************************************
 •Modded bullets integration (i.e. as part of b instead of ephemera)
 
 ******************************************* NOT PLANNED *******************************************
-•Fixing Genesis (arena boss) immunity
+•Fixing Genisis (arena boss) immunity
