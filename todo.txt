@@ -10,7 +10,7 @@
 •More images in warp menu
 
 ********************************************* POSTPONED ******************************************
-•Modded bullets integration
+•Modded bullets integration (i.e. as part of b instead of ephemera")
 
 ******************************************* NOT PLANNED *******************************************
 •Fixing Genesis (arena boss) immunity
