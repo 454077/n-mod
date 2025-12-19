@@ -4,3 +4,13 @@
 •Add bossbar for boundaryBoss
 •Add localSettings loading and clearing
 •Add more commands to chat menu
+
+******************************************* WORK-IN-PROGRESS ************************************
+•Image directiry shifting
+•More images in warp menu
+
+********************************************* POSTPONED ******************************************
+•Modded bullets integration
+
+******************************************* NOT PLANNED *******************************************
+•Fixing Genesis (arena boss) immunity

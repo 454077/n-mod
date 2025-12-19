@@ -1685,18 +1685,6 @@ const powerUps = {
             }
           }
           if (tech.isMassProduction) {
-            // const techOptions = [] //make an array of bot options
-            // for (let i = 0, len = tech.tech.length; i < len; i++) {
-            //     if (tech.tech[i].isMassProduction) techOptions.push(i)
-            // }
-            // if (techOptions.length > 0) { //pick random bot tech
-            //     const choose = techOptions[Math.floor(Math.random() * techOptions.length)];
-            //     const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/tech/${tech.tech[choose].name}.webp');"`
-            //     text += `<div class="choose-grid-module card-background" onclick="powerUps.choose('tech',${choose})" ${style}>
-            //             <div class="card-text">
-            //             <div class="grid-title">${tech.tech[choose].name}</div>
-            //             ${tech.tech[choose].descriptionFunction ? tech.tech[choose].descriptionFunction() : tech.tech[choose].description}</div></div>`
-            // }
             for (let i = 0, len = tech.tech.length; i < len; i++) {
               if (tech.tech[i].isMassProduction) {
                 const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/tech/${tech.tech[i].name}.webp');"`
