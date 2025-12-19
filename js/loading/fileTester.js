@@ -96,7 +96,7 @@ const jsSrcs = [
     src: "js/peripheral/commandConsole.js"
   }
 ];
-const fileLoads = { //each of these values is (supposed to be) set to true in its respective .js file
+const fileLoads = { //these values are each supposed to be set to true in its respective .js file
   isInitJS: false,
   isOnLoadEndJS: false,
   isMatterMinJS: false,
