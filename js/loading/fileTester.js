@@ -172,7 +172,7 @@ try {
             text += `</ul><hr>Please define and/or fix the files at these source locations.`
             document.body.innerHTML = text
             document.title = "n-mod: FAULTY FILES DETECTED"
-            favIcon.href = 'Error.png'
+            favIcon.href = 'img/Error.png'
           } else {
             fileLoads.onLoadEnd();
             level.populateLevelList();
@@ -187,7 +187,7 @@ try {
   document.body.style.backgroundColor = "white";
   document.body.innerHTML = `<h1 style="color:red">UNCAUGHT ERROR:</h1><hr><u>${error}</u>`
   document.title = "n-mod: UNCAUGHT ERROR"
-  favIcon.href = 'Error.png'
+  favIcon.href = 'img/Error.png'
 }
 /*
 
