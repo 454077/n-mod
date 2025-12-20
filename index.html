@@ -109,21 +109,20 @@ Press Escape to close"></textarea>
                         style="width: 120px;">
                     <br><span id="previous-seed" style="color:#bbb"></span>
                     <br>
-                    <svg class="SVG-button SVG-button-splash" id="enable-gamepad" width="300" height="60" stroke='none'
-                        fill='#333'
-                        onclick="javascript: (async () => { const scriptText = await (await fetch('https://raw.githubusercontent.com/kgurchiek/n-gon-controller/main/main.js')).text(); var script = document.createElement('script'); script.type = 'text/javascript'; script.textContent = scriptText; document.head.appendChild(script); document.getElementById('enable-gamepad').style.stroke = '#0b5';})();">
-                        <text x="39" y="19" font-size="14px">load gamepad support</text>
-                        <text x="40" y="38" fill='#aaa' font-size="8px">community code, external script</text>
-                        <text x="12" y="55" fill='#aaa'
-                            font-size="7px">https://github.com/kgurchiek/n-gon-controller</text>
-                    </svg><br><br>
                     Save File:<br>
-                    <input type="file" id="file-import" accept=".json" hidden>
-                    <input type="button" id="load-file" value="Import (WIP)" title="Work in progress!">
-                    <input type="button" id="save-file" value="Export" title="Click to download your save file">
-                    <input type="button" id="erase-save" value="Wipe (WIP)" style="color:red;"
-                        title="Work in progress!">
-                    <br>
+                    <div id="localSave-div">
+                        <input type="file" id="file-import" accept=".json" hidden>
+                        <input type="button" id="load-file" value="Import (WIP)" title="Work in progress!">
+                        <input type="button" id="save-file" value="Export" title="Click to download your save file">
+                        <input type="button" id="erase-save" value="Wipe (WIP)" style="color:red;"
+                            title="Work in progress!">
+                    </div>
+                    <div id="confirm-wipe-div" style="visibility: hidden;">
+                        <strong>This action is <span style='color:red'>IRREVERSIBLE!</span></strong>
+                        <br>
+                        <input type="button" id="confirm-wipe" value="Confirm Delete" style="color:red;">
+                        <input type="button" id="cancel-wipe" value="Cancel">
+                    </div>
                 </div>
             </details>
         </div>

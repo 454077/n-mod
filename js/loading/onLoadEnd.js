@@ -109,6 +109,51 @@ fileLoads.onLoadEnd = function () {
         localSettings.isCommunityMaps = simulation.isCommunityMaps
         if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
     });
+
+    document.getElementById("file-import").addEventListener("change", (oevent) => {
+        let file = oevent.target.files[0];
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    let importedSettings = JSON.parse(e.target.result);
+                    Object.assign(localSettings, importedSettings);
+                    // Update UI elements based on imported settings
+                    communityMaps.checked = localSettings.isCommunityMaps;
+                    hideHUD.checked = localSettings.isHideHUD;
+                    hideImages.checked = localSettings.isHideImages;
+                    bannedLevels.value = localSettings.banList;
+                    if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+                    //e.target.value = ""; // Clear the file input
+                    console.log("Settings imported successfully!");
+                } catch (error) {
+                    console.warn("Failed to import settings: " + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+    });
+
+    document.getElementById("erase-save").addEventListener("click", () => {
+        document.getElementById("confirm-wipe-div").style.visibility = "visible";
+        document.getElementById("localSave-div").style.visibility = "hidden";
+    });
+
+    document.getElementById("cancel-wipe").addEventListener("click", () => {
+        document.getElementById("confirm-wipe-div").style.visibility = "hidden";
+        document.getElementById("localSave-div").style.visibility = "visible"; 
+    });
+
+    document.getElementById("confirm-wipe").addEventListener("click", () => {
+        document.getElementById("confirm-wipe-div").style.visibility = "hidden";
+        document.getElementById("localSave-div").style.visibility = "visible"; 
+        setTimeout(() => {
+            build.resetStorage();
+            if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+            window.location.reload();
+        }, 20)
+    });
+
     infoDiv.style.visibility = 'visible'
     startBtn.onclick = function () { tryRunning.start() }
     trainBtn.onclick = function () { tryRunning.training() }

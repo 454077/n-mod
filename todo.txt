@@ -1,11 +1,11 @@
 ************************************************ TODO ******************************************
 •Finish Work-in-progress tech
 •Add bossbar for boundaryBoss
-•Add localSettings loading and clearing
 •Add more commands to chat menu
 
 ******************************************* WORK-IN-PROGRESS ***********************************
 •More images in warp menu
+•Add localSettings loading and clearing
 
 ********************************************* POSTPONED ****************************************
 •Modded bullets integration (i.e. as part of b instead of ephemera)

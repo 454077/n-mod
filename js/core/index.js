@@ -1169,6 +1169,132 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
     });
   },
     */
+  resetStorage() {
+    function localStorageCheck() {
+      try {
+        return 'localStorage' in window && window['localStorage'] !== null;
+      } catch (e) {
+        return false;
+      }
+    }
+    if (localStorageCheck()) {
+      localSettings = JSON.parse(localStorage.getItem("localSettings"))
+      if (localSettings) {
+        console.log('localStorage is enabled')
+        localSettings.isAllowed = true
+        localSettings.isEmpty = false
+      } else {
+        console.log('localStorage is enabled, local settings empty')
+        localSettings = {
+          isAllowed: true,
+          isEmpty: true
+        }
+      }
+    } else {
+      console.warn("localStorage is disabled")
+      localSettings = {
+        isAllowed: false
+      }
+    }
+
+    if (localSettings.isAllowed && !localSettings.isEmpty) {
+      console.log('restoring previous settings')
+
+      if (localSettings.key) {
+        input.key = localSettings.key
+      } else {
+        input.setDefault()
+      }
+
+      if (localSettings.loreCount === undefined) {
+        localSettings.loreCount = 0
+        localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+      }
+
+      simulation.isCommunityMaps = localSettings.isCommunityMaps
+      document.getElementById("community-maps").checked = localSettings.isCommunityMaps
+
+      if (localSettings.fpsCapDefault === undefined) localSettings.fpsCapDefault = 'max'
+      if (localSettings.personalSeeds === undefined) localSettings.personalSeeds = [];
+      if (localSettings.fpsCapDefault === 'max') {
+        simulation.fpsCapDefault = 999999999;
+      } else {
+        simulation.fpsCapDefault = Number(localSettings.fpsCapDefault)
+      }
+      document.getElementById("fps-select").value = localSettings.fpsCapDefault
+
+      if (!localSettings.banList) localSettings.banList = ""
+      if (localSettings.banList.length === 0 || localSettings.banList === "undefined") {
+        localSettings.banList = ""
+        localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+      }
+      document.getElementById("banned").value = localSettings.banList
+
+      if (!localSettings.isLoreDoesNotNeedReset) {
+        localSettings.isLoreDoesNotNeedReset = true
+        localSettings.loreCount = 0; //this sets what conversation is heard
+        if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+      }
+      if (localSettings.isHideImages === undefined) localSettings.isHideImages = true //default to hide images
+      document.getElementById("hide-images").checked = localSettings.isHideImages
+      // localSettings.isHideImages = true //no images
+
+      if (localSettings.isHideHUD === undefined) localSettings.isHideHUD = true
+      document.getElementById("hide-hud").checked = localSettings.isHideHUD
+
+      if (localSettings.difficultyCompleted === undefined) {
+        localSettings.difficultyCompleted = [null, false, false, false, false, false, false, false] //null because there isn't a difficulty zero
+        localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+      }
+
+      if (localSettings.difficultyMode === undefined) localSettings.difficultyMode = "2"
+      simulation.difficultyMode = localSettings.difficultyMode
+      lore.setTechGoal()
+
+      if (localSettings.pauseMenuDetailsOpen === undefined) {
+        localSettings.pauseMenuDetailsOpen = [true, false, false, true]
+        localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+      }
+      if (localSettings.techHistory === undefined) {
+        localSettings.techHistory = []
+        localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+      }
+    } else {
+    console.log('setting default localSettings')
+    const isAllowed = localSettings.isAllowed //don't overwrite isAllowed value
+    localSettings = {
+      banList: "",
+      isAllowed: isAllowed,
+      personalSeeds: [],
+      isJunkExperiment: false,
+      isCommunityMaps: false,
+      difficultyMode: '2',
+      difficultyCompleted: [null, false, false, false, false, false, false, false],
+      fpsCapDefault: 'max',
+      runCount: 0,
+      isTrainingNotAttempted: true,
+      levelsClearedLastGame: 0,
+      loreCount: 0,
+      isLoreDoesNotNeedReset: false,
+      isHuman: false,
+      key: undefined,
+      isHideImages: true, //default to hide images
+      isHideHUD: false,
+      pauseMenuDetailsOpen: [true, false, false, true],
+      techHistory: [],
+    };
+    input.setDefault()
+    if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+    document.getElementById("community-maps").checked = localSettings.isCommunityMaps
+    simulation.isCommunityMaps = localSettings.isCommunityMaps
+    document.getElementById("hide-images").checked = localSettings.isHideImages
+    document.getElementById("fps-select").value = localSettings.fpsCapDefault
+    document.getElementById("banned").value = localSettings.banList
+    }
+    document.getElementById("control-testing").style.visibility = (localSettings.loreCount < 1) ? "hidden" : "visible"
+    // document.getElementById("experiment-button").style.visibility = (localSettings.loreCount === 0) ? "hidden" : "visible"
+    input.controlTextUpdate()
+  },
   hasExperimentalMode: false,
   startExperiment() { //start playing the game after exiting the experiment menu
     build.isExperimentSelection = false;
@@ -1962,131 +2088,7 @@ document.body.addEventListener("wheel", (e) => {
 //**********************************************************************
 let localSettings
 
-function localStorageCheck() {
-  try {
-    return 'localStorage' in window && window['localStorage'] !== null;
-  } catch (e) {
-    return false;
-  }
-
-}
-if (localStorageCheck()) {
-  localSettings = JSON.parse(localStorage.getItem("localSettings"))
-  if (localSettings) {
-    console.log('localStorage is enabled')
-    localSettings.isAllowed = true
-    localSettings.isEmpty = false
-  } else {
-    console.log('localStorage is enabled, local settings empty')
-    localSettings = {
-      isAllowed: true,
-      isEmpty: true
-    }
-  }
-} else {
-  console.log("localStorage is disabled")
-  localSettings = {
-    isAllowed: false
-  }
-}
-
-if (localSettings.isAllowed && !localSettings.isEmpty) {
-  console.log('restoring previous settings')
-
-  if (localSettings.key) {
-    input.key = localSettings.key
-  } else {
-    input.setDefault()
-  }
-
-  if (localSettings.loreCount === undefined) {
-    localSettings.loreCount = 0
-    localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-  }
-
-  simulation.isCommunityMaps = localSettings.isCommunityMaps
-  document.getElementById("community-maps").checked = localSettings.isCommunityMaps
-
-  if (localSettings.fpsCapDefault === undefined) localSettings.fpsCapDefault = 'max'
-  if (localSettings.personalSeeds === undefined) localSettings.personalSeeds = [];
-  if (localSettings.fpsCapDefault === 'max') {
-    simulation.fpsCapDefault = 999999999;
-  } else {
-    simulation.fpsCapDefault = Number(localSettings.fpsCapDefault)
-  }
-  document.getElementById("fps-select").value = localSettings.fpsCapDefault
-
-  if (!localSettings.banList) localSettings.banList = ""
-  if (localSettings.banList.length === 0 || localSettings.banList === "undefined") {
-    localSettings.banList = ""
-    localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-  }
-  document.getElementById("banned").value = localSettings.banList
-
-  if (!localSettings.isLoreDoesNotNeedReset) {
-    localSettings.isLoreDoesNotNeedReset = true
-    localSettings.loreCount = 0; //this sets what conversation is heard
-    if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-  }
-  if (localSettings.isHideImages === undefined) localSettings.isHideImages = true //default to hide images
-  document.getElementById("hide-images").checked = localSettings.isHideImages
-  // localSettings.isHideImages = true //no images
-
-  if (localSettings.isHideHUD === undefined) localSettings.isHideHUD = true
-  document.getElementById("hide-hud").checked = localSettings.isHideHUD
-
-  if (localSettings.difficultyCompleted === undefined) {
-    localSettings.difficultyCompleted = [null, false, false, false, false, false, false, false] //null because there isn't a difficulty zero
-    localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-  }
-
-  if (localSettings.difficultyMode === undefined) localSettings.difficultyMode = "2"
-  simulation.difficultyMode = localSettings.difficultyMode
-  lore.setTechGoal()
-
-  if (localSettings.pauseMenuDetailsOpen === undefined) {
-    localSettings.pauseMenuDetailsOpen = [true, false, false, true]
-    localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-  }
-  if (localSettings.techHistory === undefined) {
-    localSettings.techHistory = []
-    localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-  }
-} else {
-  console.log('setting default localSettings')
-  const isAllowed = localSettings.isAllowed //don't overwrite isAllowed value
-  localSettings = {
-    banList: "",
-    isAllowed: isAllowed,
-    personalSeeds: [],
-    isJunkExperiment: false,
-    isCommunityMaps: false,
-    difficultyMode: '2',
-    difficultyCompleted: [null, false, false, false, false, false, false, false],
-    fpsCapDefault: 'max',
-    runCount: 0,
-    isTrainingNotAttempted: true,
-    levelsClearedLastGame: 0,
-    loreCount: 0,
-    isLoreDoesNotNeedReset: false,
-    isHuman: false,
-    key: undefined,
-    isHideImages: true, //default to hide images
-    isHideHUD: false,
-    pauseMenuDetailsOpen: [true, false, false, true],
-    techHistory: [],
-  };
-  input.setDefault()
-  if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-  document.getElementById("community-maps").checked = localSettings.isCommunityMaps
-  simulation.isCommunityMaps = localSettings.isCommunityMaps
-  document.getElementById("hide-images").checked = localSettings.isHideImages
-  document.getElementById("fps-select").value = localSettings.fpsCapDefault
-  document.getElementById("banned").value = localSettings.banList
-}
-document.getElementById("control-testing").style.visibility = (localSettings.loreCount === 0) ? "hidden" : "visible"
-// document.getElementById("experiment-button").style.visibility = (localSettings.loreCount === 0) ? "hidden" : "visible"
-input.controlTextUpdate()
+build.resetStorage();
 
 
 //**********************************************************************
