@@ -123,11 +123,17 @@ fileLoads.onLoadEnd = function () {
                     hideHUD.checked = localSettings.isHideHUD;
                     hideImages.checked = localSettings.isHideImages;
                     bannedLevels.value = localSettings.banList;
-                    if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-                    //e.target.value = ""; // Clear the file input
-                    console.log("Settings imported successfully!");
+                    if (localSettings.isAllowed) {
+                        localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+                        //e.target.value = ""; // Clear the file input
+                        console.log("Settings imported successfully!");
+                    } else {
+                        throw new Error("localSettings is not allowed");
+                    }
                 } catch (error) {
-                    console.warn("Failed to import settings: " + error.message);
+                    let errorMsg = "Failed to import settings: " + error.message
+                    console.warn(errorMsg);
+                    //window.alert(errorMsg;)
                 }
             };
             reader.readAsText(file);
@@ -146,12 +152,14 @@ fileLoads.onLoadEnd = function () {
 
     document.getElementById("confirm-wipe").addEventListener("click", () => {
         document.getElementById("confirm-wipe-div").style.visibility = "hidden";
-        document.getElementById("localSave-div").style.visibility = "visible"; 
-        setTimeout(() => {
+        document.getElementById("localSave-div").style.visibility = "visible";
+        if (localSettings.isAllowed) {
+            localSettings = {}
+            localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
             build.resetStorage();
-            if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-            window.location.reload();
-        }, 20)
+        } else {
+            console.warn("localSettings is not allowed");
+        }
     });
 
     infoDiv.style.visibility = 'visible'
