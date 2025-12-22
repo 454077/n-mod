@@ -2203,5 +2203,10 @@ const powerUps = {
     if (moving) Matter.Body.setVelocity(powerUp[index], { x: (Math.random() - 0.5) * 15, y: Math.random() * -9 - 3 });
     Composite.add(engine.world, powerUp[index]);
   },
+  randomLorePowerUp() {
+    let choices = ["difficulty", "instructions", "settings", "warp", "entanglement"],
+    weights = [2,4,3,3,1];
+    powerUps.spawn(m.pos.x, m.pos.y, choices.randomItem(weights)) // Array.randomItem is declared in /lib/prototypes.js
+  },
   powerUpStorage: [],//used when power ups are sent to the next level (for the constraint, level.isNextLevelPowerUps)
 };

@@ -14989,8 +14989,10 @@ const tech = {
                 powerUps.spawn(mob[i].position.x, mob[i].position.y, "heal")
               } else if (Math.random() < 1 / 2) {
                 powerUps.spawn(mob[i].position.x, mob[i].position.y, "boost")
-              } else {
+              } else if (m.coupling > 0){
                 powerUps.spawn(mob[i].position.x, mob[i].position.y, "coupling")
+              } else {
+                powerUps.spawn(mob[i].position.x, mob[i].position.y, "research")
               }
             }
           }
@@ -14998,7 +15000,7 @@ const tech = {
 
         setTimeout(() => { //a short delay, I can't remember why
           lore.techCount++
-          if (lore.techCount === lore.techGoal) {
+          if (lore.techCount >= lore.techGoal) {
             // tech.removeLoreTechFromPool();
             this.frequency = 0;
             this.description = `<strong class="lore-text">null</strong> is open at level.final() <br> &nbsp;`
@@ -15013,6 +15015,22 @@ const tech = {
         this.maxCount = lore.techGoal;
         this.description = `<strong class="lore-text">this</strong> <br> &nbsp;`
       }
+    },
+    {
+      name: "powerUps.lore.random()",
+      description: "spawn a <strong class='color-randomize'>random</strong> powerUp",
+      maxCount: 5,
+      count: 0,
+      frequency: 2,
+      frequencyDefault: 2,
+      isInstant: true,
+      isLore: true,
+      allowed() { return !build.isExperimentSelection },
+      requires: "NOT EXPERIMENT MODE",
+      effect() {
+        powerUps.randomLorePowerUp();
+      },
+      remove() {}
     }
   ],
   //variables use for gun tech upgrades
