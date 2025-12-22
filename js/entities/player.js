@@ -7038,6 +7038,7 @@ const m = {
     {
       name: "tachyonic field",
       description: `use <strong class="color-f">energy</strong> to gain a <strong>burst</strong> of <strong class='color-speed'>speed</strong>
+              <em style ="float: right; font-family: monospace;font-size:1rem;color:#fff;">←↑→↓↓</em>
       				<br>multiply <strong class='color-speed'>momentum</strong> <strong>exponentially</strong>
                     <br>16 <strong class="color-f">energy</strong> per second`,
       canMove: false,
