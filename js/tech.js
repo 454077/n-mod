@@ -10541,10 +10541,10 @@ const tech = {
       frequency: 3,
       frequencyDefault: 3,
       allowed() {
-        return (m.fieldMode === 1 || m.fieldMode === 8 || m.fieldMode === 6 || m.fieldMode === 12) &&
+        return [1,6,8,11,12].includes(m.fieldMode) &&
           (build.isExperimentSelection || powerUps.research.count > 1)
       },
-      requires: "standing wave, pilot wave, time dilation, energy condenser",
+      requires: "standing wave, pilot wave, time dilation, tachyonic field, energy condenser",
       effect() {
         tech.harmonicEnergy = 1.66
         m.setMaxEnergy()
@@ -10616,7 +10616,7 @@ const tech = {
       frequency: 2,
       frequencyDefault: 2,
       allowed() {
-        return m.fieldMode === 1 || m.fieldMode === 2 || m.fieldMode === 8 || m.fieldMode === 13
+        return [1,2,8,13].includes(m.fieldMode)
       },
       requires: "standing wave, perfect diamagnetism, pilot wave, Einsteins shield",
       effect() {
@@ -10636,7 +10636,7 @@ const tech = {
       frequency: 2,
       frequencyDefault: 2,
       allowed() {
-        return (m.fieldMode === 1 || m.fieldMode === 2 || m.fieldMode === 8 || m.fieldMode === 13) &&
+        return [1,2,8,13].includes(m.fieldMode) &&
           tech.blockDmg
       },
       requires: "bremsstrahlung",
@@ -10658,7 +10658,7 @@ const tech = {
       frequency: 2,
       frequencyDefault: 2,
       allowed() {
-        return m.fieldMode === 2 || m.fieldMode === 1 || m.fieldMode === 4 || m.fieldMode === 13
+        return [1,2,4,13].includes(m.fiel)
       },
       requires: "a field that can block",
       effect() {
@@ -10679,7 +10679,7 @@ const tech = {
       frequency: 2,
       frequencyDefault: 2,
       allowed() {
-        return (m.fieldMode === 2 || m.fieldMode === 13) && !tech.isHealBrake
+        return [2,13].includes(m.fieldMode) && !tech.isHealBrake
       },
       requires: "perfect diamagnetism, not induction brake",
       effect() {
@@ -10722,7 +10722,7 @@ const tech = {
       frequency: 2,
       frequencyDefault: 2,
       allowed() {
-        return m.fieldMode === 8 || m.fieldMode === 3 || m.fieldMode === 12
+        return [3,8,12].includes(m.fieldMode)
       },
       requires: "negative mass, pilot wave, energy condenser",
       effect() {
@@ -10744,7 +10744,7 @@ const tech = {
       frequency: 2,
       frequencyDefault: 2,
       allowed() {
-        return m.fieldMode === 8 || m.fieldMode === 3 || m.fieldMode === 12
+        return [3,8,12].includes(m.fieldMode)
       },
       requires: "negative mass, pilot wave, energy condenser",
       effect() {
@@ -10876,7 +10876,7 @@ const tech = {
       frequency: 1,
       frequencyDefault: 1,
       allowed() {
-        return m.fieldMode === 3 || m.fieldMode === 10 || m.fieldMode === 11
+        return [3,10,11].includes(m.fieldMode)
       },
       requires: "negative mass, grappling hook, tachyonic field",
       effect() {
@@ -10897,7 +10897,7 @@ const tech = {
       frequency: 1,
       frequencyDefault: 1,
       allowed() {
-        return m.fieldMode === 3 || m.fieldMode === 10 || m.fieldMode === 11
+        return [3,10,11].includes(m.fieldMode)
       },
       requires: "negative mass, grappling hook, tachyonic field",
       effect() {
@@ -11045,7 +11045,7 @@ const tech = {
       frequency: 2,
       frequencyDefault: 2,
       allowed() {
-        return m.fieldMode === 4 || m.fieldMode === 1 || m.fieldMode === 8
+        return [1,4,8].includes(m.fieldMode)
       },
       requires: "molecular assembler, pilot wave, standing wave",
       effect() {
@@ -11103,7 +11103,7 @@ const tech = {
       frequency: 2,
       frequencyDefault: 2,
       allowed() {
-        return m.fieldMode === 6 || m.fieldMode === 7 || m.fieldMode === 8
+        return [6,7,8].includes(m.fieldMode)
       },
       requires: "time dilation, cloaking, pilot wave",
       damage: 1.4,
@@ -11127,7 +11127,7 @@ const tech = {
       frequency: 2,
       frequencyDefault: 2,
       allowed() {
-        return (m.fieldMode === 5 || m.fieldMode === 4 || m.fieldMode === 10 || m.fieldMode === 12)
+        return ([4,5,10,12].includes(m.fieldMode))
           && !tech.isReel && !tech.hookNails
       },
       requires: "plasma torch, molecular assembler, grappling hook, energy condenser, not reel, swarf",
@@ -11149,8 +11149,7 @@ const tech = {
       frequency: 3,
       frequencyDefault: 3,
       allowed() {
-        return tech.isTokamak && (m.fieldMode === 5 || m.fieldMode === 4 || m.fieldMode === 10 ||
-          m.fieldMode === 12)
+        return tech.isTokamak && [4,5,10,12].includes(m.fieldMode)
       },
       requires: "tokamak",
       effect() {
@@ -11170,8 +11169,7 @@ const tech = {
       frequency: 3,
       frequencyDefault: 3,
       allowed() {
-        return tech.isTokamak && (m.fieldMode === 5 || m.fieldMode === 4 || m.fieldMode === 10 ||
-          m.fieldMode === 12)
+        return tech.isTokamak && [4,5,10,12].includes(m.fieldMode)
       },
       requires: "tokamak",
       effect() {
@@ -11191,8 +11189,7 @@ const tech = {
       frequency: 2,
       frequencyDefault: 2,
       allowed() {
-        return (m.fieldMode === 10 || m.fieldMode === 5 || m.fieldMode === 8 || m.fieldMode === 11 ||
-          m.fieldMode === 12) && !tech.isNoPilotCost
+        return [5,8,10,11,12].includes(m.fieldMode) && !tech.isNoPilotCost
       },
       requires: "plasma torch, grappling hook, pilot wave, tachyonic field, or energy condenser, not Bells theorem",
       effect() {
@@ -11488,7 +11485,7 @@ const tech = {
       frequency: 3,
       frequencyDefault: 3,
       allowed() {
-        return (m.fieldMode === 6 || m.fieldMode === 8 || m.fieldMode === 11) &&
+        return [6,8,11].includes(m.fieldMode) &&
           (build.isExperimentSelection || powerUps.research.count > 2)
       },
       requires: "time dilation, pilot wave, or tachyonic field",
@@ -11523,7 +11520,7 @@ const tech = {
       frequencyDefault: 2,
       allowed() {
         return !tech.isGroundState &&
-          (m.fieldMode === 6 || m.fieldMode === 8 || m.fieldMode === 11 || m.fieldMode === 14)
+          [6,8,11,14].includes(m.fieldMode)
       },
       requires: "time dilation, pilot wave, tachyonic field, or matter displacement, not ground state",
       effect() {
