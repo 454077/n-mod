@@ -125,7 +125,7 @@ fileLoads.onLoadEnd = function () {
                     bannedLevels.value = localSettings.banList;
                     if (localSettings.isAllowed) {
                         localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-                        //e.target.value = ""; // Clear the file input
+                        e.target.value = ""; // Clear the file input
                         console.log("Settings imported successfully!");
                     } else {
                         throw new Error("localSettings is not allowed");
