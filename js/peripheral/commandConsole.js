@@ -39,16 +39,24 @@ const cmdConsole = {
       string = string.sanitize() //clean up whitespacing before processing. [String].sanitize is defined in /lib/prototypes.js
       string = string.slice(1) //now that we know a command was inputted, we won't need the slash at the beginning any more
       cmdConsole.params = string.split(/\s+/)
-      let what = cmdConsole.params[0] //the command to be executed
-      cmdConsole.cmdIDX = cmdConsole.checkForName(what)
-      if (cmdConsole.cmdIDX > -1) { //run commands here
+      let what = cmdConsole.params[0], item = cmdConsole.cmdList[what], syntaxCheck = "" //the command to be executed
+      if (item) { //run commands here
         try {
-          let item = cmdConsole.cmdList[cmdConsole.cmdIDX]
-          string = string.slice(item.name.length + 1) //remove the command name from its input
-          if (item.checkSyntax(string)[0]) { //if syntax is correct
+          string = string.slice(what.length + 1) //remove the command name from its input
+          try {
+            syntaxCheck = item.checkSyntax(string)
+          } catch (e) {
+            syntaxCheck = [false, ""]
+          }
+          if (syntaxCheck[0]) { //if syntax is correct
             item.effect(string);
           } else {
-            throw new SyntaxError(item.checkSyntax(string)[1] || "Syntax logic is not defined");
+            try {
+              syntaxCheck = item.checkSyntax(string)[1]
+            } catch (e) {
+              syntaxCheck = "Syntax logic is not defined"
+            }
+            throw new SyntaxError(syntaxCheck);
           }
         } catch (err) { //if an error occurs during execution
           document.getElementById('text-log').innerHTML = oldHTML //revert inGameConsole, in case logging occurred during execution
@@ -72,13 +80,6 @@ const cmdConsole = {
       }, 100)
     }
   },
-  checkForName(name) {
-    let result = false
-    result = cmdConsole.cmdList.findIndex((itm) => {
-      return itm.name === name
-    });
-    return result
-  },
   isUpDnSwitch: false,
   switchCmd(num, setTo = false) {
     let hist = cmdConsole.history, chatInput = document.getElementById('chat-input'), historyInput = document.getElementById("history")
@@ -93,9 +94,8 @@ const cmdConsole = {
     chatInput.value = hist[cmdConsole.historyIDX % hist.length]
     historyInput.value = (cmdConsole.historyIDX + 1) % hist.length
   },
-  cmdList: [
-    {
-      name: "run",
+  cmdList: {
+    run: {
       checkSyntax(input) {
         let pos = [input.indexOf("{"), input.lastIndexOf("}")];
         if (input.replace(/\s/g, "").startsWith("function(){")) {
@@ -127,7 +127,6 @@ const cmdConsole = {
           let fault = input.substring(0, (pos[0] > -1 ? pos[0] + 1 : input.length - 1));
           return [false, `at "/run &nbsp; <strong>&gt;&gt;&gt;<span style='color:red';>${fault}</span>&lt;&lt;&lt; here</strong>`]
         }
-        return
       },
       effect(input) {
         let pos = [input.indexOf("{"), input.lastIndexOf("}")];
@@ -144,13 +143,18 @@ const cmdConsole = {
             -R3d5t0n3_GUY
       */
         runTemp();
-      }
+      },
+      description: `Allows the user to run JavaScript without needing to open their Dev Tools
+      <br><strong>SYNTAX:</strong> /run function(){<br><em>//input code to run here</em><br>}
+      `
     },
-    {
-      name: "help",
+    help: {
+      checkSyntax(input){
+        return [true, ""]
+      },
       effect(input) {
 
       }
     },
-  ] //will expand the list
+  } //will expand the list
 }

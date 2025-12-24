@@ -117,6 +117,8 @@ fileLoads.onLoadEnd = function () {
             reader.onload = function (e) {
                 try {
                     let importedSettings = JSON.parse(e.target.result);
+                    localSettings = {}
+                    build.resetStorage();
                     Object.assign(localSettings, importedSettings);
                     // Update UI elements based on imported settings
                     communityMaps.checked = localSettings.isCommunityMaps;
