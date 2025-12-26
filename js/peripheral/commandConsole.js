@@ -144,17 +144,40 @@ const cmdConsole = {
       */
         runTemp();
       },
-      description: `Allows the user to run JavaScript without needing to open their Dev Tools
+      description: `Allows the user to run JavaScript without needing to open their Dev Tools.
       <br><strong>SYNTAX:</strong> /run function(){<br><em>//input code to run here</em><br>}
       `
     },
     help: {
       checkSyntax(input){
-        return [true, ""]
+        cmdConsole.params = input.split(/\s+/)
+        if (cmdConsole.params.length < 2) {
+          return [true, ""]
+        } else {
+          return [false, "<strong class='color-var'>help</strong> can have no more than one parameter"]
+        }
       },
       effect(input) {
-
-      }
+        if (input.replace(/\s/g, "") === "") {
+          let result = "<strong><u>List of available commands:</u></strong><ul>", list = Object.keys(cmdConsole.cmdList);
+          list.forEach(item => {
+            result += `<li><em class='color-var help' onclick='cmdConsole.requestCmd("/help ${item}")'>${item}</em></li>`
+          });
+          result += "</ul><br>Click each of the command names above to view their info (must be in pause menu)"
+          simulation.inGameConsole(result, 600)
+        } else {
+          let item = cmdConsole.cmdList[input] || cmdConsole.cmdList.help
+          if (item) {
+            let helpText = (item.descriptionFunction ? item.descriptionFunction() : item.description)
+            simulation.lastLogTime = 0
+            simulation.inGameConsole(helpText, 600)
+          } else {
+            throw new ReferenceError(`<strong class='color-var'>${input}</strong> is not a known command`)
+          }
+        }
+      },
+      description: `Explains the functionality and syntax of a given console command.
+      <br><strong>SYNTAX:</strong> /help &lt;<em>commandName</em>&gt;`
     },
   } //will expand the list
 }

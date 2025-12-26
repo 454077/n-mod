@@ -882,8 +882,15 @@ summary {
   user-select: none;
 }
 
-#chat-window {
+.help {
   z-index: 3;
+  pointer-events: all;
+  user-select: none;
+  cursor: pointer;
+}
+
+#chat-window {
+  z-index: 4;
   position: absolute;
   bottom: 10px;
   left: 10px;

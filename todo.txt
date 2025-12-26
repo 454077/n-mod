@@ -5,7 +5,6 @@
 
 ******************************************* WORK-IN-PROGRESS ***********************************
 •More images in warp menu
-•/help command
 
 ********************************************* POSTPONED ****************************************
 •Modded bullets integration (i.e. as part of b instead of ephemera)
