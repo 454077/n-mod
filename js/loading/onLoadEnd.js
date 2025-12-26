@@ -113,7 +113,7 @@ fileLoads.onLoadEnd = function () {
     document.getElementById("file-import").addEventListener("change", (oevent) => {
         let file = oevent.target.files[0];
         if (file) {
-            let reader = new FileReader();
+            let reader = new FileReader(), oldSettings = localSettings;
             reader.onload = function (e) {
                 try {
                     let importedSettings = JSON.parse(e.target.result);
@@ -135,7 +135,9 @@ fileLoads.onLoadEnd = function () {
                 } catch (error) {
                     let errorMsg = "Failed to import settings: " + error.message
                     console.warn(errorMsg);
-                    //window.alert(errorMsg;)
+                    e.target.value = "";
+                    localSettings = oldSettings
+                    window.alert(errorMsg)
                 }
             };
             reader.readAsText(file);
