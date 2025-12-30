@@ -91,7 +91,7 @@ const cmdConsole = {
     }
     if (cmdConsole.historyIDX < 0) cmdConsole.historyIDX = hist.length + 1
     cmdConsole.historyIDX = (cmdConsole.historyIDX - 1) % hist.length
-    chatInput.value = hist[cmdConsole.historyIDX % hist.length]
+    chatInput.value = hist[cmdConsole.historyIDX % hist.length] || ""
     historyInput.value = (cmdConsole.historyIDX + 1) % hist.length
   },
   cmdList: {
@@ -145,7 +145,7 @@ const cmdConsole = {
         runTemp();
       },
       description: `Allows the user to run JavaScript without needing to open their Dev Tools.
-      <br><strong>SYNTAX:</strong> /run function(){<br><em>//input code to run here</em><br>}
+      <br><strong>SYNTAX:</strong> /run function() {<br><em>//input code to run here</em><br>}
       `
     },
     help: {
@@ -177,7 +177,7 @@ const cmdConsole = {
         }
       },
       description: `Explains the functionality and syntax of a given console command.
-      <br><strong>SYNTAX:</strong> /help &lt;<em>commandName</em>&gt;`
+      <br><strong>SYNTAX:</strong> /help <em>[commandName]</em>`
     },
   } //will expand the list
 }

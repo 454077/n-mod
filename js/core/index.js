@@ -1591,14 +1591,10 @@ function onHistoryInputChange(e) {
   }
 }
 
-/*document.getElementById("history").addEventListener("keydown", (event) => {
-  onHistoryInputChange(event);
-});*/
 
 document.getElementById("history").addEventListener("change", (event) => {
   onHistoryInputChange(event);
 });
-
 
 function onChatInputChange(e) {
   if (simulation.testing && simulation.isChatMenuOpen &&
@@ -1606,12 +1602,6 @@ function onChatInputChange(e) {
     cmdConsole.cachedCmd = document.getElementById("chat-input").value
   }
 }
-
-/*
-document.getElementById("chat-input").addEventListener("keydown", (event) => {
-  onChatInputChange(event);
-});
-*/
 
 document.getElementById("chat-input").addEventListener("change", (event) => {
   onChatInputChange(event);
