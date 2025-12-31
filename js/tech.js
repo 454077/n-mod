@@ -13366,28 +13366,19 @@ const tech = {
       },
       requires: "",
       effect() {
-        if (Math.random() < 0.5) {
+        if (Math.random < 0.5){
+          document.body.style.fontFamily = "Mojangles, Times New Roman, serif";
+          for (let i = 0, len = tech.tech.length; i < len; i++) {
+            let techName = tech.tech[i].name;
+            tech.tech[i].name = techName.shuffle()
+          }
+        } else if (Math.random() < 0.5) {
           document.body.style.fontFamily = "Standard Galactic, Mojangles, Times New Roman, serif";
           document.body.style.fontSize = "18px"
         } else {
           document.body.style.fontFamily = "IllagerAlt, Mojangles, Times New Roman, serif";
           document.body.style.fontSize = "15px"
         }
-        String.prototype.shuf = function () {
-          var a = this.split(""),
-            n = a.length;
-
-          for (var i = n - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var tmp = a[i];
-            a[i] = a[j];
-            a[j] = tmp;
-          }
-          return a.join("");
-        }
-        /*if (Math.random() < 0.37) {
-          for (let i = 0, len = tech.tech.length; i < len; i++) tech.tech[i].name = tech.tech[i].name.shuf()
-        }*/
       },
       remove() { }
     },
