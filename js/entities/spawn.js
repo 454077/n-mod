@@ -3297,7 +3297,7 @@ const spawn = {
         if (tech.totalCount > 0) { //only increment if player has tech
           this.techRefunds++
         }
-        powerUps.ejectTech()
+        powerUps.ejectTech('random', false, true) //don't remove lore tech. seriously. it's annoying losing undefined to these mf-ers
         powerUps.ejectGraphic("150, 138, 255");
         // powerUps.spawn(m.pos.x + 60 * (Math.random() - 0.5), m.pos.y + 60 * (Math.random() - 0.5), "ammo");
         // powerUps.spawn(m.pos.x + 60 * (Math.random() - 0.5), m.pos.y + 60 * (Math.random() - 0.5), "research");
@@ -3411,7 +3411,7 @@ const spawn = {
         this.techRefunds++
       }
       if (Math.random() < 0.49) {
-        powerUps.ejectTech()
+        powerUps.ejectTech('random', false, true) //don't remove lore tech. seriously. it's annoying losing undefined to these mf-ers
         powerUps.ejectGraphic("150, 138, 255");
         // powerUps.spawn(m.pos.x + 60 * (Math.random() - 0.5), m.pos.y + 60 * (Math.random() - 0.5), "ammo");
         // powerUps.spawn(m.pos.x + 60 * (Math.random() - 0.5), m.pos.y + 60 * (Math.random() - 0.5), "research");

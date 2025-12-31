@@ -1993,14 +1993,15 @@ const powerUps = {
       for (let i = 0; i < 3; i++) powerUps.spawnRandomPowerUp(x, y);
     }
   },
-  ejectTech(choose = 'random', isOverride = false) {
+  ejectTech(choose = 'random', isOverride = false, isIgnoreLore = false) {
     if (!simulation.isChoosing || isOverride) {
       // console.log(tech.tech[choose].name, tech.tech[choose].count, tech.tech[choose].isInstant)
       //find which tech you have
       if (choose === 'random') {
         const have = []
         for (let i = 0; i < tech.tech.length; i++) {
-          if (tech.tech[i].count > 0 && !tech.tech[i].isInstant) have.push(i)
+          let isSkipLore = (this.tech.tech[i].isLore && isIgnoreLore)
+          if (tech.tech[i].count > 0 && !tech.tech[i].isInstant && !isSkipLore) have.push(i)
         }
         // if (have.length === 0) {
         //     for (let i = 0; i < tech.tech.length; i++) {
@@ -2062,7 +2063,7 @@ const powerUps = {
         let oldGun = tech.tech[index].gun;
         powerUps.rerollMUgun(index, oldGun);
         let gunName = tech.tech[index].gun;
-        while (gunName === oldGun) {
+        while (gunName === oldGun) { //don't pick the same gun as before
           powerUps.rerollMUgun(index, oldGun);
           gunName = tech.tech[index].gun;
         }
@@ -2100,13 +2101,15 @@ const powerUps = {
     if (m.coupling) options.push("coupling")
     if (tech.isBoostPowerUps) options.push("boost")
 
-    let bigIndexes = []
-    let smallIndexes = []
+    let bigIndexes = [], smallIndexes = [], ignoredIndexes = ["settings", "instructions", "warp", "difficulty", "entanglement"]
     for (let i = 0; i < powerUp.length; i++) {
-      if (powerUp[i].name === "tech" || powerUp[i].name === "gun" || powerUp[i].name === "field") {
-        bigIndexes.push(i)
-      } else {
-        smallIndexes.push(i)
+      let isLorePowerUp = ignoredIndexes.includes(powerUp[i].name)
+      if (!isLorePowerUp){
+        if (powerUp[i].name === "tech" || powerUp[i].name === "gun" || powerUp[i].name === "field") {
+          bigIndexes.push(i)
+        } else {
+          smallIndexes.push(i)
+       }
       }
     }
 
