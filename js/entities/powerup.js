@@ -2000,7 +2000,7 @@ const powerUps = {
       if (choose === 'random') {
         const have = []
         for (let i = 0; i < tech.tech.length; i++) {
-          let isSkipLore = (this.tech.tech[i].isLore && isIgnoreLore)
+          let isSkipLore = (tech.tech[i].isLore && isIgnoreLore)
           if (tech.tech[i].count > 0 && !tech.tech[i].isInstant && !isSkipLore) have.push(i)
         }
         // if (have.length === 0) {
