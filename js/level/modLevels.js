@@ -91,6 +91,9 @@ const modLevels = {
         // if (simulation.difficulty > 1) spawn.randomLevelBoss(2200, -1300);
         // spawn.secondaryBossChance(100, -1500)
         powerUps.addResearchToLevel() //needs to run after mobs are spawned
+        for (let i = 0; i < 3; i++) {
+            powerUps.spawn(level.exit.x, level.exit.y, "tech") //reward for completing the hard challenge
+        }
     },
     movementTech() {
         // level.announceMobTypes()
@@ -102,9 +105,6 @@ const modLevels = {
         level.exit.y = -1875;
         spawn.mapRect(level.enter.x, level.enter.y + 20, 100, 20); //bump for level entrance
         spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 20); //bump for level exit
-        for (let i = 0; i < 3; i++) {
-            powerUps.spawn(level.exit.x, level.exit.y, "tech") //reward for completing the hard challenge
-        }
         level.defaultZoom = 1800
         simulation.zoomTransition(level.defaultZoom)
         document.body.style.backgroundColor = "#d8dadf";
