@@ -92,7 +92,9 @@ const modLevels = {
         // spawn.secondaryBossChance(100, -1500)
         powerUps.addResearchToLevel() //needs to run after mobs are spawned
         for (let i = 0; i < 3; i++) {
-            powerUps.spawn(level.exit.x, level.exit.y, "tech") //reward for completing the hard challenge
+            setTimeout(() => {
+                powerUps.spawn(level.exit.x - 50 * i - 50, level.exit.y - 5, "tech") //reward for completing the hard challenge
+            }, 50);
         }
     },
     movementTech() {
