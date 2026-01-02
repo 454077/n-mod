@@ -958,8 +958,8 @@ const powerUps = {
         m.velocitySmooth = Vector.add(Vector.mult(m.velocitySmooth, 0.8), Vector.mult(player.velocity, 0.2))
         ctx.rotate(Math.atan2(m.velocitySmooth.y, m.velocitySmooth.x))
         ctx.beginPath();
-        const radius = 40
-        const mag = 8 * Vector.magnitude(m.velocitySmooth) + radius
+        const radius = 40 * player.scale
+        const mag = 8 * Vector.magnitude(m.velocitySmooth) * player.scale + radius
         ctx.arc(0, 0, radius, -Math.PI / 2, Math.PI / 2);
         ctx.bezierCurveTo(-radius, radius, -radius, 0, -mag, 0); // bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)
         ctx.bezierCurveTo(-radius, 0, -radius, -radius, 0, -radius);

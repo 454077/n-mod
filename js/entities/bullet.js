@@ -87,13 +87,13 @@ const b = {
     if (tech.crouchAmmoCount && m.crouch) {
       if (tech.crouchAmmoCount % 2) {
         b.guns[b.activeGun].ammo--;
-        if (level.is2xAmmo && b.guns[b.activeGun].ammo > 0) b.guns[b.activeGun].ammo--;
+        if (level.is2xAmmo && b.guns[b.activeGun].ammo > 0 && (b.guns[b.activeGun].name !== "harpoon" || tech.isRailGun)) b.guns[b.activeGun].ammo--;
         simulation.updateGunHUD();
       }
       tech.crouchAmmoCount++ //makes the no ammo toggle off and on
     } else {
       b.guns[b.activeGun].ammo--;
-      if (level.is2xAmmo && b.guns[b.activeGun].ammo > 0) b.guns[b.activeGun].ammo--;
+      if (level.is2xAmmo && b.guns[b.activeGun].ammo > 0 && (b.guns[b.activeGun].name !== "harpoon" || tech.isRailGun)) b.guns[b.activeGun].ammo--;
       simulation.updateGunHUD();
     }
   },
@@ -1466,7 +1466,8 @@ const b = {
         powerUpDamage: tech.isHarpoonPowerUp && simulation.cycle - 480 < tech.harpoonPowerUpCycle,
         draw() {
           // draw rope
-          const where = { x: m.pos.x + 30 * Math.cos(m.angle), y: m.pos.y + 30 * Math.sin(m.angle) }
+          const r = 30 * player.scale
+          const where = { x: m.pos.x + r * Math.cos(m.angle), y: m.pos.y + r * Math.sin(m.angle) }
           const sub = Vector.sub(where, this.vertices[0])
           ctx.strokeStyle = "#000" // "#0ce"
           ctx.lineWidth = 0.5
@@ -2038,7 +2039,8 @@ const b = {
       },
       drawString() {
         ropeIndex = this.vertices.length - 1
-        const where = { x: m.pos.x + 30 * Math.cos(m.angle), y: m.pos.y + 30 * Math.sin(m.angle) }
+        const r = 30 * player.scale
+        const where = { x: m.pos.x + r * Math.cos(m.angle), y: m.pos.y + r * Math.sin(m.angle) }
         const sub = Vector.sub(where, this.vertices[ropeIndex])
         const perpendicular = Vector.mult(Vector.normalise(Vector.perp(sub)), this.drawStringFlip * Math.min(80, 10 + this.drawStringControlMagnitude / (10 + Vector.magnitude(sub))))
         const controlPoint = Vector.add(Vector.add(where, Vector.mult(sub, -0.5)), perpendicular)
@@ -2386,7 +2388,8 @@ const b = {
       const SPEED = 8 + 12 * tech.isPlasmaRange
       const me = bullet.length;
       const where = Vector.add(m.pos, player.velocity)
-      bullet[me] = Bodies.polygon(where.x + 20 * Math.cos(m.angle), where.y + 20 * Math.sin(m.angle), 4, 0.01, {
+      const r = 20 * player.scale
+      bullet[me] = Bodies.polygon(where.x + r * Math.cos(m.angle), where.y + r * Math.sin(m.angle), 4, 0.01, {
         cycle: -0.5,
         isWave: true,
         endCycle: simulation.cycle + 40, // + 30 * tech.isPlasmaRange,
@@ -2606,13 +2609,30 @@ const b = {
       const r = Vector.normalise(Vector.sub(d, nn));
       path[path.length] = Vector.add(Vector.mult(r, 5000), path[path.length - 1]);
     };
-
+    const grabPowerUp = function () {
+      if (tech.isLaserGrabPowerUp) {
+          bestPowerUp = vertexCollision(path[path.length - 2], path[path.length - 1], [mob, map, body, powerUp]);
+          if (bestPowerUp.who) {
+              for (let i = 0, len = powerUp.length; i < len; ++i) {
+                  if (powerUp[i] === bestPowerUp.who && !simulation.isChoosing && (powerUp[i].name !== "heal" || m.maxHealth - m.health > 0.01 || tech.isOverHeal) && !(tech.isEnergyNoAmmo && powerUp[i].name === "ammo")) {
+                      m.energy += 0.8
+                      powerUps.onPickUp(powerUp[i]);
+                      powerUp[i].effect();
+                      Matter.Composite.remove(engine.world, powerUp[i]);
+                      powerUp.splice(i, 1);
+                      return;
+                  }
+              }
+          }
+        }
+    }
     checkForCollisions();
     let lastBestOdd
     let lastBestEven = best.who //used in hack below
     if (best.dist2 !== Infinity) { //if hitting something
       path[path.length - 1] = { x: best.x, y: best.y };
       laserHitMob();
+      grabPowerUp();
       for (let i = 0; i < reflections; i++) {
         reflection();
         checkForCollisions();
@@ -2621,6 +2641,7 @@ const b = {
           path[path.length - 1] = { x: best.x, y: best.y };
           damage *= reflectivity
           laserHitMob();
+          grabPowerUp();
           //I'm not clear on how this works, but it gets rid of a bug where the laser reflects inside a block, often vertically.
           //I think it checks to see if the laser is reflecting off a different part of the same block, if it is "inside" a block
           if (i % 2) {
@@ -2985,10 +3006,14 @@ const b = {
           if (this.isFreeze) mobs.statusSlow(who, 90)
         },
         onEnd() {
-          if (tech.isMutualism && this.isMutualismActive && !tech.isEnergyHealth) {
-            m.health += 0.02
-            if (m.health > m.maxHealth) m.health = m.maxHealth;
-            m.displayHealth();
+          if (tech.isMutualism && this.isMutualismActive) {
+            if (tech.isEnergyHealth) {
+                m.energy += 0.02
+            } else {
+                m.health += 0.02
+                if (m.health > m.maxHealth) m.health = m.maxHealth;
+                m.displayHealth();
+            }
           }
         },
         tailCycle: 6.28 * Math.random(),
@@ -3051,10 +3076,14 @@ const b = {
         y: SPEED * Math.sin(ANGLE)
       });
       Composite.add(engine.world, bullet[bIndex]); //add bullet to world
-      if (tech.isMutualism && m.health > 0.04) {
-        m.health -= 0.02
-        m.displayHealth();
-        bullet[bIndex].isMutualismActive = true
+      if (tech.isMutualism && this.isMutualismActive) {
+        if (tech.isEnergyHealth) {
+            m.energy += 0.02
+        } else {
+            m.health += 0.02
+            if (m.health > m.maxHealth) m.health = m.maxHealth;
+            m.displayHealth();
+        }
       }
     }
   },
@@ -3092,10 +3121,14 @@ const b = {
           }
         },
         onEnd() {
-          if (tech.isMutualism && this.isMutualismActive && !tech.isEnergyHealth) {
-            m.health += 0.01
-            if (m.health > m.maxHealth) m.health = m.maxHealth;
-            m.displayHealth();
+         if (tech.isMutualism && this.isMutualismActive) {
+            if (tech.isEnergyHealth) {
+                m.energy += 0.02
+            } else {
+                m.health += 0.02
+                if (m.health > m.maxHealth) m.health = m.maxHealth;
+                m.displayHealth();
+            }
           }
           // console.log(this.dmg)
         },
@@ -3146,6 +3179,15 @@ const b = {
       }
 
       Composite.add(engine.world, bullet[bIndex]); //add bullet to world
+      if (tech.isMutualism && this.isMutualismActive) {
+          if (tech.isEnergyHealth) {
+              m.energy += 0.02
+          } else {
+              m.health += 0.02
+              if (m.health > m.maxHealth) m.health = m.maxHealth;
+              m.displayHealth();
+          }
+      }
 
       if (tech.isMutualism && m.health > 0.01) {
         m.health -= 0.01
@@ -3284,10 +3326,14 @@ const b = {
         }
       },
       onEnd() {
-        if (tech.isMutualism && this.isMutualismActive && !tech.isEnergyHealth) {
-          m.health += 0.02
-          if (m.health > m.maxHealth) m.health = m.maxHealth;
-          m.displayHealth();
+        if (tech.isMutualism && this.isMutualismActive) {
+          if (tech.isEnergyHealth) {
+              m.energy += 0.02
+          } else {
+              m.health += 0.02
+              if (m.health > m.maxHealth) m.health = m.maxHealth;
+              m.displayHealth();
+          }
         }
       },
       gravity: 0.002 + 0.002 * tech.isSporeFollow,
@@ -3347,10 +3393,14 @@ const b = {
     })
     Composite.add(engine.world, bullet[me]); //add bullet to world
     Matter.Body.setVelocity(bullet[me], velocity);
-    if (tech.isMutualism && m.health > 0.01) {
-      m.health -= 0.01
-      m.displayHealth();
-      bullet[bullet.length - 1].isMutualismActive = true
+    if (tech.isMutualism && this.isMutualismActive) {
+      if (tech.isEnergyHealth) {
+          m.energy += 0.02
+      } else {
+          m.health += 0.02
+          if (m.health > m.maxHealth) m.health = m.maxHealth;
+          m.displayHealth();
+      }
     }
   },
   delayDrones(where, droneCount = 1, deliveryCount = 0) {
@@ -7831,7 +7881,8 @@ const b = {
           x: 0.7 * player.velocity.x + SPEED * Math.cos(dir),
           y: 0.5 * player.velocity.y + SPEED * Math.sin(dir)
         }
-        const position = { x: m.pos.x + 30 * Math.cos(m.angle), y: m.pos.y + 30 * Math.sin(m.angle) }
+        const r = 30 * player.scale
+        const position = { x: m.pos.x + r * Math.cos(m.angle), y: m.pos.y + r * Math.sin(m.angle) }
         b.foam(position, Vector.rotate(velocity, spread), radius)
         this.applyKnock(velocity)
         m.fireCDcycle = m.cycle + Math.floor(1.5 * b.fireCDscale);
@@ -7855,9 +7906,10 @@ const b = {
               x: 0.7 * player.velocity.x + SPEED * Math.cos(dir),
               y: 0.5 * player.velocity.y + SPEED * Math.sin(dir)
             }
+            const r = 30 * player.scale
             const position = {
-              x: m.pos.x + 30 * Math.cos(m.angle),
-              y: m.pos.y + 30 * Math.sin(m.angle)
+                x: m.pos.x + r * Math.cos(m.angle),
+                y: m.pos.y + r * Math.sin(m.angle)
             }
             b.foam(position, Vector.rotate(velocity, spread), radius)
             this.applyKnock(velocity)
@@ -7885,7 +7937,8 @@ const b = {
           x: 0.7 * player.velocity.x + SPEED * Math.cos(dir),
           y: 0.5 * player.velocity.y + SPEED * Math.sin(dir)
         }
-        const position = { x: m.pos.x + 30 * Math.cos(m.angle), y: m.pos.y + 30 * Math.sin(m.angle) }
+        const r = 30 * player.scale
+        const position = { x: m.pos.x + r * Math.cos(m.angle), y: m.pos.y + r * Math.sin(m.angle) }
 
         b.foam(position, Vector.rotate(velocity, spread), radius)
         this.applyKnock(velocity)
@@ -8315,7 +8368,7 @@ const b = {
           ctx.lineWidth = 2
         }
         ctx.beginPath();
-        ctx.arc(m.pos.x, m.pos.y, 60, this.angle - this.arcRange, this.angle + this.arcRange);
+        ctx.arc(m.pos.x, m.pos.y, 60 * player.scale, this.angle - this.arcRange, this.angle + this.arcRange);
         ctx.strokeStyle = '#fff' //'rgba(255,255,255,0.9)' //'hsl(189, 100%, 95%)'
         ctx.stroke();
       },
@@ -8429,7 +8482,8 @@ const b = {
         } else {
           m.fireCDcycle = m.cycle
           m.energy -= drain
-          const where = { x: m.pos.x + 20 * Math.cos(m.angle), y: m.pos.y + 20 * Math.sin(m.angle) }
+          const r = 20 * player.scale
+          const where = { x: m.pos.x + r * Math.cos(m.angle), y: m.pos.y + r * Math.sin(m.angle) }
           b.laser(where, {
             x: where.x + 5000 * Math.cos(m.angle),
             y: where.y + 5000 * Math.sin(m.angle)
@@ -8449,7 +8503,8 @@ const b = {
           // const scale = Math.pow(0.9, tech.beamSplitter)
           // const pushScale = scale * scale
           let dmg = tech.laserDamage / b.fireCDscale * this.lensDamage // * scale //Math.pow(0.9, tech.laserDamage)
-          const where = { x: m.pos.x + 20 * Math.cos(m.angle), y: m.pos.y + 20 * Math.sin(m.angle) }
+          const r = 20 * player.scale
+          const where = { x: m.pos.x + r * Math.cos(m.angle), y: m.pos.y + r * Math.sin(m.angle) }
           const divergence = m.crouch ? 0.15 : 0.35
           const angle = m.angle - tech.beamSplitter * divergence / 2
           for (let i = 0; i < 1 + tech.beamSplitter; i++) {
@@ -8474,7 +8529,8 @@ const b = {
             if (Math.sin(m.cycle * freq + phase * (i) + Math.PI / 2) > 0 || !(m.cycle % 3)) ctx.globalAlpha = 0.35
 
             const whereSweep = m.angle + (m.crouch ? 0.4 : 1) * (Math.sin(m.cycle * freq + phase * (i)))
-            const where = { x: m.pos.x + 30 * Math.cos(whereSweep), y: m.pos.y + 30 * Math.sin(whereSweep) }
+             const r = 30 * player.scale
+                        const where = { x: m.pos.x + r * Math.cos(whereSweep), y: m.pos.y + r * Math.sin(whereSweep) }
             b.laser(where, {
               x: where.x + 5000 * Math.cos(m.angle),
               y: where.y + 5000 * Math.sin(m.angle)
@@ -8503,13 +8559,14 @@ const b = {
             y: 7.5 * Math.sin(m.angle - Math.PI / 2)
           }
           const dmg = 0.70 * tech.laserDamage / b.fireCDscale * this.lensDamage //  3.5 * 0.55 = 200% more damage
+          const r = 30 * player.scale
           const where = {
-            x: m.pos.x + 30 * Math.cos(m.angle),
-            y: m.pos.y + 30 * Math.sin(m.angle)
+              x: m.pos.x + r * Math.cos(m.angle),
+              y: m.pos.y + r * Math.sin(m.angle)
           }
           const eye = {
-            x: m.pos.x + 15 * Math.cos(m.angle),
-            y: m.pos.y + 15 * Math.sin(m.angle)
+              x: m.pos.x + r / 2 * Math.cos(m.angle),
+              y: m.pos.y + r / 2 * Math.sin(m.angle)
           }
           ctx.strokeStyle = tech.laserColor;
           ctx.lineWidth = 8
@@ -8566,9 +8623,10 @@ const b = {
           const dmg = tech.laserDamage / b.fireCDscale * this.lensDamage
           const spacing = Math.ceil(23 - tech.historyLaser)
           ctx.beginPath();
+          const r = 20 * player.scale
           b.laser({
-            x: m.pos.x + 20 * Math.cos(m.angle),
-            y: m.pos.y + 20 * Math.sin(m.angle)
+              x: m.pos.x + r * Math.cos(m.angle),
+              y: m.pos.y + r * Math.sin(m.angle)
           }, {
             x: m.pos.x + 3000 * Math.cos(m.angle),
             y: m.pos.y + 3000 * Math.sin(m.angle)
@@ -8579,8 +8637,8 @@ const b = {
             const off = history.yOff - 24.2859 + 2 * i
             // ctx.globalAlpha = 0.13
             b.laser({
-              x: history.position.x + 20 * Math.cos(history.angle),
-              y: history.position.y + 20 * Math.sin(history.angle) - off
+                x: history.position.x + r * Math.cos(history.angle),
+                y: history.position.y + r * Math.sin(history.angle) - off
             }, {
               x: history.position.x + 3000 * Math.cos(history.angle),
               y: history.position.y + 3000 * Math.sin(history.angle) - off

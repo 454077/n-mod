@@ -421,6 +421,95 @@ const tech = {
       }
     },
     {
+      name: "scale invariance",
+      descriptionFunction() {
+          return `press <strong>down</strong> to scale your <strong>size</strong> between
+          <br><span style ="font-size:80%;"><strong>small</strong> (<strong>0.7x</strong> <strong class='color-defense'>damage taken</strong>)</span> or <strong>big</strong> (<strong>3x</strong> <strong class='color-d'>damage</strong>)`
+      },
+      maxCount: 1,
+      count: 0,
+      frequency: 1,
+      frequencyDefault: 1,
+      isSkin: true,
+      allowed() {
+          return !m.isAltSkin
+      },
+      requires: "not skinned",
+      effect() {
+          m.skin.scaleInvariance();
+      },
+      remove() {
+        if (this.count) {
+          if (player.scale === 0.5) {
+            m.damageReduction /= 0.7
+          } else if (player.scale === 2) {
+            m.damageDone /= 3
+          } else if (player.scale === 0.3) {
+            m.damageReduction /= 0.5
+          } else if (player.scale === 3) {
+            m.damageDone /= 6
+          }
+
+
+          //scale up to 2 because that what works for the vertices adjustment,  I don't know why
+          const mass = player.mass
+          Matter.Body.scale(player, 2 / player.scale, 2 / player.scale); //undoes old scale and set new scale to be 2
+          Matter.Body.setMass(player, mass);
+          Matter.Body.setInertia(player, Infinity);
+          player.scale = 2
+          //increase angle of the floor connection to allow smoothly walking over bumps
+          playerBody.vertices[6].y += 20
+          playerBody.vertices[3].y += 20
+
+
+          //back to scale 1
+          Matter.Body.scale(player, 1 / player.scale, 1 / player.scale);
+          Matter.Body.setMass(player, mass);
+          Matter.Body.setInertia(player, Infinity);
+          player.scale = 1
+
+          m.resetSkin();
+        }
+        player.scale = 1
+      }
+    },
+    {
+      name: "bijection",
+      descriptionFunction() {
+          return `extend the effect of <span style ="float: right;font-size:75%;"><strong>tiny</strong> (0.7x to <strong>0.5x</strong> <strong class='color-defense'>damage taken</strong>)</span><br>&nbsp;<strong>scale invariance</strong> <span style ="float: right;"><strong>huge</strong> (3x to <strong>6x</strong> <strong class='color-d'>damage</strong>)&nbsp; </span>`
+      },
+      maxCount: 1,
+      count: 0,
+      frequency: 3,
+      frequencyDefault: 3,
+      isInstant: true,
+      allowed() {
+          return player.scale !== 1
+      },
+      requires: "scale invariance",
+      effect() {
+        //reset scale to prepare
+        if (player.scale === 0.5) {
+          m.damageReduction /= 0.7
+        } else if (player.scale === 2) {
+          m.damageDone /= 3
+        } else if (player.scale === 0.33) {
+          m.damageReduction /= 0.5
+        } else if (player.scale === 3) {
+          m.damageDone /= 6
+        }
+
+        const mass = player.mass
+        Matter.Body.scale(player, 1 / player.scale, 1 / player.scale);
+        Matter.Body.setMass(player, mass);
+        Matter.Body.setInertia(player, Infinity);
+        player.scale = 1
+
+        m.skin.scaleInvariance2();
+      },
+      remove() { }
+    },
+    {
       name: "acoustic levitation",
       description: `<strong>0.7x</strong> <strong class='color-defense'>damage taken</strong>
         <br><strong>+2</strong> seconds of <strong>coyote time</strong> <em style ='float: right;'>(jumping after falling)</em>`,
@@ -7772,7 +7861,8 @@ const tech = {
     {
       name: "mutualism",
       descriptionFunction() {
-        return `<strong>3x</strong> ${b.guns[6].nameString()} <strong class='color-d'>damage</strong><br>${b.guns[6].nameString('s')} borrow <strong>1</strong> <strong class='color-h'>health</strong> until they <strong>die</strong>`
+        return `<strong>3x</strong> ${b.guns[6].nameString()} <strong class='color-d'>damage</strong>
+        <br>${b.guns[6].nameString('s')} borrow <strong>${tech.isSporeWorm || tech.isSporeFlea ? 2 : 1}</strong> ${tech.isEnergyHealth ? "<strong class='color-f'>energy" : "<strong class='color-h'>health"}</strong> until they <strong>die</strong>`
       },
       isGunTech: true,
       maxCount: 1,
@@ -8912,8 +9002,31 @@ const tech = {
       }
     },
     {
+      name: "optical tweezers",
+      descriptionFunction() {
+        return `collect <strong>power ups</strong> hit by your <strong class='color-laser'>laser</strong>
+        <br>and gain <strong>+80</strong> <strong class='color-f'>energy</strong>`
+      },
+      isGunTech: true,
+      maxCount: 1,
+      count: 0,
+      frequency: 1,
+      frequencyDefault: 1,
+      allowed() {
+        return tech.haveGunCheck("laser") && !tech.isPulseLaser
+      },
+      requires: "laser gun, not pulse",
+      effect() {
+        tech.isLaserGrabPowerUp = true
+
+      },
+      remove() {
+        tech.isLaserGrabPowerUp = false
+      }
+    },
+    {
       name: "optical amplifier",
-      description: `gain <strong>3</strong> random <strong class='color-laser'>laser</strong> ${powerUps.orb.tech()}<br><strong class='color-laser'>laser</strong> only turns <strong>off</strong> if you have no <strong class='color-f'>energy</strong>`,
+      description: `gain <strong>3</strong> random <strong class='color-laser'>laser</strong> ${powerUps.orb.gunTech()}<br><strong class='color-laser'>laser</strong> only turns <strong>off</strong> if you have no <strong class='color-f'>energy</strong>`,
       // isGunTech: true,
       maxCount: 1,
       count: 0,
@@ -8928,7 +9041,7 @@ const tech = {
         requestAnimationFrame(() => {
           let techGiven = 0
           for (let j = 0; j < 3; j++) {
-            const names = ["quasiparticles", "lens", "compound lens", "arc length", "infrared diode", "free-electron laser", "dye laser", "relativistic momentum", "specular reflection", "diffraction grating", "diffuse beam", "output coupler", "slow light", "laser-bot", "laser-bot upgrade", "collimator"]
+            const names = ["quasiparticles", "lens", "compound lens", "arc length", "infrared diode", "free-electron laser", "dye laser", "relativistic momentum", "specular reflection", "diffraction grating", "diffuse beam", "output coupler", "slow light", "laser-bot", "laser-bot upgrade", "collimator", "optical tweezers"]
             //convert names into indexes
             const options = []
             for (let i = 0; i < names.length; i++) {
@@ -14306,6 +14419,34 @@ const tech = {
       },
       remove() { }
     },
+    /* {
+      name: "miniaturization",
+      descriptionFunction() {
+        return `you are tiny!<br>shrink by ${this.scale}x`
+      },
+      maxCount: 9,
+      count: 0,
+      frequency: 1,
+      frequencyDefault: 1,
+      isSkin: true,
+      isJunk: true,
+      allowed() {
+        return !m.isAltSkin
+      },
+      requires: "not skinned",
+      scale: 0.6,
+      effect() {
+        player.scale *= this.scale
+        m.skin.small(this.scale);
+      },
+      remove() {
+        if (this.count) {
+          m.skin.small(1 / player.scale);
+          m.resetSkin();
+        }
+        player.scale = 1
+      }
+    }, */
     {
       name: "microtransactions",
       description: `${powerUps.orb.tech()} have <strong>+1</strong> <strong class='color-choice'><span>ch</span><span>oi</span><span>ce</span></strong> where you can
