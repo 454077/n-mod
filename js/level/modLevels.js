@@ -72,7 +72,7 @@ const modLevels = {
         spawn.mapRect(-575, -2125, 50, 50);
         spawn.mapRect(-575, -2150, 175, 75);
         spawn.mapRect(-925, -1950, 75, 50);
-        spawn.mapRect(-875, -2000, 25, 50);
+        spawn.mapRect(-875, -2000, 27.5, 50);
         spawn.mapRect(-875, -2250, 25, 250);
         spawn.mapRect(-875, -2275, 25, 25);
         spawn.mapRect(-875, -2275, 50, 25);
@@ -102,6 +102,9 @@ const modLevels = {
         level.exit.y = -1875;
         spawn.mapRect(level.enter.x, level.enter.y + 20, 100, 20); //bump for level entrance
         spawn.mapRect(level.exit.x, level.exit.y + 20, 100, 20); //bump for level exit
+        for (let i = 0; i < 3; i++) {
+            powerUps.spawn(level.exit.x, level.exit.y, "tech") //reward for completing the hard challenge
+        }
         level.defaultZoom = 1800
         simulation.zoomTransition(level.defaultZoom)
         document.body.style.backgroundColor = "#d8dadf";
