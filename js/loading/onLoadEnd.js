@@ -160,10 +160,10 @@ fileLoads.onLoadEnd = function () {
     document.getElementById("confirm-wipe").addEventListener("click", () => {
         document.getElementById("confirm-wipe-div").style.visibility = "hidden";
         document.getElementById("localSave-div").style.visibility = "visible";
+        localSettings = {}
+        build.resetStorage();
         if (localSettings.isAllowed) {
-            localSettings = {}
             localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-            build.resetStorage();
         } else {
             console.warn("localSettings is not allowed");
         }
