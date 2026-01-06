@@ -1,13 +1,15 @@
-************************************************ TODO ******************************************
-•Finish Work-in-progress tech
+**************************************************** TODO **********************************************
 •Add bossbar for boundaryBoss
 •Add more commands to chat menu
+•Fix HTML generation for warp menu background images
 
-******************************************* WORK-IN-PROGRESS ***********************************
-•More images in warp menu
+*********************************************** WORK-IN-PROGRESS ***************************************
+•Stay up-to-date with original game of n-gon (for the most part; see NOT PLANNED section for exceptions)
+•More images in warp menu (Input needed from community)
 
-********************************************* POSTPONED ****************************************
+************************************************* POSTPONED ********************************************
 •Modded bullets integration (i.e. as part of b instead of ephemera)
 
-******************************************* NOT PLANNED ****************************************
+*********************************************** NOT PLANNED ********************************************
 •Fixing Genisis (arena boss) immunity
+•Add "too-punishing" update features from original n-gon (e.g. finalBoss's mob-based invulnerability)
