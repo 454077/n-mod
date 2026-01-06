@@ -1281,6 +1281,7 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
       isHideImages: true, //default to hide images
       isHideHUD: false,
       pauseMenuDetailsOpen: [true, false, false, true],
+      entanglement: undefined,
       techHistory: [],
     };
     input.setDefault()

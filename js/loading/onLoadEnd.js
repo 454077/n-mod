@@ -116,7 +116,7 @@ fileLoads.onLoadEnd = function () {
             let reader = new FileReader(), oldSettings = localSettings;
             reader.onload = function (e) {
                 try {
-                    let importedSettings = JSON.parse(e.target.result);
+                    let importedSettings = JSON.parse(e.target.result.replace(/,\s*\]/g, ']')); //remove any stray commas preceding closing array brackets
                     localSettings = {}
                     build.resetStorage();
                     Object.assign(localSettings, importedSettings);

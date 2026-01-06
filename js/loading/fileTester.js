@@ -167,12 +167,16 @@ try {
             document.body.style.backgroundColor = "white";
             let text = `<h1 style="color:red"><u>ERROR LOADING THE FOLLOWING FILES:</u></h1><hr><ul>`
             errors.forEach(function (item) { //compile list of error locations
-              text += `<li><a href="${item.src}">${item.name}</a></li>`
+              setTimeout(() => {
+                text += `<li><a href="${item.src}" target="_blank">${item.name}</a></li>`
+              }, 10);
             });
-            text += `</ul><hr>Please define and/or fix the files at these source locations.`
-            document.body.innerHTML = text
-            document.title = "n-mod: FAULTY FILES DETECTED"
-            favIcon.href = 'img/Error.png'
+            setTimeout(() => {
+              text += `</ul><hr>Please define and/or fix the files at these source locations.`
+              document.body.innerHTML = text
+              document.title = "n-mod: FAULTY FILES DETECTED"
+              favIcon.href = 'img/Error.png'
+            }, 10 * errors.length + 30);
           } else {
             fileLoads.onLoadEnd();
             level.populateLevelList();
