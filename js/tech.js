@@ -8941,7 +8941,7 @@ const tech = {
       description: `<strong>convert</strong> your <strong class='color-bot'>bots</strong> to <strong class='color-bot'>harpoon-bots</strong>
       <br>increased <strong class='color-d'>damage</strong> and <em>fire rate</em>`,
       maxCount: 1,
-      isGunTech: true,
+      //isGunTech: true,
       count: 0,
       frequency: 3,
       frequencyDefault: 3,
@@ -12289,13 +12289,16 @@ const tech = {
       requires: "",
       effect() {
         for (let i = 0, len = tech.tech.length; i < len; i++) {
+          
           tech.tech[i].isJunk = !tech.tech[i].isJunk
           if (tech.tech[i].isJunk) { } else { }
 
           if (tech.tech[i].frequency > 0 || tech.tech[i].isJunk) {
+            tech.tech[i].oldFrequency = tech.tech[i].frequency
             tech.tech[i].frequency = 0
           } else {
-            tech.tech[i].frequency = (tech.tech[i].frequencyDefault || 2)
+            tech.tech[i].frequency = (tech.tech[i].oldFrequency || tech.tech[i].frequencyDefault || 2)
+            tech.tech[i].oldFrequency = 0
           }
         }
         if (build.isExperimentSelection) {
