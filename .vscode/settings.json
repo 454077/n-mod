@@ -52,8 +52,8 @@
         "*.gif": "gifPlayer.player"
     },
     "workbench.colorTheme": "2077",
-    "editor.fontFamily": "monospace, 'Droid Sans Mono', monospace",
-    "editor.fontLigatures": false,
+    "editor.fontFamily": "'Minecraft Extended', 'Chakra Petch', monospace",
+    "editor.fontLigatures": true,
     "theme-explorer.themeStyle": "both",
     "theme-explorer.ignoreThemes": [
         "GitHub Light Colorblind (Beta)",
