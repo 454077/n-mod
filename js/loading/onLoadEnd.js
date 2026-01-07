@@ -117,9 +117,7 @@ fileLoads.onLoadEnd = function () {
             reader.onload = function (e) {
                 try {
                     let importedSettings = e.target.result
-                    importedSettings = importedSettings.replace(/,\s*\]/g, ']') //remove any stray commas preceding closing array brackets
-                    importedSettings = importedSettings.replace(/,\s*\}/g, '}') //ditto (object brackets)
-                    importedSettings = JSON.parse(importedSettings);
+                    importedSettings = importedSettings.parseAsJSON();
                     localSettings = {}
                     build.resetStorage();
                     Object.assign(localSettings, importedSettings);
