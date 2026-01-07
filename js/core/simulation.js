@@ -452,7 +452,6 @@ lastTextLog: null,
 openChatMenu() {
   try {
     cmdConsole.cmdIdx = 0
-    let chatInput = document.getElementById('chat-input'), historyInput = document.getElementById('history')
     document.body.style.cursor = "auto";
     simulation.isChatMenuOpen = true //block keypresses while player is using chat
     //simulation.lastTextLog = document.getElementById("text-log").innerHTML
@@ -487,7 +486,7 @@ closeChatWindow() {
 focusChatMenu() {
   if (simulation.testing && simulation.isChatMenuOpen && !cmdConsole.isHistoryInputFocused) {
     try {
-      document.getElementById("chat-input").focus();
+      document.getElementById('chat-input').focus();
     } catch (e) {}
   }
 },

@@ -94,6 +94,10 @@ const jsSrcs = [
   {
     name: "Command Console",
     src: "js/peripheral/commandConsole.js"
+  },
+  {
+    name: "Command List",
+    src: "js/peripheral/commandList.js"
   }
 ];
 const fileLoads = { //these values are each supposed to be set to true in its respective .js file
@@ -121,6 +125,7 @@ const fileLoads = { //these values are each supposed to be set to true in its re
   isScriptLoaderJS: false,
   isAudioPlayer: false,
   isCommandConsoleJS: false,
+  isCommandListJS: false,
   onLoadEnd: null
 };
 //const fullLevelList = {}
