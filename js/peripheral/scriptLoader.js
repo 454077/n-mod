@@ -56,6 +56,8 @@ container.style.flexDirection = 'column';
 container.style.overflow = 'hidden';
 container.style.fontFamily = document.body.style.fontFamily;
 container.style.color = '#e0e0e0';
+container.style.userSelect = 'none';
+container.style.cursor = 'auto';
 
 const header = document.createElement('div');
 header.style.padding = '10px';

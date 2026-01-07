@@ -165,6 +165,7 @@ summary {
   border: 1.5px #333 solid;
   border-radius: 8px;
   background-color: #fff;
+  cursor: pointer;
 }
 
 .SVG-button:hover {
@@ -294,6 +295,7 @@ summary {
   line-height: 160%;
   background-color: var(--card-color);
   font-size: 0.75em;
+  cursor: pointer;
 }
 
 .choose-grid-module:hover {
@@ -400,6 +402,7 @@ summary {
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
+  cursor: auto;
 }
 
 #experiment-grid::-webkit-scrollbar {
@@ -421,6 +424,7 @@ summary {
   padding-top: 4px;
   font-size: 1.4em;
   font-weight: 600;
+  cursor: auto;
 }
 
 .experiment-grid-module:hover:not(.build-tech-selected, .build-field-selected, .build-gun-selected) {
@@ -459,6 +463,7 @@ summary {
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .card-text {
@@ -470,6 +475,7 @@ summary {
   font-size: 0.92em;
   min-height: 88px;
   /* border-radius: 5px; */
+  cursor: auto;
 }
 
 .cancel-card {
@@ -890,7 +896,7 @@ summary {
 }
 
 #chat-window {
-  z-index: 4;
+  z-index: 4; /* higher z-order than textLog to avoid conflicts */
   position: absolute;
   bottom: 10px;
   left: 10px;

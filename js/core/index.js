@@ -456,7 +456,6 @@ const build = {
     document.body.style.overflowX = "hidden";
     document.getElementById("info").style.display = 'none'
     build.reset();
-
   },
   hideHUD() {
     if (simulation.isTraining) {
@@ -1114,61 +1113,6 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
     document.getElementById("field-0").classList.add("build-field-selected");
     document.getElementById("experiment-grid").style.display = "grid"
   },
-  /*
-  shareURL(isCustom = false) {
-    let url = "https://landgreen.github.io/n-gon/index.html?"
-    url += `&seed=${Math.initialSeed}`
-    let count = 0;
-    for (let i = 0; i < b.inventory.length; i++) {
-      if (b.guns[b.inventory[i]].have) {
-        url += `&gun${count}=${encodeURIComponent(b.guns[b.inventory[i]].name.trim())}`
-        count++
-      }
-    }
-    count = 0;
-    for (let i = 0; i < tech.tech.length; i++) {
-      for (let j = 0; j < tech.tech[i].count; j++) {
-        if (!tech.tech[i].isLore && !tech.tech[i].isJunk && !tech.tech[i].isInstant) {
-          url += `&tech${count}=${encodeURIComponent(tech.tech[i].name.trim())}`
-          count++
-        }
-      }
-    }
-    url += `&molMode=${encodeURIComponent(simulation.molecularMode)}`
-    // if (property === "molMode") {
-    //     simulation.molecularMode = Number(set[property])
-    //     m.fieldUpgrades[i].description = m.fieldUpgrades[i].setDescription()
-    //     document.getElementById(`field-${i}`).innerHTML = `<div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}`
-    // }
-
-    url += `&field=${encodeURIComponent(m.fieldUpgrades[m.fieldMode].name.trim())}`
-    url += `&difficulty=${simulation.difficultyMode}`
-    if (isCustom) {
-      // url += `&level=${Math.abs(Number(document.getElementById("starting-level").value))}`
-      // alert('n-gon build URL copied to clipboard.\nPaste into browser address bar.')
-    } else {
-      simulation.inGameConsole("n-gon build URL copied to clipboard.<br>Paste into browser address bar.")
-    }
-    console.log('n-gon build URL copied to clipboard.\nPaste into browser address bar.')
-    console.log(url)
-    navigator.clipboard.writeText(url).then(function () {
-      // clipboard successfully set
-      if (isCustom) {
-        setTimeout(function () {
-          alert('n-gon build URL copied to clipboard.\nPaste into browser address bar.')
-        }, 300);
-      }
-    }, function () {
-      // clipboard write failed
-      if (isCustom) {
-        setTimeout(function () {
-          alert('copy failed')
-        }, 300);
-      }
-      console.log('copy failed')
-    });
-  },
-    */
   resetStorage() {
     function localStorageCheck() {
       try {
