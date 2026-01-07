@@ -924,7 +924,7 @@ const m = {
       ctx.fillStyle = m.fillColor;
       m.walk_cycle += m.flipLegs * m.Vx;
       ctx.save();
-      ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+      ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
       ctx.translate(m.pos.x, m.pos.y);
       m.calcLeg(Math.PI, -3);
       m.drawLeg("#4a4a4a");
@@ -1012,7 +1012,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         // m.calcLeg(Math.PI, -3);
         // m.drawLeg("#4a4a4a");
@@ -1066,7 +1066,7 @@ const m = {
 
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -1.25);
         m.drawLeg("#606060");
@@ -1292,7 +1292,7 @@ const m = {
 
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -1.25);
         m.drawLeg("#606060");
@@ -1409,7 +1409,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -3);
 
@@ -1708,7 +1708,7 @@ const m = {
 
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -1.25);
         m.drawLeg("#606080");
@@ -1831,7 +1831,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -3);
         m.drawLeg("#456");
@@ -1934,7 +1934,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(4.2, -3);
         m.drawLeg("#666");
@@ -2074,7 +2074,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -3);
         m.drawLeg("#4a4a5a");
@@ -2150,7 +2150,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -3);
         m.drawLeg("#456");
@@ -2210,7 +2210,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -3);
         m.drawLeg("#456");
@@ -2322,7 +2322,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -3);
         m.drawLeg("#eee");
@@ -2397,7 +2397,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -2);
         m.drawLeg("#4a4a4a");
@@ -2481,7 +2481,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -3);
         m.drawLeg("#555");
@@ -2525,7 +2525,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         for (let i = 0; i < 16; i++) {
           m.calcLeg(Math.PI * i / 8, -3 * i / 16)
@@ -2552,7 +2552,7 @@ const m = {
         m.walk_cycle += m.flipLegs * m.Vx;
 
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -3);
         m.drawLeg("#4a4a4a");
@@ -2580,7 +2580,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -3);
         m.drawLeg("#4a4a4a");
@@ -2647,7 +2647,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -3);
         m.drawLeg("#4a4a4a");
@@ -2851,7 +2851,7 @@ const m = {
 
         //draw body
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
 
         m.calcLeg(Math.PI, -3);
@@ -2894,7 +2894,7 @@ const m = {
         ctx.fillStyle = m.fillColor;
         m.walk_cycle += m.flipLegs * m.Vx;
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(m.pos.x, m.pos.y);
         m.calcLeg(Math.PI, -3);
         m.drawLeg("#4a4a4a");
@@ -7949,7 +7949,7 @@ const m = {
 
       m.draw = () => { //just draw the circle
         ctx.save();
-        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : 0.3 + 0.4 * Math.random()
+        ctx.globalAlpha = (m.immuneCycle < m.cycle) ? 1 : m.cycle % 3 ? 0.1 : 0.65 + 0.1 * Math.random()
         ctx.translate(player.position.x, player.position.y);
         ctx.rotate(player.angle);
 
