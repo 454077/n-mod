@@ -23,9 +23,9 @@ const spawn = {
   tier: [
     ["starter"],
     ["slasher", "hopper", "flutter", "shooter", "grower", "grenadier", "laser", "beamer", "launcher", "exploder"],
-    ["slasher2", "hopperBaby", "stabber", "springer", "striker", "dodger", "spinner", "sucker", "pulsar", "focuser", "spawner", "spiker", /*"pitcher"*/],
-    ["slasher3", "hopMother", "stinger", "sniper", "sneaker", "slicer", "ghoster", "laserLayer", "launcherOne", "freezer", /*"pitcher3"*/],
-    ["slasher4", "hopsploder", "stingWinger", "sneakyStriker", /*"bigSucker",*/ "quadLaser", "launchPusher", "slasher5", "mortar",/* "pitcher4"*/],
+    ["slasher2", "hopperBaby", "stabber", "springer", "striker", "dodger", "spinner", "sucker", "pulsar", "focuser", "spawner", "spiker", "pitcher"],
+    ["slasher3", "hopMother", "stinger", "sniper", "sneaker", "slicer", "ghoster", "laserLayer", "launcherOne", "freezer", "pitcher3"],
+    ["slasher4", "hopsploder", "stingWinger", "sneakyStriker", "bigSucker", "quadLaser", "launchPusher", "slasher5", "mortar","pitcher4"],
   ],
   bossTier: [
     [],

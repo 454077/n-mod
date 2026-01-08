@@ -5,7 +5,7 @@ setTimeout(() => {
 const cmdConsole = {
   CD_cycle: 200, //on starting the game, enter cooldown for a short time.
   CD_length: 60, //cooldown to reduce spamming
-  history: [""], //track history
+  history: [], //track history
   historyIDX: 0,	//allow cycling through history
   isHistoryInputFocused: false,
   params: [], //parameters for commands

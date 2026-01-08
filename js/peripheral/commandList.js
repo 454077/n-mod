@@ -87,4 +87,47 @@ const cmdList = {
       description: `Explains the functionality and syntax of a given console command.
       <br><strong>SYNTAX:</strong> /help <em>[commandName]</em>`
     },
+    spawn: {
+      checkSyntax(input) {
+        cmdConsole.params = input.split(/\s+/)
+        if (cmdConsole.params.length === 4) {
+          return [true, ""]
+        } else {
+          return [false, "<strong class='color-var'>spawn</strong> requires exactly four parameters"]
+        }
+      },
+      effect(input) {
+        cmdConsole.params = input.split(/\s+/)
+        let types = ["mob", "boss", "powerUp"], fullMobList = spawn.tier.flat(),
+          fullBossList = spawn.bossTier.flat(), fullPowerUpList = [], what = cmdConsole.params[1],
+          fullCatalog = [], reference = Object.entries(powerUps);
+        if (types.includes(cmdConsole.params[0])) {
+          reference.forEach(item => {
+            try {
+              if (item[1].name && item[1].effect) fullPowerUpList.push(item[0] || item[1].name)
+            } catch (e) {}
+          })
+          fullCatalog = [fullMobList, fullBossList, fullPowerUpList]
+          fullCatalog.forEach((list, i) => {
+            if (cmdConsole.params[0] === types[i]) {
+              if (list.includes(what)) {
+                if (i < 2) {
+                  spawn[what](parseFloat(cmdConsole.params[2]), parseFloat(cmdConsole.params[3]))
+                  simulation.inGameConsole("Object successfully summoned.")
+                } else {
+                  powerUps.directSpawn(parseFloat(eval(cmdConsole.params[2])), parseFloat(eval(cmdConsole.params[3])), what)
+                  simulation.inGameConsole("Object successfully summoned.")
+                }
+              } else {
+                throw new ReferenceError(`<strong class='color-var'>${what}</strong> is not a valid ${cmdConsole.params[0]} name`)
+              }
+            }
+          })
+        } else {
+          throw new ReferenceError(`<strong class='color-var'>${cmdConsole.params[0]}</strong> is not a valid entity type`)
+        }
+      },
+      description: `Spawns an entity at a given position.
+      <br><strong>SYNTAX:</strong> /spawn <em>&lt;type (mob|boss|powerUp)&gt; &lt;name&gt; &lt;position (x y)&gt;</em>`
+    }
   } //will expand the list
