@@ -1113,7 +1113,7 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
     document.getElementById("field-0").classList.add("build-field-selected");
     document.getElementById("experiment-grid").style.display = "grid"
   },
-  resetStorage() {
+  resetStorage(isForceReset = false) {
     function localStorageCheck() {
       try {
         return 'localStorage' in window && window['localStorage'] !== null;
@@ -1141,7 +1141,7 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
       }
     }
 
-    if (localSettings.isAllowed && !localSettings.isEmpty) {
+    if (localSettings.isAllowed && !localSettings.isEmpty && !isForceReset) {
       console.log('restoring previous settings')
 
       if (localSettings.key) {
@@ -1204,37 +1204,38 @@ ${simulation.difficultyMode > 4 ? `<details id="constraints-details" style="padd
         localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
       }
     } else {
-    console.log('setting default localSettings')
-    const isAllowed = localSettings.isAllowed //don't overwrite isAllowed value
-    localSettings = {
-      banList: "",
-      isAllowed: isAllowed,
-      personalSeeds: [],
-      isJunkExperiment: false,
-      isCommunityMaps: false,
-      difficultyMode: '2',
-      difficultyCompleted: [null, false, false, false, false, false, false, false],
-      fpsCapDefault: 'max',
-      runCount: 0,
-      isTrainingNotAttempted: true,
-      levelsClearedLastGame: 0,
-      loreCount: 0,
-      isLoreDoesNotNeedReset: false,
-      isHuman: false,
-      key: undefined,
-      isHideImages: true, //default to hide images
-      isHideHUD: false,
-      pauseMenuDetailsOpen: [true, false, false, true],
-      entanglement: undefined,
-      techHistory: [],
-    };
-    input.setDefault()
-    if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-    document.getElementById("community-maps").checked = localSettings.isCommunityMaps
-    simulation.isCommunityMaps = localSettings.isCommunityMaps
-    document.getElementById("hide-images").checked = localSettings.isHideImages
-    document.getElementById("fps-select").value = localSettings.fpsCapDefault
-    document.getElementById("banned").value = localSettings.banList
+      console.log('setting default localSettings')
+      const isAllowed = localSettings.isAllowed //don't overwrite isAllowed value
+      localSettings = {
+        banList: "",
+        isAllowed: isAllowed,
+        personalSeeds: [],
+        isJunkExperiment: false,
+        isCommunityMaps: false,
+        difficultyMode: '2',
+        difficultyCompleted: [null, false, false, false, false, false, false, false],
+        fpsCapDefault: 'max',
+        runCount: 0,
+        isTrainingNotAttempted: true,
+        levelsClearedLastGame: 0,
+        loreCount: 0,
+        isLoreDoesNotNeedReset: false,
+        isHuman: false,
+        key: undefined,
+        isHideImages: true, //default to hide images
+        isHideHUD: false,
+        pauseMenuDetailsOpen: [true, false, false, true],
+        entanglement: undefined,
+        techHistory: [],
+      };
+      input.setDefault()
+      if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+      document.getElementById("community-maps").checked = localSettings.isCommunityMaps
+      simulation.isCommunityMaps = localSettings.isCommunityMaps
+      document.getElementById("hide-images").checked = localSettings.isHideImages
+      document.getElementById("hide-hud").checked = localSettings.isHideHUD
+      document.getElementById("fps-select").value = localSettings.fpsCapDefault
+      document.getElementById("banned").value = localSettings.banList
     }
     document.getElementById("control-testing").style.visibility = (localSettings.loreCount < 1) ? "hidden" : "visible"
     // document.getElementById("experiment-button").style.visibility = (localSettings.loreCount === 0) ? "hidden" : "visible"

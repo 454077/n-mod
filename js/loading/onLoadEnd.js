@@ -158,12 +158,20 @@ fileLoads.onLoadEnd = function () {
     document.getElementById("confirm-wipe").addEventListener("click", () => {
         document.getElementById("confirm-wipe-div").style.visibility = "hidden";
         document.getElementById("localSave-div").style.visibility = "visible";
-        localSettings = {}
-        build.resetStorage();
-        if (localSettings.isAllowed) {
-            localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-        } else {
-            console.warn("localSettings is not allowed");
+        let oldSettings = localSettings;
+        try {
+            localSettings = {}; //reset local settings
+            build.resetStorage(true); //force reset
+            if (localSettings.isAllowed) {
+                localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+            } else {
+                console.warn("localSettings is not allowed");
+            }
+        } catch (error) {
+            let errorMsg = "Failed to wipe save file: " + error.message
+            console.warn(errorMsg);
+            localSettings = oldSettings
+            window.alert(errorMsg)
         }
     });
 
