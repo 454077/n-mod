@@ -34,6 +34,16 @@ const powerUps = {
       color: `rgba(${color}, 0.15)`,
       time: 16
     });
+    /*
+    for (let i = 4; i > 0; i--) {
+      simulation.drawList.push({
+        x: m.pos.x,
+        y: m.pos.y,
+        radius: i * 25,
+        color: `rgba(${color}, ${0.2 * i})`,
+        time: (5 - i) * 4
+      });
+    */
   },
   healGiveMaxEnergy: false, //for tech 1st ionization energy
   orb: {
@@ -1295,21 +1305,21 @@ const powerUps = {
     return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}"${powerUps.hideStyle}>
         <div class="card-text">
         <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[choose].name}</div>
-        ${m.fieldUpgrades[choose].description}</div></div>`
+        ${m.fieldUpgrades[choose].descriptionFunction ? m.fieldUpgrades[choose].descriptionFunction() : m.fieldUpgrades[choose].description}</div></div>`
   },
   gunText(choose, click) {
     const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/gun/${b.guns[choose].name}.webp'), url('img/junk.webp');"`
     return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}" ${style}>
             <div class="card-text">
             <div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${b.guns[choose].name}</div>
-            ${b.guns[choose].descriptionFunction()}</div></div>`
+            ${b.guns[choose].descriptionFunction ? b.guns[choose].descriptionFunction() : b.guns[choose].description}</div></div>`
   },
   fieldText(choose, click) {
     const style = localSettings.isHideImages ? powerUps.hideStyle : `style="background-image: url('img/field/${m.fieldUpgrades[choose].name}.webp'), url('img/junk.webp');"`
     return `<div class="choose-grid-module card-background" onclick="${click}" onauxclick="${click}"${style}>
         <div class="card-text">
         <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[choose].name}</div>
-        ${m.fieldUpgrades[choose].description}</div></div>`
+        ${m.fieldUpgrades[choose].descriptionFunction ? m.fieldUpgrades[choose].descriptionFunction() : m.fieldUpgrades[choose].description}</div></div>`
   },
   techText(choose, click) {
     const techCountText = tech.tech[choose].count > 0 ? ` (${tech.tech[choose].count + 1}x)` : "";
