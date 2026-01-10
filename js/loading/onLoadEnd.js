@@ -131,7 +131,8 @@ fileLoads.onLoadEnd = function () {
                         e.target.value = ""; // Clear the file input
                         console.log("Settings imported successfully!");
                     } else {
-                        throw new Error("localSettings is not allowed");
+                        window.alert("localSettings is not allowed");
+                        //throw new Error("localSettings is not allowed");
                     }
                 } catch (error) {
                     let errorMsg = "Failed to import settings: " + error.message
