@@ -52,11 +52,11 @@ const cmdConsole = {
             item.effect(string);
           } else {
             try {
-              syntaxCheck = item.checkSyntax(string)[1]
+              syntaxCheck = new SyntaxError(item.checkSyntax(string)[1])
             } catch (e) {
-              syntaxCheck = "Syntax logic is not defined"
+              syntaxCheck = new ReferenceError("Syntax logic is not defined")
             }
-            throw new SyntaxError(syntaxCheck);
+            throw syntaxCheck;
           }
         } catch (err) { //if an error occurs during execution
           document.getElementById('text-log').innerHTML = oldHTML //revert inGameConsole, in case logging occurred during execution
