@@ -1036,7 +1036,7 @@ const tech = {
       name: "pigeonhole principle",
       descriptionFunction() {
         return `<strong>1.4x</strong> <strong class='color-d'>damage</strong> per ${powerUps.orb.gun()}, but your active ${powerUps.orb.gun()}
-            	<br>cycles each level and you can't <strong>switch</strong>`
+            	<br>cycles each ${powerUps.orb.warp()} and you can't <strong>switch</strong>`
       },
       // descriptionFunction() {
       //     let info = ""
@@ -1066,7 +1066,7 @@ const tech = {
     {
       name: "generalist",
       description: `spawn <strong>7</strong> ${powerUps.orb.gun()}, but your equipped ${powerUps.orb.gun()}
-        	<br>cycles each level and you can't <strong>switch</strong>`,
+        	<br>cycles each ${powerUps.orb.warp()} and you can't <strong>switch</strong>`,
       maxCount: 1,
       count: 0,
       frequency: 1,
@@ -3905,7 +3905,8 @@ const tech = {
     {
       name: "quantum Zeno effect",
       descriptionFunction() {
-        return `you can only <strong>die</strong> if you <strong>end</strong> a level with <strong class='color-h'>health</strong> < <strong>0</strong><br><strong>2x</strong> <strong class='color-d'>damage</strong> while <strong class='color-h'>health</strong> < <strong>0</strong>`
+        return `you can only <strong>die</strong> if you <strong>end</strong> a ${powerUps.orb.warp()} with <strong class='color-h'>health</strong> < <strong>0</strong>
+        <br><strong>2x</strong> <strong class='color-d'>damage</strong> while <strong class='color-h'>health</strong> < <strong>0</strong>`
         // return `you don't <strong>die</strong> when you go below <strong>0</strong> <strong class='color-h'>health</strong>, but<br>you need <strong class='color-h'>health</strong> above <strong>0</strong> to <strong>exit</strong> the level`
         // return `you can't <strong>die</strong> if <strong class='color-h'>health</strong> < <strong>0</strong>, but<br>you need <strong class='color-h'>health</strong> > <strong>0</strong> to <strong>exit</strong> the level`
       },
@@ -3928,7 +3929,8 @@ const tech = {
     {
       name: "quantum Darwinism",
       descriptionFunction() {
-        return `once per level if <strong class='color-h'>health</strong> < <strong>0</strong><br>spawn ${powerUps.orb.tech()} and <strong>+2%</strong> chance for <strong class='color-junk'>JUNK</strong>`
+        return `once per ${powerUps.orb.warp()} if <strong class='color-h'>health</strong> < <strong>0</strong>
+        <br>spawn ${powerUps.orb.tech()} and <strong>+2%</strong> chance for <strong class='color-junk'>JUNK</strong>`
       },
       maxCount: 1,
       count: 0,
@@ -4100,7 +4102,8 @@ const tech = {
     {
       name: "accretion",
       descriptionFunction() {
-        return `${powerUps.orb.heal(1)} follow you, even between levels<br><strong>+4%</strong> chance to <strong class='color-dup'>duplicate</strong> spawned <strong>power ups</strong>`
+        return `${powerUps.orb.heal(1)} follow you, even between ${powerUps.orb.warp()}
+        <br><strong>+4%</strong> chance to <strong class='color-dup'>duplicate</strong> spawned <strong>power ups</strong>`
       },
       isPacifist: true,
       maxCount: 1,
@@ -4229,7 +4232,7 @@ const tech = {
       },
       descriptionFunction() {
         // return `once per level, instead of <strong>dying</strong> use ${powerUps.orb.research(1)} and<br>spawn ${powerUps.orb.heal(22)}`
-        return `${(tech.isAnthropicExtended) ? `${tech.isAnthropicExtended + 1} times` : `once`} per level, if 
+        return `${(tech.isAnthropicExtended) ? `${tech.isAnthropicExtended + 1} times` : `once`} per ${powerUps.orb.warp()}, if 
             	<strong class='color-h'>health</strong> < <strong>0</strong> use ${powerUps.orb.research(1)} to survive
             	<br>and spawn ${powerUps.orb.heal((tech.isAnthropicExtended) ? Math.max(22 - 3 * tech.isAnthropicExtended, 4) : 22)}<em style ="float: right;">(${(tech.deathsAvoidedThisLevel < (tech.isAnthropicExtended + 1 || 1) && powerUps.research.count > 0) ? "on" : "off"})</em>`
 
@@ -4257,7 +4260,8 @@ const tech = {
     },
     {
       name: "weak anthropic principle",
-      description: "after <strong>anthropic principle</strong> prevents your <strong>death</strong><br><strong>+60%</strong> <strong class='color-dup'>duplication</strong> chance for that level",
+      description: `after <strong>anthropic principle</strong> prevents your <strong>death</strong>
+      <br><strong>+60%</strong> <strong class='color-dup'>duplication</strong> chance for that ${powerUps.orb.warp()}`,
       maxCount: 1,
       count: 0,
       frequency: 3,
@@ -4278,7 +4282,7 @@ const tech = {
     {
       name: "defensive anthropic principle",
       description: `after <strong>anthropic principle</strong> prevents your <strong>death</strong>
-        	<br><strong>0.37x</strong> <strong class='color-defense'>damage taken</strong> for that level`,
+        	<br><strong>0.37x</strong> <strong class='color-defense'>damage taken</strong> for that ${powerUps.orb.warp()}`,
       isPacifist: true,
       maxCount: 1,
       count: 0,
@@ -4298,7 +4302,7 @@ const tech = {
     {
       name: "extended anthropic principle",
       description: `<strong>anthropic principle</strong> prevents your <strong>death +1</strong> time
-        	<br> but spawns ${powerUps.orb.heal(3)} <strong>less</strong>`,
+        	<br>but spawns ${powerUps.orb.heal(3)} <strong>less</strong>`,
       isPacifist: true,
       maxCount: 3,
       count: 0,
@@ -4324,7 +4328,7 @@ const tech = {
     {
       name: "strong anthropic principle",
       description: `after <strong>anthropic principle</strong> prevents your <strong>death</strong>
-        	<br><strong>2.71828x</strong> <strong class='color-d'>damage</strong> for that level`,
+        	<br><strong>2.71828x</strong> <strong class='color-d'>damage</strong> for that ${powerUps.orb.warp()}`,
       maxCount: 1,
       count: 0,
       frequency: 3,
@@ -4342,7 +4346,8 @@ const tech = {
     },
     {
       name: "quantum immortality",
-      description: "<strong>0.7x</strong> <strong class='color-defense'>damage taken</strong><br>after <strong>dying</strong>, continue in an <strong class='alt'>alternate reality</strong>",
+      description: `<strong>0.7x</strong> <strong class='color-defense'>damage taken</strong>
+      <br>after <strong>dying</strong>, continue in an <strong class='alt'>alternate reality</strong>`,
       isPacifist: true,
       maxCount: 1,
       count: 0,
@@ -4364,7 +4369,8 @@ const tech = {
     },
     {
       name: "many-worlds",
-      description: `at the start of each <strong>level</strong> spawn ${powerUps.orb.tech()}<br>and enter an <strong class='alt'>alternate reality</strong>`,
+      description: `at the start of each ${powerUps.orb.warp()} spawn ${powerUps.orb.tech()}
+      <br>and enter an <strong class='alt'>alternate reality</strong>`,
       maxCount: 1,
       count: 0,
       frequency: 1,
@@ -4384,7 +4390,8 @@ const tech = {
     {
       name: "Ψ(t) collapse",
       link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Wave_function_collapse' class="link">Ψ(t) collapse</a>`,
-      description: `after a <strong>boss</strong> <strong>dies</strong> spawn ${powerUps.orb.research(4)}<br>if you <strong class='color-r'>research</strong> enter an <strong class='alt'>alternate reality</strong>`,
+      description: `after a <strong>boss</strong> <strong>dies</strong> spawn ${powerUps.orb.research(4)}
+      <br>if you <strong class='color-r'>research</strong> enter an <strong class='alt'>alternate reality</strong>`,
       maxCount: 1,
       count: 0,
       frequency: 1,
@@ -5298,7 +5305,7 @@ const tech = {
       link: `<a target="_blank" href='https://en.wikipedia.org/wiki/Option_(finance)' class="link">options exchange</a>`,
       description: `clicking <strong class='color-cancel'>cancel</strong> for ${powerUps.orb.field()}, ${powerUps.orb.tech()}, or ${powerUps.orb.gun()}
         	<br>will <strong class='color-randomize'>randomize</strong> with <strong>3x</strong> <strong class='color-choice'><span>ch</span><span>oi</span><span>ces</span></strong>,
-            <br>once a level for each ${powerUps.orb.field()}, ${powerUps.orb.tech()}, and ${powerUps.orb.gun()}`,
+            <br>once a ${powerUps.orb.warp()} for each ${powerUps.orb.field()}, ${powerUps.orb.tech()}, and ${powerUps.orb.gun()}`,
       isPacifist: true,
       maxCount: 3,
       count: 0,
@@ -12737,7 +12744,7 @@ const tech = {
     },
     {
       name: "harvest",
-      description: "convert all the mobs on this level into <strong class='color-ammo'>ammo</strong>",
+      description: `convert all the mobs on this ${powerUps.orb.warp()} into <strong class='color-ammo'>ammo</strong>`,
       maxCount: 1,
       count: 0,
       frequency: 0,
@@ -12862,7 +12869,7 @@ const tech = {
     },
     {
       name: "facsimile",
-      description: `inserts a copy of your current level into the level list`,
+      description: `inserts a copy of your current ${powerUps.orb.warp()} into the ${powerUps.orb.warp()} list`,
       maxCount: 1,
       count: 0,
       frequency: 0,
@@ -13717,7 +13724,7 @@ const tech = {
     },
     {
       name: "lubrication",
-      description: "reduce block density and friction for this level",
+      description: `reduce block density and friction for this ${powerUps.orb.warp()}`,
       maxCount: 9,
       count: 0,
       frequency: 0,
@@ -13941,7 +13948,7 @@ const tech = {
     },
     {
       name: "the upside down",
-      description: `Flip the universe until the end of the level.<br>I'll give you 1.1x <strong class='color-d'>damage</strong> as well.`,
+      description: `Flip the universe until the end of the ${powerUps.orb.warp()}.<br>I'll give you 1.1x <strong class='color-d'>damage</strong> as well.`,
       maxCount: 1,
       count: 0,
       frequency: 0,
@@ -14026,7 +14033,7 @@ const tech = {
     },
     {
       name: "level.nextLevel()",
-      description: "advance to the next level",
+      description: `advance to the next ${powerUps.orb.warp()}`,
       maxCount: 9,
       count: 0,
       frequency: 0,
@@ -14649,7 +14656,7 @@ const tech = {
     {
       name: "warp",
       description: `spawn a power up that lets you
-      		<br> <strong class="color-warp"><em>warp</em></strong> to another level`,
+      		<br> <strong class="color-warp"><em>warp</em></strong> to another ${powerUps.orb.warp()}`,
       maxCount: 1,
       count: 1,
       frequency: 0,
@@ -15058,7 +15065,7 @@ const tech = {
     {
         name: "tamagotchi",
         description: `you adopt a digital <strong>pet</strong>!!!1!!
-        <br>after each <strong>n-gon</strong> level your pet brings you <strong>something</strong>
+        <br>after each <strong>n-gon</strong> ${powerUps.orb.warp()} your pet brings you <strong>something</strong>
         <br>if your <strong>pet</strong> <strong style="color:red;">dies</strong> you <strong style="color:red;">die</strong> in <strong>n-gon</strong>`,
         maxCount: 1,
         count: 0,
