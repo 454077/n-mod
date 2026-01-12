@@ -5723,7 +5723,8 @@ const tech = {
     {
       name: "planned obsolescence",
       descriptionFunction() {
-        return `at the start of each <strong>level</strong> <span class='color-remove'>eject</span> your oldest ${powerUps.orb.tech()}<br>and gain <strong>1.1x</strong> <strong class='color-d'>damage</strong> each time` //<em style ="float: right;">(${(tech.isEjectOld).toFixed(2)}x)</em>
+        return `at the start of each ${powerUps.orb.warp()} <span class='color-remove'>eject</span> your oldest ${powerUps.orb.tech()}
+        <br>and gain <strong>1.1x</strong> <strong class='color-d'>damage</strong> each time` //<em style ="float: right;">(${(tech.isEjectOld).toFixed(2)}x)</em>
       },
       maxCount: 1,
       count: 0,
