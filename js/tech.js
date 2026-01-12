@@ -9437,7 +9437,8 @@ const tech = {
       name: "tritiated medium",
       descriptionFunction() {
         let pluralize = "beam is";
-        if (tech.beamSplitter || tech.beamCollimator || tech.historyLaser) {
+        if (tech.beamSplitter || tech.beamCollimator || tech.historyLaser || tech.isLaserMine || tech.isLaserField ||
+          tech.laserBotCount > (tech.haveGunCheck("laser", false) ? 0 : 1)) {
           pluralize = "beams are";
         }
         return `<strong>1.33x</strong> <strong class='color-laser'>laser</strong> <strong class="color-f">energy</strong> cost
@@ -9456,12 +9457,15 @@ const tech = {
       },
       effect() {
         tech.isRadioLaser = true;
-        tech.laserColor = "#3fff00";
+        tech.laserColor = "rgba(47, 191, 0, 1)";
+        tech.laserColorAlpha = "rgba(47, 191, 0, 0.5)";
         tech.laserDrain *= 1.25;
       },
       remove() {
         tech.isRadioLaser = false;
         tech.laserDrain *= 0.8;
+        tech.laserColor = "#f00"
+        tech.laserColorAlpha = "rgba(255, 0, 0, 0.5)"
       }
     },
     {
@@ -9472,11 +9476,11 @@ const tech = {
       maxCount: 1,
       count: 0,
       frequency: 1,
-      requires: "laser",
+      requires: "laser, not pulse",
       isNGUTech: true,
       isGunTech: true,
       allowed() {
-        return tech.haveGunCheck("laser");
+        return tech.haveGunCheck("laser") && !tech.isPulseLaser;
       },
       effect() {
         tech.isPhotonicResonance = true;
