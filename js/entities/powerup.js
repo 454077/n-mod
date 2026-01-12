@@ -101,7 +101,7 @@ const powerUps = {
       return `<div class="circle-grid tech tooltip" style="width: 1.32em; height: 1.32em;"><span class="tooltiptext color-m">tech</span></div>`
     },
     warp(num = 1) {
-      return `<div class="circle-grid warp tooltip" style="position:relative; width: 1em; height: 1em; bottom:-.5em;"><span class="tooltiptext color-warp">level</span></div>`
+      return `<div class="circle-grid warp tooltip" style="position:relative; width: 1em; height: 1em; bottom:-.5em;"><span class="tooltiptext color-warp" style="position: relative; top:-2em;">level</span></div>`
     },
     field(num = 1) {
       return `<div class="circle-grid field tooltip"><span class="tooltiptext color-f">field</span></div>`
