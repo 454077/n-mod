@@ -418,6 +418,7 @@ const m = {
     }
   },
   death() {
+    if (tech.isPeriodicRealitySwitch) clearInterval(realitySwitchClock); //stop quantum leaping
     if (tech.isImmortal) { //if player has the immortality buff, spawn on the same level with randomized damage
       //remove immortality tech
       // for (let i = 0; i < tech.tech.length; i++) {
@@ -435,7 +436,7 @@ const m = {
       level.isFlipped = false
       simulation.clearNow = true; //triggers a map reset
 
-      m.switchWorlds()
+      m.switchWorlds("quantum immortality")
       const swapPeriod = 1000
       for (let i = 0, len = 5; i < len; i++) {
         setTimeout(function () {

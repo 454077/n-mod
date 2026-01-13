@@ -13544,7 +13544,7 @@ const tech = {
       requires: "",
       effect() {
         tech.isPeriodicRealitySwitch = true;
-        setInterval(() => {
+        const realitySwitchClock = setInterval(() => {
           const unit = {
             x: 1,
             y: 0
