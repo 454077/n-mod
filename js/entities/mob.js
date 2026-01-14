@@ -293,6 +293,17 @@ const mobs = {
                     }
                 }
             },
+            healthBarByTier(tier = this.tier) {
+                if (tier === 1) { 
+                    this.healthBar1();
+                } else if (tier === 2) {
+                    this.healthBar2();
+                } else if (tier === 3) {
+                    this.healthBar3();
+                } else  if (tier === 4) {
+                    this.healthBar4();
+                }
+            },
             status: [], // [ { effect(), endCycle } ]
             checkStatus() {
                 let j = this.status.length;

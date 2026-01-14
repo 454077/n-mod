@@ -10,7 +10,7 @@ const cmdList = {
           let trailing = input.slice(pos[1] + 1)
           if (trailing.replace(/\s/g, "") === "" || trailing.replace(/\s/g, "").startsWith("//")) {
             let invalidPhrases = ["document", "EventListener", "innerHTML", "outerHTML", "getElementsBy", "getElementBy", "prototype", "createElement",
-              "appendChild", "removeChild", "eval", "runTemp", "console.", "const ", "commandList", "resetStorage"], isInvalid = false, regExpTest = /cmdConsole(?!\.history)/;
+              "appendChild", "removeChild", "eval", "runTemp", "console.", "const ", "commandList", "resetStorage", "defaultGameVars", "resetGame"], isInvalid = false, regExpTest = /cmdConsole(?!\.history)/;
             //this command should NOT access or alter HTML DOM, nor should it alter JS prototypes or request other commands, for security reasons
             isInvalid = regExpTest.test(input);
             for (let i = 0, len = invalidPhrases.length; i < len; i++) {
