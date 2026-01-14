@@ -33,6 +33,7 @@ const tech = {
     m.resetSkin();
     tech.removeCount = 0;
     tech.pauseEjectTech = 1; //used in paradigm shift
+    tech.pauseEjectResearch = 1; //used in paradigm analysis
     lore.techCount = 0;
     tech.duplication = 0;
     m.damageDone = 1
@@ -5760,9 +5761,30 @@ const tech = {
       },
       remove() {
         tech.isPauseEjectTech = false;
-
       }
     },
+    {
+      name: "paradigm analysis",
+      descriptionFunction(){
+        return `<span class='color-remove'>ejecting</span> ${powerUps.orb.tech()} costs ${tech.pauseEjectResearch > 9 ? `<strong>${tech.pauseEjectResearch}</strong> ${powerUps.orb.research()}` : powerUps.orb.research(tech.pauseEjectResearch)}
+          <br>instead of ${tech.isEnergyHealth ? "<strong class='color-f'>energy</strong>" : "<strong class='color-h'>health</strong>"}</strong>  <em style ="float: right;">(+1 cost each use)</em>`
+      },
+      maxCount: 1,
+      count: 0,
+      frequency: 1,
+      frequencyDefault: 1,
+      allowed() {
+        return tech.isPauseEjectTech
+      },
+      requires: "paradigm shift",
+      effect() {
+        tech.isPauseEjectResearch = true;
+        if (!tech.pauseEjectResearch) tech.pauseEjectResearch = 1;
+      },
+      remove() {
+        tech.isPauseEjectResearch = false;
+      }
+    }, 
     {
       name: "Born rule",
       description: `<span class='color-remove'>eject</span> all your ${powerUps.orb.tech()}`,
@@ -9419,9 +9441,9 @@ const tech = {
       allowed() {
         return tech.haveGunCheck("laser") && tech.laserReflections < 3 && !(tech.isStuckOn ||
           tech.beamCollimator || tech.isIRdiode || tech.isFreeElectron || tech.isDyeLaser ||
-          tech.isRadioLaser)
+          tech.isRadioLaser || tech.isLaserGrabPowerUp || tech.isWideLaser)
       },
-      requires: "laser gun, not specular reflection, diffuse, free-electron laser, optical amplifier, collimator, tritiated medium",
+      requires: "laser gun, not specular reflection, diffuse, free-electron laser, optical tweezers, collimator, tritiated medium",
       effect() {
         tech.isPulseLaser = true;
         b.guns[11].chooseFireMethod()
@@ -15472,6 +15494,8 @@ const tech = {
   isPauseSwitchField: null,
   isPauseEjectTech: null,
   pauseEjectTech: null,
+  isPauseEjectResearch: null,
+  pauseEjectResearch: null,
   isShieldPierce: null,
   isDuplicateMobs: null,
   isDynamoBotUpgrade: null,

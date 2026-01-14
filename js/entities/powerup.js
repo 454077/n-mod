@@ -2066,9 +2066,7 @@ const powerUps = {
     b.guns[name].defaultAmmoPack /= 2;
   },
   pauseEjectTech(index) {
-    if ((tech.isPauseEjectTech || simulation.testing)
-        && !simulation.isChoosing && !tech.tech[index].isInstant
-       ) {
+    if (tech.isPauseEjectTech || simulation.testing) {
       if ((tech.tech[index].name === "marginal utility") && tech.isRerollGunAmmo) {
         let oldGun = tech.tech[index].gun;
         powerUps.rerollMUgun(index, oldGun);
@@ -2087,13 +2085,25 @@ const powerUps = {
         // } else {
         // }
         //tech.tech[index].frequency = 0 //banish tech
-        tech.tech[index].isBadRandomOption = true
-        powerUps.ejectTech(index)
-        if (m.immuneCycle < m.cycle) m.takeDamage(tech.pauseEjectTech * 0.01, false)
-        tech.pauseEjectTech *= 1.3
-        document.getElementById(`${index}-pause-tech`).style.textDecoration = "line-through"
-        document.getElementById(`${index}-pause-tech`).style.animation = ""
-        document.getElementById(`${index}-pause-tech`).onclick = null
+        if (!tech.isPauseEjectResearch || powerUps.research.count >= (tech.pauseEjectResearch || 1)) {
+          tech.tech[index].isBadRandomOption = true
+          powerUps.ejectTech(index)
+          if (tech.isPauseEjectResearch) {
+            for (let i = 0; i < tech.pauseEjectResearch; i++) powerUps.research.changeRerolls(-1);
+            if (tech.pauseEjectResearch < 0) tech.pauseEjectResearch = 0
+            tech.pauseEjectResearch++;
+          } else {
+            if (m.immuneCycle < m.cycle) m.takeDamage(tech.pauseEjectTech * 0.01, false)
+            tech.pauseEjectTech *= 1.3
+          }
+          build.generatePauseLeft();
+          build.generatePauseRight();
+          simulation.updateTechHUD();
+          simulation.updateGunHUD();
+          document.getElementById(`${index}-pause-tech`).style.textDecoration = "line-through"
+          document.getElementById(`${index}-pause-tech`).style.animation = ""
+          document.getElementById(`${index}-pause-tech`).onclick = null
+        }
       }
     }
   },
@@ -2116,6 +2126,9 @@ const powerUps = {
       let isLorePowerUp = ignoredIndexes.includes(powerUp[i].name)
       if (!isLorePowerUp){
         if (powerUp[i].name === "tech" || powerUp[i].name === "gun" || powerUp[i].name === "field") {
+          bigIndexes.push(i)
+        } else if (powerUp[i].name === "heal" && tech.isHealAttract &&
+          Vector.magnitudeSquared(Vector.sub(powerUp[i].position, m.pos)) < 50000 && Math.random() < 0.5) { //if player has accretion, chance to spawn heal as larger powerUp
           bigIndexes.push(i)
         } else {
           smallIndexes.push(i)
