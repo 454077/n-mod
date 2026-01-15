@@ -1987,7 +1987,7 @@ const mainLevels = {
                     for (let i = 0; i < mob.length; i++) {
                         let who = mob[i], where = who.position
                         if (who.isReactorBoss) {
-                            if (where.x < -1200 || where.x > 4500 || where.y < -2000 || where.y > 500) { //fixes softlocking issue
+                            if (where.x < 200 || where.x > 2750 || where.y < -1900 || where.y > 500) { //fixes softlocking issue
                                 who.damage(Infinity, true)
                             } else {
                                 isFoundBoss = true
