@@ -14414,6 +14414,58 @@ const tech = {
       remove() { }
     },
     {
+      name: "slink",
+      description: "while you are crouched you runing around really fast!",
+      maxCount: 1,
+      count: 0,
+      frequency: 0,
+      isInstant: true,
+      isJunk: true,
+      allowed() {
+        return true
+      },
+      requires: "",
+      effect() {
+        m.groundControl = function () {
+          const moveX = player.velocity.x - m.moverX //account for mover platforms
+          //check for crouch or jump
+          if (m.crouch) {
+            if (!(input.down) && m.checkHeadClear() && m.hardLandCD < m.cycle) m.undoCrouch();
+          } else if (input.down || m.hardLandCD > m.cycle) {
+            m.doCrouch(); //on ground && not crouched and pressing s or down
+          } else if (input.up && m.buttonCD_jump + 20 < m.cycle) {
+            m.jump()
+          }
+          //Math.abs(player.velocity.x) < 7.5
+          const fx = m.Fx * ((m.crouch && input.down) ? 10 : 1)
+          if (input.left && !input.right) {
+            if (moveX > -2) {
+              player.force.x -= fx * 1.5
+            } else {
+              player.force.x -= fx
+            }
+            // }
+          } else if (input.right && !input.left) {
+            if (moveX < 2) {
+              player.force.x += fx * 1.5
+            } else {
+              player.force.x += fx
+            }
+          } else {
+            const stoppingFriction = 0.92; //come to a stop if no move key is pressed
+            Matter.Body.setVelocity(player, { x: m.moverX * 0.08 + player.velocity.x * stoppingFriction, y: player.velocity.y * stoppingFriction });
+          }
+
+          if (Math.abs(moveX) > 4) { //come to a stop if fast     // if (player.speed > 4) { //come to a stop if fast 
+            const stoppingFriction = (m.crouch && (input.down || !m.checkHeadClear())) ? 0.65 : 0.89; // this controls speed when crouched 
+            Matter.Body.setVelocity(player, { x: m.moverX * (1 - stoppingFriction) + player.velocity.x * stoppingFriction, y: player.velocity.y * stoppingFriction });
+          }
+          m.moverX = 0 //reset the level mover offset
+        }
+      },
+      remove() { }
+    },
+    {
       name: "ship",
       description: "fly around with no legs",
       maxCount: 1,

@@ -453,7 +453,7 @@ const level = {
             document.getElementById("right-HUD").style.top = "15px";
         }
     },
-     inGameText(x, y, text, count = 240, color = `rgb(200, 200, 200)`) {  //max width around 900-1000
+    inGameText(x, y, text, count = 240, color = `rgb(200, 200, 200)`) {  //max width around 900-1000
         let xAdjusted = x - text.length * 29 / 2
         // simulation.draw.font.drawString('abcdefghijklmnopqrstuvwxyzdnasijfnibdiasbfuyabndkjbsdufdbaisfbkadsbfkusbfdkuhbsdfubdsaifbadosifbiousadbfiuasdbfiuasdbifubasi', x, y)
         simulation.draw.font.word = new Path2D()
@@ -464,7 +464,7 @@ const level = {
             count: count,
             do() {
                 count--
-                if (count < 0 || !m.alive || this.onLevel !== level.levels[level.onLevel]) simulation.removeEphemera(this)
+                if (count < 0 || !m.alive || this.onLevel !== level.levels[level.onLevel]) simulation.removeEphemera(this.name)
                 ctx.strokeStyle = color
                 ctx.lineWidth = 3// + Math.random()
                 ctx.beginPath()
