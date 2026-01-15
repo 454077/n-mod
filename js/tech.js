@@ -8575,9 +8575,10 @@ const tech = {
       frequency: 2,
       frequencyDefault: 2,
       allowed() {
-        return tech.blockDamage > 0.075 || tech.isRailGun || (tech.haveGunCheck("foam") && tech.isFoamPressure) || tech.isTokamak || tech.isPulseLaser || tech.isPlasmaBall
+        return tech.blockDamage > 0.075 || tech.isRailGun || (tech.haveGunCheck("foam") && tech.isFoamPressure) ||
+          tech.spearRadioactive || tech.isTokamak || tech.isPulseLaser || tech.isPlasmaBall
       },
-      requires: "mass driver, railgun, foam, pressure vessel, pulse, tokamak, plasma ball",
+      requires: "mass driver, railgun, foam, pressure vessel, pulse, polonium-210, tokamak, plasma ball",
       effect() {
         tech.isCapacitor = true;
       },
@@ -10105,13 +10106,17 @@ const tech = {
         simulation.ephemera.push({
           name: "spearRadioactive",
           radius: 0,
+          maxRadius: null,
           particles: [],
-          maxParticles: 50,
-          gatherSpeed: 0.08,
+          maxParticles: null,
+          gatherSpeed: null,
           do() {
             if (!tech.spearRadioactive) {
               simulation.removeEphemera(this.name);
             }
+            this.maxRadius = 75 * (tech.isPlasmaRange || 1) + 7.5;
+            this.gatherSpeed = (tech.isCapacitor ? 0.2 : 0.08);
+            this.maxParticles = (tech.isCapacitor ? 150 : 50);
             for (let i = 0, len = b.inventory.length; i < len; ++i) {
               if (b.guns[b.inventory[i]].name === "spear" && b.guns[b.inventory[i]].spear) {
                 let spearPos = {
@@ -10119,7 +10124,7 @@ const tech = {
                   y: b.guns[b.inventory[i]].bladeSegments[4].vertices[0].y
                 };
                 if (input.down && m.energy > 0) {
-                  this.radius += 1;
+                  this.radius += (tech.isCapacitor ? Math.sqrt(this.maxRadius / 5) : 1);
                   m.energy -= 0.001;
                 } else if (this.radius > 0) {
                   let angle = Math.atan2(b.guns[b.inventory[i]].constraint2.pointA.y - b.guns[b.inventory[i]].constraint1.bodyB.position.y, b.guns[b.inventory[i]].constraint2.pointA.x - b.guns[b.inventory[i]].constraint1.bodyB.position.x);
@@ -10164,9 +10169,9 @@ const tech = {
                       this.energyBeam(eye, angle, this.radius);
                     }
                   }
-                  this.radius -= 0.5;
+                  this.radius -= 0.5 / (tech.bulletsLastLonger || 1);
                 }
-                this.radius = Math.min(75 + 15 * Math.random(), Math.max(0, this.radius));
+                this.radius = Math.min(75 * (tech.isPlasmaRange || 1) + 15 * Math.random(), Math.max(0, this.radius));
                 if (this.particles.length < this.maxParticles && input.down) {
                   const angle = Math.random() * 2 * Math.PI;
                   const distance = this.radius + Math.random() * 500;
