@@ -6,30 +6,36 @@ const tech = {
   totalCount: null,
   removeCount: 0,
   resetAllTech() {
-    for (let i = 0, len = tech.tech.length; i < len; i++) {
-      let what = tech.tech[i]
-      what.isBanished = false
-      what.remove();
-      what.count = 0
-      if (what.isJunk) {
-        what.frequency = 0
-      } else if (what.frequencyDefault) {
-        what.frequency = what.frequencyDefault
-      } else {
-        what.frequency = 1
-      }
-      if (what.name === "heals" || what.name === "ammo" || what.name === "research") what.value = what.defaultValue
-      try {
-        if (localSettings.isAllowed) {
-          if (localSettings.loreCount > 5) { /*if it's a pacifist run, increase the frequency of finding tech
-          	for health, defense, invulnerability, and energy*/
-            if (what.isPacifist) what.frequency *= (what.isFieldTech ? 4 : 2)
-          }
+    /* try {
+      let keys = Object.keys(tech);
+      for (let i = 0; i < keys.length; i++) delete tech[keys[i]];
+      Object.assign(tech, defaultGameVars.tech);
+    } catch (e) { */
+      for (let i = 0, len = tech.tech.length; i < len; i++) {
+        let what = tech.tech[i]
+        what.isBanished = false
+        what.remove();
+        what.count = 0
+        if (what.isJunk) {
+          what.frequency = 0
+        } else if (what.frequencyDefault) {
+          what.frequency = what.frequencyDefault
+        } else {
+          what.frequency = 1
         }
-      } catch (err) {
-        console.warn(err)
+        if (what.name === "heals" || what.name === "ammo" || what.name === "research") what.value = what.defaultValue
+        try {
+          if (localSettings.isAllowed) {
+            if (localSettings.loreCount > 5) { /*if it's a pacifist run, increase the frequency of finding tech
+              for health, defense, invulnerability, and energy*/
+              if (what.isPacifist) what.frequency *= (what.isFieldTech ? 4 : 2)
+            }
+          }
+        } catch (err) {
+          console.warn(err)
+        }
       }
-    }
+    /* } */
     m.resetSkin();
     tech.removeCount = 0;
     tech.pauseEjectTech = 1; //used in paradigm shift
