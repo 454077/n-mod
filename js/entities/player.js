@@ -4050,7 +4050,6 @@ const m = {
   },
   setField(index) {
     let oldIndex = m.fieldMode
-    if (index === 12 && tech.isEnergyHealth) index = 0 //if attempting to switch to energy condenser with mass-energy, switch to field emitter instead
     // console.log("field mode: ", index)
     window.removeEventListener("keydown", m.fieldEvent);
     if (m.fieldUpgrades[8].collider) {
@@ -4067,8 +4066,10 @@ const m = {
           break;
         }
       }
-      if (!found) return //if you can't find the field don't give a field to avoid game crash
+      if (!found) index = 0 //if you can't find the field, default to field emitter
     }
+    if (index === 12 && tech.isEnergyHealth) index = 0 //if attempting to switch to energy condenser with mass-energy, switch to field emitter instead
+    index = Math.min(m.fieldUpgrades.length, Math.max(index, 0))
     m.fieldMode = index;
     document.getElementById("field").innerHTML = m.fieldUpgrades[index].name
     m.setHoldDefaults();
