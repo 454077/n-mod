@@ -1988,7 +1988,7 @@ const mainLevels = {
                         let who = mob[i], where = who.position
                         if (who.isReactorBoss) {
                             isFoundBoss = true
-                            if (where.x < 170 || where.x > 2800 || where.y < -2000 || where.y > 500) { //fixes softlocking issue
+                            if (where.x > -170 || where.x < -2800 || where.y < -2000 || where.y > 500) { //fixes softlocking issue
                                 who.damage(Infinity, true)
                             }
                         }
@@ -2080,9 +2080,12 @@ const mainLevels = {
                 } else if (!isFightOver && !(simulation.cycle % 180)) {
                     let isFoundBoss = false
                     for (let i = 0; i < mob.length; i++) {
-                        if (mob[i].isBoss) {
+                        let who = mob[i], where = who.position
+                        if (who.isReactorBoss) {
                             isFoundBoss = true
-                            break
+                            if (where.x < 170 || where.x > 2800 || where.y < -2000 || where.y > 500) { //fixes softlocking issue
+                                who.damage(Infinity, true)
+                            }
                         }
                     }
                     if (!isFoundBoss) {
