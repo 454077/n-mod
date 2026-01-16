@@ -2126,7 +2126,7 @@ const powerUps = {
         if (powerUp[i].name === "tech" || powerUp[i].name === "gun" || powerUp[i].name === "field") {
           bigIndexes.push(i)
         } else if (powerUp[i].name === "heal" && tech.isHealAttract &&
-          Vector.magnitudeSquared(Vector.sub(powerUp[i].position, m.pos)) < 50000 && Math.random() < 0.5) { //if player has accretion, chance to spawn heal as larger powerUp
+          /* Vector.magnitudeSquared(Vector.sub(powerUp[i].position, m.pos)) < 50000 && */ Math.random() < 0.75) { //if player has accretion, chance to spawn heal as larger powerUp
           bigIndexes.push(i)
         } else {
           smallIndexes.push(i)

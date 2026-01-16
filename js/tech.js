@@ -679,8 +679,15 @@ const tech = {
     },
     {
       name: "mass-energy equivalence",
-      description: `<strong class='color-f'>energy</strong> protects you instead of <strong class='color-h'>health</strong>
-        	<br><strong>1.5x</strong> <strong class='color-d'>damage</strong>`,
+      descriptionFunction() {
+        if (m.fieldMode === 12) {
+          return `<rstrong>reset</strong> your <strong class='color-f'>field</strong>
+          <br> to its <strong>initial</strong> state <em style ="float: right;">(field emitter)</em>`
+        } else {
+          return `<strong class='color-f'>energy</strong> protects you instead of <strong class='color-h'>health</strong>
+            <br><strong>1.5x</strong> <strong class='color-d'>damage</strong>`
+        }
+      },
       maxCount: 1,
       count: 0,
       frequency: 1,
@@ -693,18 +700,21 @@ const tech = {
       requires: "not skinned, piezoelectricity, CPT, annihilation, quantum Zeno effect",
       damage: 1.5,
       effect() {
-        m.damageDone *= this.damage
-
-        m.health = 0
-        document.getElementById("health").style.display = "none"
-        document.getElementById("health-bg").style.display = "none"
-        document.getElementById("dmg").style.backgroundColor = "#0cf";
-        tech.isEnergyHealth = true;
-        simulation.mobDmgColor = "rgba(0, 255, 255,0.6)" //"#0cf"
-        m.displayHealth();
-        m.lastCalculatedDefense = 0 //this triggers a redraw of the defense bar
-        m.skin.energy();
-        if (m.fieldMode === 12) m.setField(m.fieldMode) //reset to field emitter if using energy condenser
+        if (m.fieldMode === 12) {
+          m.setField(0) //reset to field emitter if using energy condenser
+          this.count = 0
+        } else {
+          m.damageDone *= this.damage
+          m.health = 0
+          document.getElementById("health").style.display = "none"
+          document.getElementById("health-bg").style.display = "none"
+          document.getElementById("dmg").style.backgroundColor = "#0cf";
+          tech.isEnergyHealth = true;
+          simulation.mobDmgColor = "rgba(0, 255, 255,0.6)" //"#0cf"
+          m.displayHealth();
+          m.lastCalculatedDefense = 0 //this triggers a redraw of the defense bar
+          m.skin.energy();
+        }
       },
       remove() {
         if (this.count > 0) {
