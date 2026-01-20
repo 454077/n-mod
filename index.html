@@ -330,6 +330,75 @@ Press Escape to close"></textarea>
             }
         }, 250);
         document.body.appendChild(fileLoader)
+
+        /***** Scramble color-censored here (does NOT work if loaded anywhere else) *****/
+        function scramble(text) {
+          let result = "";
+          for (let i = 0; i < text.length; i++) {
+            result += String.fromCharCode(Math.floor(Math.random() * 94) + 33);
+          }
+          return result;
+        }
+
+        function initColorCensored(el) {
+          if (el.dataset.init == 1) {
+            return;
+          } else {
+            el.dataset.init = "1";
+            const trueText = el.textContent;
+            el.dataset.true = trueText
+            // 🔒 FORCE LAYOUT HACK
+            el.textContent = "\u00A0".repeat(trueText.length);
+            el.addEventListener("copy", e => {
+              e.preventDefault();
+              e.clipboardData.setData("text/plain", trueText);
+            });
+            function animate() {
+              el.setAttribute("data-fake", scramble(trueText));
+            }
+            animate();
+            setInterval(animate, 50);
+          }
+        }
+
+        function scan(root = document) {
+          root.querySelectorAll(".color-censored").forEach(initColorCensored);
+        }
+        new MutationObserver(muts => {
+          muts.forEach(m =>
+            m.addedNodes.forEach(n => n.nodeType === 1 && scan(n))
+          );
+        }).observe(document.body, { childList: true, subtree: true });
+        document.addEventListener("copy", e => {
+        const sel = document.getSelection();
+        if (!sel.rangeCount) {
+          return;
+        } else {
+          let output = "";
+          let handled = false;
+          for (let i = 0; i < sel.rangeCount; i++) {
+            const range = sel.getRangeAt(i);
+
+            // Clone the selected DOM
+            const fragment = range.cloneContents();
+
+            // Replace censored spans inside the fragment
+            fragment.querySelectorAll(".color-censored").forEach(el => {
+            const text = el.dataset.true || "";
+            el.replaceWith(document.createTextNode(text));
+            handled = true;
+            });
+
+            output += fragment.textContent;
+        }
+        if (handled) {
+          e.preventDefault();
+          e.clipboardData.setData("text/plain", output);
+        }
+      }
+    });
+    scan();
+    setInterval(scan, 50);
     </script>
 </body>
 
