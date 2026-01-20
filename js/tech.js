@@ -12754,7 +12754,7 @@ const tech = {
     {
       name: "Higgs phase transition",
       description: `instantly spawn ${powerUps.orb.tech()}${powerUps.orb.tech()}${powerUps.orb.tech()}${powerUps.orb.tech()}${powerUps.orb.tech()}, but add a chance to
-      <br>remove everything with a 5 minute <strong class="color-censored">half-life</strong>`,
+      <br>remove everything with a 5 minute <strong>half-life</strong>`,
       maxCount: 1,
       count: 0,
       frequency: 0,
