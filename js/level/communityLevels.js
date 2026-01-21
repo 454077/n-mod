@@ -10042,7 +10042,7 @@ const communityLevels = {
                 const nodeBalance = Math.random()
                 const nodes2 = Math.min(15, Math.floor(2 + 4 * nodeBalance + 0.75 * Math.sqrt(simulation.difficulty)))
                 me.isBoss = true;
-                me.name "aceBoss"
+                me.name = "aceBoss"
 
                 me.isSlashBoss = true;
                 me.showHealthBar = false;
