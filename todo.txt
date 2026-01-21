@@ -2,6 +2,7 @@
 •Add bossbar for boundaryBoss
 •Add more commands to chat menu
 •Fix HTML generation for warp menu background images
+•Fix bug in temple level
 •Test out Howler for audio player
 
 ******************************************* WORK-IN-PROGRESS ***********************************
