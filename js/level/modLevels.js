@@ -795,6 +795,7 @@ const modLevels = {
             let me = mob[mob.length - 1];
             me.isBoss = true;
             me.isBoundaryBossCenter = true
+            me.name = "boundaryBoss"
 
             me.accelMag = 0.001 * simulation.accelScale;
             me.frictionStatic = 0;
@@ -1255,6 +1256,7 @@ const modLevels = {
         const boundaryBossCrystal = function (x, y, type = 0, radius = 30) {
             mobs.spawn(x, y, 6 - (type * 2), radius + (type * 5), "hsl(0 100% 50%)");
             let me = mob[mob.length - 1];
+            me.name = "boundaryBossCrystal"
 
             me.accelMag = 0.001 * simulation.accelScale;
             me.frictionStatic = 0;

@@ -3761,6 +3761,7 @@ const communityLevels = {
             });
             Composite.add(engine.world, me.constraint);
             me.isBoss = true;
+            me.name = "templeBoss"
 
             me.stroke = "transparent";
             me.eventHorizon = 900;
@@ -4012,7 +4013,7 @@ const communityLevels = {
                 tech.isImmortal = false;
             }
         }
-        let name = "⥟ᘊ5⪊Ыᳪៗⱕ␥ዘᑧ⍗";
+        let name = "templeBoss"; //"⥟ᘊ5⪊Ыᳪៗⱕ␥ዘᑧ⍗";
         addPartToMap = (len = map.length - 1) => {
             map[len].collisionFilter.category = cat.map;
             map[len].collisionFilter.mask = cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet;
@@ -4969,7 +4970,7 @@ const communityLevels = {
             setPos(a, b);
             freeze(a);
         };
-        const makeLore = (x, t) => simulation.inGameConsole(`<h2 style='color: #f00; display: inline-block'>${name}:</h2> &nbsp; <h3 style='display: inline-block'>${x}</h3>`, t);
+        const makeLore = (x, t) => simulation.inGameConsole(`<h2 class='color-censored' style='color: #f00; display: inline-block'>${name}:</h2> &nbsp; <h3 style='display: inline-block'>${x}</h3>`, t);
         level.custom = () => {
             // All the logic gets handled here. How nice!
             for (const i in LogicHandler) {
@@ -10041,6 +10042,8 @@ const communityLevels = {
                 const nodeBalance = Math.random()
                 const nodes2 = Math.min(15, Math.floor(2 + 4 * nodeBalance + 0.75 * Math.sqrt(simulation.difficulty)))
                 me.isBoss = true;
+                me.name "aceBoss"
+
                 me.isSlashBoss = true;
                 me.showHealthBar = false;
                 me.damageReduction = 0.1
@@ -11318,6 +11321,8 @@ const communityLevels = {
                 const nodeBalance = Math.random()
                 const nodes2 = Math.min(15, Math.floor(2 + 4 * nodeBalance + 0.75 * Math.sqrt(simulation.difficulty)))
                 me.isBoss = true;
+                me.name = "aceBoss2"
+
                 me.isSlashBoss = true;
                 me.showHealthBar = false;
                 me.damageReduction = 0.1
