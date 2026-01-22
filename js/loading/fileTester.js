@@ -12,6 +12,10 @@ const jsSrcs = [
     src: 'lib/matter.min.js'
   },
   {
+    name: "Howler",
+    src: 'lib/howler.js'
+  },
+  {
     name: "Prototypes",
     src: 'lib/prototypes.js'
   },
@@ -100,10 +104,11 @@ const jsSrcs = [
     src: "js/peripheral/commandList.js"
   }
 ];
-const fileLoads = { //these values are each supposed to be set to true in its respective .js file
+const fileLoads = { //these values are each supposed to be set in its respective .js file
   isInitJS: false,
   isOnLoadEndJS: false,
   isMatterMinJS: false,
+  isHowlerJS: false,
   isPrototypesJS: false,
   isSimulationJS: false,
   isPlayerJS: false,
@@ -162,12 +167,12 @@ try {
       } else {
         setTimeout(() => {
           let validities = Object.values(fileLoads)
-          for (let j = 0; j < validities.length; j++) {
+          for (let j = 0; j < validities.length - 1; j++) { //ignore the last element (fileLoads.onLoadEnd function)
             if (!validities[j] && !errors.includes(jsSrcs[j])) { //for each file not properly defined, push its source url to error list
               errors.push(jsSrcs[j]);
             }
           }
-          clearInterval(loadText);
+          clearInterval(loadText); //stop loading animation for buttons
           if (errors.length > 0) { //if any files are not properly defined, overwrite document with error report
             document.body.style.backgroundColor = "white";
             let text = `<h1 style="color:red"><u>ERROR LOADING THE FOLLOWING FILES:</u></h1><hr><ul>`
