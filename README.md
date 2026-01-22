@@ -11,7 +11,6 @@ It includes portions of the following games and mods:
   <li>maps from <a href="https://coaldeficit.github.io/c-gon">c-gon by coalDeficit</a></li>
 </ul>
 <br>
-<br>
 The following libraries are used:
 <ul>
   <li><a href='https://github.com/liabru/matter-js'>Matter</a> by <a href="https://github.com/liabru">Liabru</a></li>
