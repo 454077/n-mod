@@ -11,4 +11,11 @@ It includes portions of the following games and mods:
   <li>maps from <a href="https://coaldeficit.github.io/c-gon">c-gon by coalDeficit</a></li>
 </ul>
 <br>
+<br>
+The following libraries are used:
+<ul>
+  <li><a href='https://github.com/liabru/matter-js'>Matter</a> by <a href="https://github.com/liabru">Liabru</a></li>
+  <li> <a href='https://github.com/goldfire/howler.js/blob/master/dist/howler.js'>Howler</a> by <a href="https://github.com/goldfire">James Simpson</a></li>
+</ul>
+<br>
 Feel free to <a href="https://github.com/454077/n-mod/issues/new">report bugs</a> or <a href="https://github.com/454077/n-mod/discussions/new?category=ideas">share ideas!</a>
