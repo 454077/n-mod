@@ -38,7 +38,7 @@ Press Escape to close"></textarea>
         <input type="button" id="execute-command" value="Enter">
         <input type="button" id="close-chat" value="Exit"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="button" id="jump-to" value="Jump to...">
-        <input type="number" id="history" min="0" max="1" placeholder="0 (where you left off)" style="width:200px">
+        <input type="number" id="history" min="-1" max="1" placeholder="0 (where you left off)" style="width:200px">
     </div>
     <div id="fade-out"></div>
     <div id="health-bg"></div>
@@ -109,7 +109,7 @@ Press Escape to close"></textarea>
                         style="width: 120px;">
                     <br><span id="previous-seed" style="color:#bbb"></span>
                     <br>
-                    Save File:<br>
+                    Save File: <div id='file-status-div'></div>
                     <div id="localSave-div">
                         <input type="file" id="file-import" accept=".json" hidden>
                         <input type="button" id="load-file" value="Import" title="Click to use your save file">

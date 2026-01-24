@@ -16,6 +16,10 @@ const jsSrcs = [
     src: 'lib/howler.js'
   },
   {
+    name: "Local Saves",
+    src: 'js/peripheral/localSaves.js'
+  },
+  {
     name: "Prototypes",
     src: 'lib/prototypes.js'
   },

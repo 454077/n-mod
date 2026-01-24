@@ -837,6 +837,7 @@ gravity() {
 },
 firstRun: true,
 splashReturn() {
+  fileStatusDiv.innerHTML = "<br>"
   document.getElementById("previous-seed").innerHTML = `previous seed: <span style="font-size:80%;">${Math.initialSeed}</span><br>`
   document.getElementById("seed").value = Math.initialSeed = Math.seed //randomize initial seed
 
@@ -880,6 +881,7 @@ splashReturn() {
 fpsInterval: 0, //set in startGame
 then: null,
 startGame(isBuildRun = false, isTrainingRun = false) {
+  fileStatusDiv.innerHTML = "<br>"
   //level.fullLevelList = mainLevels.appendObjects([trainingLevels, communityLevels, removedLevels, modLevels, loreLevels]);
   simulation.isTextLogOpen = true
   simulation.clearMap()
