@@ -75,7 +75,7 @@ setTimeout(() => {
             console.warn(errorMsg);
             localSettings = oldSettings
             fileStatusDiv.innerHTML = "<strong style='color:red;'>ERROR RESETTING FILE</strong>"
-            window.alert(errorMsg)
+            setTimeout(() =>{window.alert(errorMsg)}, 100);
         }
     });
 }, 150)

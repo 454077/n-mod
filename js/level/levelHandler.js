@@ -231,6 +231,7 @@ const level = {
           tech.canFieldReroll = true
           tech.canTechReroll = true
         }
+        powerUps.warp.exit(); //fixing a bug with picking up powerups after entering a new level
         tech.tokamakHealCount = 0
         tech.buffedGun++
         if (tech.buffedGun > b.inventory.length - 1) tech.buffedGun = 0;
