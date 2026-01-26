@@ -231,7 +231,6 @@ const level = {
           tech.canFieldReroll = true
           tech.canTechReroll = true
         }
-        powerUps.warp.exit(); //fixing a bug with picking up powerups after entering a new level
         tech.tokamakHealCount = 0
         tech.buffedGun++
         if (tech.buffedGun > b.inventory.length - 1) tech.buffedGun = 0;
@@ -833,14 +832,9 @@ const level = {
                     if (count > 0) {
                         requestAnimationFrame(newLevelDraw);
                     } else { //unpause
-                        if (m.immuneCycle < m.cycle + 15 * ((m.fieldMode === 0 || m.fieldMode === 14) ? m.immuneBoostCouple : 1)) m.immuneCycle = m.cycle + 30 * ((m.fieldMode === 0 || m.fieldMode === 14) ? m.immuneBoostCouple : 1); //player is immune to damage for 30 cycles
-                        if (simulation.paused) requestAnimationFrame(cycle);
-                        if (m.alive) simulation.paused = false;
-                        simulation.isChoosing = false; //stops p from un pausing on key down
-                        build.unPauseGrid()
-                        document.getElementById("choose-grid").style.opacity = "0"
                         setTimeout(() => {
-                            document.getElementById("choose-grid").style.visibility = "hidden"
+                            //document.getElementById("choose-grid").style.visibility = "hidden"
+                            powerUps.warp.exit(); //fixing a bug with picking up powerups after entering a new level
                         }, 1000);
                     }
                     //draw
