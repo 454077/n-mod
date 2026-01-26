@@ -2023,32 +2023,16 @@ const m = {
       }
       m.fillColor = `hsl(${m.color.hue},${m.color.sat}%,${m.color.light}%)`
       m.fillColorDark = `hsl(${m.color.hue},${m.color.sat}%,${m.color.light - 50}%)`
-      const grd = ctx.createRadialGradient(16, 0, 0, 0, 0, 40);
-      grd.addColorStop(0, `#c78034`);
-      grd.addColorStop(0.04, `#bd5235`);
-      grd.addColorStop(0.08, `#ab554d`);
-      grd.addColorStop(0.12, `#8f5d8f`);
-      grd.addColorStop(0.16, `#4352ab`);
-      grd.addColorStop(0.2, `#2058b3`);
-      grd.addColorStop(0.24, `#1a6fc4`);
-      grd.addColorStop(0.28, `#1b85cf`);
-      grd.addColorStop(0.32, `#2d9bd7`);
-      grd.addColorStop(0.4, `#d2d7b4`);
-      grd.addColorStop(0.44, `#e1cd87`);
-      grd.addColorStop(0.48, `#f0b955`);
-      grd.addColorStop(0.52, `#ffa050`);
-      grd.addColorStop(0.56, `#ff8269`);
-      grd.addColorStop(0.6, `#f5697d`);
-      grd.addColorStop(0.64, `#e65aaf`);
-      grd.addColorStop(0.68, `#d732d7`);
-      grd.addColorStop(0.72, `#c846e6`);
-      grd.addColorStop(0.76, `#c850fa`);
-      grd.addColorStop(0.8, `#878cf0`);
-      grd.addColorStop(0.84, `#37beeb`);
-      grd.addColorStop(0.88, `#00d2be`);
-      grd.addColorStop(0.92, `#00e19b`);
-      grd.addColorStop(0.96, `#19f5aa`);
-      grd.addColorStop(1, `#aaf5af`);
+      let grd = ctx.createRadialGradient(16, 0, 0, 0, 0, 40), colors = [
+        [0, `#c78034`],[0.04, `#bd5235`],[0.08, `#ab554d`],[0.12, `#8f5d8f`],
+        [0.16, `#4352ab`],[0.2, `#2058b3`],[0.24, `#1a6fc4`],[0.28, `#1b85cf`],
+        [0.32, `#2d9bd7`],[0.4, `#d2d7b4`],[0.44, `#e1cd87`],[0.48, `#f0b955`],
+        [0.52, `#ffa050`],[0.56, `#ff8269`],[0.6, `#f5697d`],[0.64, `#e65aaf`],
+        [0.68, `#d732d7`],[0.72, `#c846e6`],[0.76, `#c850fa`],[0.8, `#878cf0`],
+        [0.84, `#37beeb`],[0.88, `#00d2be`],[0.92, `#00e19b`],[0.96, `#19f5aa`],
+        [1, `#aaf5af`]
+      ]
+      colors.forEach(item => {grd.addColorStop(item[0], item[1])});
       m.bodyGradient = grd
 
       m.draw = function () {
