@@ -113,6 +113,7 @@ const fileLoads = { //these values are each supposed to be set in its respective
   isOnLoadEndJS: false,
   isMatterMinJS: false,
   isHowlerJS: false,
+  isLocalSavesJS: false,
   isPrototypesJS: false,
   isSimulationJS: false,
   isPlayerJS: false,

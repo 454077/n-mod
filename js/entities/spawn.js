@@ -35,6 +35,12 @@ const spawn = {
     ["powerUpBoss", "stagBeetleBoss", "kingSnakeBoss", "fabricatorBoss", "pentaLaserBoss", "iceBlockBoss", "defendingBoss", "quasarBoss", "spiderBoss4"]
     //finalBoss is T5
   ],
+  bannedMobs: [ //list of mobs that shouldn't spawn during pacifist runs
+    "exploder", "pitcher", "sucker", "pitcher3", "bigSucker", "quadLaser", "pitcher4"
+  ],
+  isAllowedPacifist(name = null) {
+    return (typeof(name) === "string") && (localSettings.loreCount < 6 || !spawn.bannedMobs.includes(name))
+  },
   forefitList: [ //joke lines powerUp-type bosses say when spawned on level.final
     `I quit, finalBoss. Tired of hanging around freaks like you.`,
     `You're on your own here, finalBoss. I don't want you to contaminate my pearls with your flab.`,
@@ -140,48 +146,61 @@ const spawn = {
   },
   setSpawnList() { //this is run at the start of each new level to determine the possible mobs for the level
     spawn.pickList.splice(0, 1);
-    if (level.levelsCleared > 13) {
-      const push = spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]
-      spawn.pickList.push(push);
-    } else {
-      const push = spawn.mobTypeSpawnOrder[spawn.mobTypeSpawnIndex++ % spawn.mobTypeSpawnOrder.length]
-      spawn.pickList.push(push);
+    let push = null, isValid = false
+    while (!isValid) {
+      if (level.levelsCleared > 13) {
+        push = spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]
+      } else {
+        push = spawn.mobTypeSpawnOrder[spawn.mobTypeSpawnIndex++ % spawn.mobTypeSpawnOrder.length]
+      }
+      isValid = spawn.isAllowedPacifist(push);
     }
+    spawn.pickList.push(push);
   },
   randomizeSpawnList(tier) { //used in subway to get new random mobs at current tier level
     spawn.pickList.splice(0, 1);
-    if (level.levelsCleared > 13) {
-      const push = spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]
-      spawn.pickList.push(push);
-    } else {
-      const array = spawn.tier[tier]
-      const push = array[Math.floor(Math.random() * array.length)]
-      spawn.pickList.push(push);
+    let push = null, isValid = false;
+    while (!isValid) {
+      if (level.levelsCleared > 13) {
+        push = spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]
+      } else {
+        let array = spawn.tier[tier]
+        push = array[Math.floor(Math.random() * array.length)]
+      }
+      isValid = spawn.isAllowedPacifist(push);
     }
+    spawn.pickList.push(push);
   },
   randomMobByLevelsCleared(x, y) {
-    if (level.levelsCleared > 13) {
-      const pick = spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]
-      spawn[pick](x, y);
-    } else {
-      const t = spawn.mobTierSpawnOrder[level.levelsCleared]
-      const pickFrom = spawn.tier[t]
-      const pick = pickFrom[Math.floor(Math.random() * pickFrom.length)];
-      spawn[pick](x, y);
+    let pick = null, isValid = false;
+    while (!isValid) {
+      if (level.levelsCleared > 13) {
+        pick = spawn.fullPickList[Math.floor(Math.random() * spawn.fullPickList.length)]
+        spawn[pick](x, y);
+      } else {
+        let t = spawn.mobTierSpawnOrder[level.levelsCleared]
+        let pickFrom = spawn.tier[t]
+        pick = pickFrom[Math.floor(Math.random() * pickFrom.length)];
+      }
+      isValid = spawn.isAllowedPacifist(pick);
     }
+    spawn[pick](x, y);
   },
   spawnChance(chance) {
     const difficultyChance = (simulation.difficultyMode === 1) ? 1 : simulation.difficulty
     return (Math.random() < chance + 0.07 * difficultyChance) && (mob.length < -1 + 16 * Math.log10(simulation.difficulty + 1))
   },
   randomMob(x, y, chance = 1) {
-    if (spawn.spawnChance(chance) || chance === Infinity) {
-      const pick = spawn.pickList[Math.floor(Math.random() * spawn.pickList.length)];
-      spawn[pick](x, y);
+    let pick = null, isValid = false;
+    while (!isValid) {
+      pick = spawn.pickList[Math.floor(Math.random() * spawn.pickList.length)];
+      isValid = spawn.isAllowedPacifist(pick);
     }
-    if (tech.isDuplicateMobs && Math.random() < tech.duplicationChance()) {
-      const pick = spawn.pickList[Math.floor(Math.random() * spawn.pickList.length)];
+    if (spawn.spawnChance(chance) || chance === Infinity) {
       spawn[pick](x, y);
+      if (tech.isDuplicateMobs && Math.random() < tech.duplicationChance()) {
+        spawn[pick](x, y);
+      }
     }
   },
   randomSmallMob(x, y,
