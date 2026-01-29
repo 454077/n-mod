@@ -23,13 +23,13 @@ const files = [
   },
   {
     name: 'FallDamage',
-    src: 'SFX/FallDamage.mp3',
+    src: 'SFX/Joke/FallDamage.mp3',
     playCDcycle: m.cycle,
     loadAttempt: 0
   },
   {
     name: 'Fire in the hole',
-    src: 'SFX/fire.mp3',
+    src: 'SFX/Joke/fire.mp3',
     playCDcycle: m.cycle,
     loadAttempt: 0
   },
@@ -91,21 +91,14 @@ const audioPlayer = {
           {
             if (name === 'Explosion') {
               if (currentMonth === 3 && currentDay === 1) { //Every April 1st, play reverb fart for explosions
-                listItem.src = 'SFX/ExplosionFools.mp3'
+                listItem.src = 'SFX/Joke/ExplosionFools.mp3'
               } else {
-                let explodeSounds = ['SFX/Explosion1.ogg', 'SFX/Explosion2.ogg',
-                                     'SFX/Explosion3.ogg', 'SFX/Explosion4.ogg'
-                                    ], soundIDX = Math.floor(Math.random() * explodeSounds.length);
-                listItem.src = explodeSounds[soundIDX];
+                listItem.src = `SFX/Explosions/Explosion${Math.ceil(Math.random() * 4)}.ogg`
               }
             } else if (name === 'Step') {
-              let stepSounds = ['SFX/Footstep1.mp3', 'SFX/Footstep2.mp3', 'SFX/Footstep3.mp3',
-                                'SFX/Footstep4.mp3', 'SFX/Footstep5.mp3', 'SFX/Footstep6.mp3'
-                               ], soundIDX = Math.floor(Math.random() * stepSounds.length);
-              listItem.src = stepSounds[soundIDX];
+              listItem.src = `SFX/Footsteps/Footstep${Math.ceil(Math.random() * 6)}.mp3`
             } else if (name === 'Teleport') {
-              let TPsounds = ['SFX/Teleport1.mp3', 'SFX/Teleport2.mp3'], soundIDX = Math.floor(Math.random() * TPsounds.length);
-              listItem.src = TPsounds[soundIDX];
+              listItem.src = `SFX/Teleports/Teleport${Math.ceil(Math.random() * 3)}.mp3`
             }
             try {
               //simulation.inGameConsole(listItem.src);
@@ -140,8 +133,8 @@ const audioPlayer = {
                 break;
               } else {
                 listItem.playCDcycle = m.cycle;
-                simulation.inGameConsole(`<span style='color:red;'<strong>ERROR PLAYING SOUND FILE:</strong>
-                                    <br>${error}`)
+                simulation.inGameConsole(`<span style='color:red;'<strong>Uncaught ${error.name} playing sound file:</strong>
+                                    <br>${error.message}`)
                 console.error("ERROR PLAYING SOUND FILE: ", error);
               }
             }
@@ -150,8 +143,8 @@ const audioPlayer = {
         }
       }
     } catch (err) {
-      simulation.inGameConsole(`<span style='color:red;'<strong>ERROR REQUESTING AUDIO:</strong>
-      	<br>${err}</strong></span>`);
+      simulation.inGameConsole(`<span style='color:red;'<strong>Uncaught ${err.name} requesting audio:</strong>
+      	<br>${err.message}</strong></span>`);
     }
   }
 };
