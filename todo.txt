@@ -4,10 +4,12 @@
 •Fix HTML generation for warp menu background images
 •Fix bug in temple level
 •Test out Howler for audio player
+•Fix rotary cannon
 
 ******************************************* WORK-IN-PROGRESS ***********************************
 •Stay up-to-date with original game of n-gon (for the most part; see NOT PLANNED section for exceptions)
 •More images in warp menu (Input needed from community)
+•Figure out what's wrong with rotary cannon
 
 ********************************************* POSTPONED ****************************************
 •Modded bullets integration (i.e. as part of b instead of ephemera)
