@@ -102,20 +102,34 @@ const cmdList = {
           fullBossList = spawn.bossTier.flat(), fullPowerUpList = [], what = cmdConsole.params[1],
           fullCatalog = [], reference = Object.entries(powerUps);
         if (types.includes(cmdConsole.params[0])) {
-          reference.forEach(item => {
+          if (cmdConsole.params[0] === "powerUp" ) {reference.forEach(item => {
             try {
               if (item[1].name && item[1].effect) fullPowerUpList.push(item[0] || item[1].name)
             } catch (e) {}
-          })
+          })}
           fullCatalog = [fullMobList, fullBossList, fullPowerUpList]
+          if (cmdConsole.params[2].at(0) === "~") {
+            cmdConsole.params[2] = m.pos.x + parseFloat(eval(cmdConsole.params[2].slice(1)) || 0)
+          } else {
+            cmdConsole.params[2] = parseFloat(eval(cmdConsole.params[2]))
+          }
+          if (cmdConsole.params[3].at(0) === "~") {
+            cmdConsole.params[3] = m.pos.y + parseFloat(eval(cmdConsole.params[3].slice(1)) || 0)
+          } else {
+            cmdConsole.params[3] = parseFloat(eval(cmdConsole.params[3]))
+          }
+          let where = {
+            x: cmdConsole.params[2],
+            y: cmdConsole.params[3]
+          }
           fullCatalog.forEach((list, i) => {
             if (cmdConsole.params[0] === types[i]) {
               if (list.includes(what)) {
                 if (i < 2) {
-                  spawn[what](parseFloat(cmdConsole.params[2]), parseFloat(cmdConsole.params[3]))
+                  spawn[what](where.x, where.y)
                   simulation.inGameConsole("Object successfully summoned.")
                 } else {
-                  powerUps.directSpawn(parseFloat(eval(cmdConsole.params[2])), parseFloat(eval(cmdConsole.params[3])), what)
+                  powerUps.directSpawn(where.x, where.y, what)
                   simulation.inGameConsole("Object successfully summoned.")
                 }
               } else {
