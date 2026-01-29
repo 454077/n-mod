@@ -6148,8 +6148,8 @@ const tech = {
     },
     {
       name: "rotary cannon",
-      description: `This ${powerUps.orb.tech()} is <strong class='color-censored'>bugged<strong>
-      <br><strong style='color:red;'>DO NOT ACQUIRE THIS!</strong>`//`<strong>nail gun</strong> has increased muzzle <strong class="color-speed">speed</strong>,<br>maximum <em>fire rate</em>, <strong>accuracy</strong>, and <strong>recoil</strong>`,
+      description: `This ${powerUps.orb.tech()} is <strong class='color-censored'>corrupted</strong>
+      <br><strong style='color:red;'>DO NOT ACQUIRE THIS!</strong>`, //`<strong>nail gun</strong> has increased muzzle <strong class="color-speed">speed</strong>,<br>maximum <em>fire rate</em>, <strong>accuracy</strong>, and <strong>recoil</strong>`,
       isGunTech: true,
       isWIP: true,
       maxCount: 1,
