@@ -34,6 +34,17 @@ const tech = {
         } catch (err) {
           console.warn(err)
         }
+        if (what.isCorrupted) {
+          if (what.descriptionFunction) {
+            what.descriptionFunction = () => {
+              return `This ${powerUps.orb.tech()} is <strong class='color-censored'>corrupted</strong>
+      <br><strong style='color:red;'>DO NOT ACQUIRE THIS!</strong>`
+            }
+          } else {
+            what.description = `This ${powerUps.orb.tech()} is <strong class='color-censored'>corrupted</strong>
+      <br><strong style='color:red;'>DO NOT ACQUIRE THIS!</strong>`
+          } 
+        }
       }
     /* } */
     m.resetSkin();
@@ -6148,10 +6159,9 @@ const tech = {
     },
     {
       name: "rotary cannon",
-      description: `This ${powerUps.orb.tech()} is <strong class='color-censored'>corrupted</strong>
-      <br><strong style='color:red;'>DO NOT ACQUIRE THIS!</strong>`, //`<strong>nail gun</strong> has increased muzzle <strong class="color-speed">speed</strong>,<br>maximum <em>fire rate</em>, <strong>accuracy</strong>, and <strong>recoil</strong>`,
+      description: `<strong>nail gun</strong> has increased muzzle <strong class="color-speed">speed</strong>,<br>maximum <em>fire rate</em>, <strong>accuracy</strong>, and <strong>recoil</strong>`,
       isGunTech: true,
-      isWIP: true,
+      isCorrupted: true,
       maxCount: 1,
       count: 0,
       frequency: 2,
@@ -15360,8 +15370,8 @@ const tech = {
       description: "spawn a <strong class='color-randomize'>random</strong> powerUp",
       maxCount: 5,
       count: 0,
-      frequency: 2,
-      frequencyDefault: 2,
+      frequency: 1,
+      frequencyDefault: 1,
       isInstant: true,
       isLore: true,
       allowed() { return !build.isExperimentSelection },
