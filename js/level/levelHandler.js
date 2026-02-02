@@ -833,8 +833,8 @@ const level = {
                         requestAnimationFrame(newLevelDraw);
                     } else { //unpause
                         setTimeout(() => {
-                            //document.getElementById("choose-grid").style.visibility = "hidden"
-                            powerUps.warp.exit(); //fixing a bug with picking up powerups after entering a new level
+                        //document.getElementById("choose-grid").style.visibility = "hidden"
+                        powerUps.warp.exit(); //fixing a bug with picking up powerups after entering a new level
                         }, 1000);
                     }
                     //draw
